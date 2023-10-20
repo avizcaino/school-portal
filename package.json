@@ -1,0 +1,21 @@
+{
+  "name": "school-portal",
+  "version": "1.0.0",
+  "description": "School management portal",
+  "repository": "git@github.com:avizcaino/school-portal.git",
+  "author": "Alex Vizcaino",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@uxland/project-tools": "^2.1.2",
+    "husky": "^8.0.0",
+    "lerna": "^7.4.1"
+  },
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
