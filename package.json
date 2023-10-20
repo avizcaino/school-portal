@@ -12,10 +12,11 @@
     "lerna": "^7.4.1"
   },
   "workspaces": [
-    "app",
-    "server"
+    "app/*",
+    "server/*"
   ],
   "scripts": {
+    "dev": "lerna run dev --scope @school-app/app --verbose",
     "prepare": "husky install"
   }
 }
