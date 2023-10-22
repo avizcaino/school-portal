@@ -1570,6 +1570,15 @@
     "@typescript-eslint/types" "6.8.0"
     eslint-visitor-keys "^3.4.1"
 
+"@uxland/ioc@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@uxland/ioc/-/ioc-1.0.1.tgz#9d997211e809f126c65b4c1652243704cf3c38eb"
+  integrity sha512-5GLsnBYk7K/a5ekgYwJCJE3dalDxO49JmML8LjqPdCCk+3CsB439SKxca/v4p2/f1gMEaP3WDiVzipXREu3jiA==
+  dependencies:
+    inversify "^6.0.1"
+    mediatr-ts "^0.3.0"
+    reflect-metadata "^0.1.13"
+
 "@uxland/project-tools@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@uxland/project-tools/-/project-tools-2.1.2.tgz#c75979ed1ff8a32915a862f2007f2ea55e6568f2"
@@ -3523,6 +3532,11 @@ inquirer@^8.2.4:
     through "^2.3.6"
     wrap-ansi "^6.0.1"
 
+inversify@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/inversify/-/inversify-6.0.1.tgz#b20d35425d5d8c5cd156120237aad0008d969f02"
+  integrity sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==
+
 ip@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ip/-/ip-2.0.0.tgz#4cf4ab182fee2314c75ede1276f8c80b479936da"
@@ -4176,6 +4190,16 @@ map-obj@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
+
+mediatr-ts@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/mediatr-ts/-/mediatr-ts-0.3.0.tgz#9c860c97eb54061501f781599d2387f46ac13021"
+  integrity sha512-cnGB68wMJdWevMm1Ye3U9KPS/R8AeJbMSejme+dKJeQjyPeWaKb6OGPnh+OE82+SKme6DbmF4/yLfAevCl1M4w==
+
+mediatr-ts@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/mediatr-ts/-/mediatr-ts-1.2.1.tgz#744f68e65713d4ab87bc29c91e9ebb93ed577289"
+  integrity sha512-+jSid6kcJteIKaFkTCkXaixl/0pgwgHPmHQSlUcxKOnr2Utpp0KXfkTSl6ugpRTbk6Pa/Ob7lBY0RWIY3XIQ+Q==
 
 meow@^8.0.0, meow@^8.1.2:
   version "8.1.2"
@@ -5241,6 +5265,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
 
 regenerator-runtime@^0.14.0:
   version "0.14.0"

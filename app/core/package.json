@@ -1,0 +1,25 @@
+{
+  "name": "@school-portal/core",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Alex Vizcaino <avizcainoluna@gmail.com>",
+  "homepage": "https://github.com/avizcaino/school-portal#readme",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avizcaino/school-portal.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@school-portal/core.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/avizcaino/school-portal/issues"
+  },
+  "dependencies": {
+    "@uxland/ioc": "^1.0.1",
+    "inversify": "^6.0.1"
+  }
+}
