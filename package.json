@@ -16,7 +16,9 @@
     "server/*"
   ],
   "scripts": {
-    "dev": "lerna run dev --scope @school-app/app --verbose",
-    "prepare": "husky install"
+    "dev": "lerna run dev --scope @school-portal/app --verbose",
+    "prepare": "husky install",
+    "server:build": "lerna run build --scope @school-portal/server --verbose",
+    "server:start": "lerna run start --scope @school-portal/server --verbose"
   }
 }

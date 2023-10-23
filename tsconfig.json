@@ -22,7 +22,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@uvic/*": ["./app/*/"]
+      "@school-app/*": ["./app/*/"]
     }
   },
   "references": [{"path": "./tsconfig.node.json"}]

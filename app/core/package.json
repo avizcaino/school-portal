@@ -19,7 +19,7 @@
     "url": "https://github.com/avizcaino/school-portal/issues"
   },
   "dependencies": {
-    "@uxland/ioc": "^1.0.1",
+    "@uxland/ioc": "^1.0.3",
     "inversify": "^6.0.1"
   }
 }

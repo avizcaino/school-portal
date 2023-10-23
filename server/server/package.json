@@ -1,0 +1,37 @@
+{
+  "name": "@school-portal/server",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Alex Vizcaino <avizcainoluna@gmail.com>",
+  "homepage": "https://github.com/avizcaino/school-portal#readme",
+  "license": "MIT",
+  "main": "src/server.js",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avizcaino/school-portal.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@school-portal/server.test.js",
+    "build": "tsoa spec-and-routes",
+    "start:x": "node build/src/server.js",
+    "start": "node -r reflect-metadata -r dotenv/config -r ts-node/register --inspect src/server.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/avizcaino/school-portal/issues"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.7",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@uxland/ioc": "^1.0.3",
+    "express": "^4.18.2",
+    "inversify": "^6.0.2",
+    "inversify-binding-decorators": "^4.0.0",
+    "tsoa": "^5.1.1"
+  }
+}
