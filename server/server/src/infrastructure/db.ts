@@ -42,4 +42,14 @@ export class FirebaseDBImpl implements FirebaseDB {
       .get();
     return snapshot.data() as T;
   }
+
+  async deleteDocument(collectionId: string, documentId: string): Promise<any> {
+    try {
+      const documentRef = this.db.collection(collectionId).doc(documentId);
+      await documentRef.delete();
+      return;
+    } catch (error: any) {
+      throw new Error(`Failed to delete document: ${error.message}`);
+    }
+  }
 }

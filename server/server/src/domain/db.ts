@@ -13,4 +13,5 @@ export abstract class FirebaseDB {
     documentId: string,
     converter: Converter<T>
   ): Promise<T>;
+  abstract deleteDocument(collectionId: string, documentId: string): Promise<any>;
 }

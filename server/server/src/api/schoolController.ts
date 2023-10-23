@@ -57,8 +57,7 @@ export class SchoolController extends Controller implements School {
 
   @Delete('teacher/{id}')
   deleteTeacher(@Path() id: string): Promise<boolean> {
-    console.log(id);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.deleteDocument(TEACHERS_COLLECTION, id);
   }
 
   @Get('group/all')
