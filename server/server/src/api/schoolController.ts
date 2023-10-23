@@ -41,13 +41,12 @@ export class SchoolController extends Controller implements School {
 
   @Get('teacher/all')
   getTeachers(): Promise<ITeacher[]> {
-    return this.backendAdapter.getAll<ITeacher>(TEACHERS_COLLECTION);
+    return this.backendAdapter.getCollection<ITeacher>(TEACHERS_COLLECTION);
   }
 
   @Get('teacher/{id}')
   getTeacher(@Path() id: string): Promise<ITeacher> {
-    console.log(id);
-    throw new Error('Not implemented');
+    return this.backendAdapter.getDocument<ITeacher>(TEACHERS_COLLECTION, id);
   }
 
   @Post(`teacher`)

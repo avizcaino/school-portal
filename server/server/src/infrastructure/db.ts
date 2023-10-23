@@ -27,6 +27,19 @@ export class FirebaseDBImpl implements FirebaseDB {
 
   async getCollection<T>(collectionId: string, converter: Converter<T>): Promise<T[]> {
     const snapshot = await this.db.collection(collectionId).withConverter(converter).get();
-    return snapshot.docs.map(doc => doc.data()) as T[];
+    return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})) as T[];
+  }
+
+  async getDocument<T>(
+    collectionId: string,
+    documentId: string,
+    converter: Converter<T>
+  ): Promise<T> {
+    const snapshot = await this.db
+      .collection(collectionId)
+      .doc(documentId)
+      .withConverter(converter)
+      .get();
+    return snapshot.data() as T;
   }
 }

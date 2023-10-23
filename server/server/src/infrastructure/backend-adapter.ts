@@ -9,7 +9,11 @@ import {getCollectionConverter} from '../mappers/collection-converter';
 export class BackendAdapterImpl implements BackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
-  async getAll<T>(collectionId: string): Promise<T[]> {
-    return this.db.getCollection<T>(collectionId, getCollectionConverter<T>());
+  async getCollection<T>(collectionId: string): Promise<T[]> {
+    return await this.db.getCollection<T>(collectionId, getCollectionConverter<T>());
+  }
+
+  async getDocument<T>(collectionId: string, documentId: string): Promise<T> {
+    return await this.db.getDocument<T>(collectionId, documentId, getCollectionConverter<T>());
   }
 }
