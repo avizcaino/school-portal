@@ -2,6 +2,7 @@ import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Route} from 'tsoa';
 import {Controller} from '../controller';
 import {BackendAdapter} from '../domain/backend-adapter';
+import {TEACHERS_COLLECTION} from '../domain/collections';
 import {IGroup} from '../interfaces/group';
 import {School} from '../interfaces/school';
 import {IStudent} from '../interfaces/student';
@@ -40,7 +41,7 @@ export class SchoolController extends Controller implements School {
 
   @Get('teacher/all')
   getTeachers(): Promise<ITeacher[]> {
-    throw new Error('Not implemented');
+    return this.backendAdapter.getAll<ITeacher>(TEACHERS_COLLECTION);
   }
 
   @Get('teacher/{id}')
