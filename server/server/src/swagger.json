@@ -9,68 +9,6 @@
 			"ID": {
 				"type": "string"
 			},
-			"IStudent": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"firstSurname": {
-						"type": "string"
-					},
-					"secondSurname": {
-						"type": "string"
-					},
-					"birthDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"group": {
-						"$ref": "#/components/schemas/ID"
-					}
-				},
-				"required": [
-					"name",
-					"firstSurname",
-					"secondSurname",
-					"birthDate",
-					"group"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ITeacher": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"firstSurname": {
-						"type": "string"
-					},
-					"secondSurname": {
-						"type": "string"
-					},
-					"groups": {
-						"items": {
-							"$ref": "#/components/schemas/ID"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"name",
-					"firstSurname",
-					"secondSurname",
-					"groups"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"IGroup": {
 				"properties": {
 					"id": {
@@ -108,6 +46,74 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"IStudent": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"firstSurname": {
+						"type": "string"
+					},
+					"secondSurname": {
+						"type": "string"
+					},
+					"birthDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"idalu": {
+						"type": "string"
+					},
+					"group": {
+						"$ref": "#/components/schemas/ID"
+					}
+				},
+				"required": [
+					"name",
+					"firstSurname",
+					"birthDate",
+					"idalu",
+					"group"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITeacher": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"firstSurname": {
+						"type": "string"
+					},
+					"secondSurname": {
+						"type": "string"
+					},
+					"idDocument": {
+						"type": "string"
+					},
+					"groups": {
+						"items": {
+							"$ref": "#/components/schemas/ID"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"firstSurname",
+					"idDocument",
+					"groups"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -126,216 +132,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/school/student/all": {
-			"get": {
-				"operationId": "GetStudents",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/IStudent"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/school/student/{id}": {
-			"get": {
-				"operationId": "GetStudent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IStudent"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"delete": {
-				"operationId": "DeleteStudent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "boolean"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/school/student": {
-			"post": {
-				"operationId": "RegisterStudent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/IStudent"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/school/teacher/all": {
-			"get": {
-				"operationId": "GetTeachers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/ITeacher"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/school/teacher/{id}": {
-			"get": {
-				"operationId": "GetTeacher",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ITeacher"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"delete": {
-				"operationId": "DeleteTeacher",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "boolean"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/school/teacher": {
-			"post": {
-				"operationId": "RegisterTeacher",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ITeacher"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/school/group/all": {
 			"get": {
 				"operationId": "GetGroups",
@@ -354,6 +150,9 @@
 						}
 					}
 				},
+				"tags": [
+					"school"
+				],
 				"security": [],
 				"parameters": []
 			}
@@ -373,6 +172,9 @@
 						}
 					}
 				},
+				"tags": [
+					"school"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -399,6 +201,9 @@
 						}
 					}
 				},
+				"tags": [
+					"school"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -427,6 +232,9 @@
 						}
 					}
 				},
+				"tags": [
+					"school"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
@@ -435,6 +243,240 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/IGroup"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/students/all": {
+			"get": {
+				"operationId": "GetStudents",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IStudent"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/students/{id}": {
+			"get": {
+				"operationId": "GetStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IStudent"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/students": {
+			"post": {
+				"operationId": "RegisterStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IStudent"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/teachers/all": {
+			"get": {
+				"operationId": "GetTeachers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ITeacher"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"teachers"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/teachers/{id}": {
+			"get": {
+				"operationId": "GetTeacher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ITeacher"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"teachers"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteTeacher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"teachers"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/teachers": {
+			"post": {
+				"operationId": "RegisterTeacher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"teachers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ITeacher"
 							}
 						}
 					}

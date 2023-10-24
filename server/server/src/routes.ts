@@ -13,6 +13,10 @@ import {
 } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {SchoolController} from './api/schoolController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import {StudentsController} from './api/studentsController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import {TeachersController} from './api/teachersController';
 import {iocContainer} from './ioc';
 import type {IocContainer, IocContainerFactory} from '@tsoa/runtime';
 import type {RequestHandler, Router} from 'express';
@@ -23,31 +27,6 @@ const models: TsoaRoute.Models = {
   ID: {
     dataType: 'refAlias',
     type: {dataType: 'string', validators: {}},
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  IStudent: {
-    dataType: 'refObject',
-    properties: {
-      id: {dataType: 'string'},
-      name: {dataType: 'string', required: true},
-      firstSurname: {dataType: 'string', required: true},
-      secondSurname: {dataType: 'string', required: true},
-      birthDate: {dataType: 'datetime', required: true},
-      group: {ref: 'ID', required: true},
-    },
-    additionalProperties: false,
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  ITeacher: {
-    dataType: 'refObject',
-    properties: {
-      id: {dataType: 'string'},
-      name: {dataType: 'string', required: true},
-      firstSurname: {dataType: 'string', required: true},
-      secondSurname: {dataType: 'string', required: true},
-      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
-    },
-    additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   IGroup: {
@@ -63,6 +42,33 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  IStudent: {
+    dataType: 'refObject',
+    properties: {
+      id: {dataType: 'string'},
+      name: {dataType: 'string', required: true},
+      firstSurname: {dataType: 'string', required: true},
+      secondSurname: {dataType: 'string'},
+      birthDate: {dataType: 'datetime', required: true},
+      idalu: {dataType: 'string', required: true},
+      group: {ref: 'ID', required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  ITeacher: {
+    dataType: 'refObject',
+    properties: {
+      id: {dataType: 'string'},
+      name: {dataType: 'string', required: true},
+      firstSurname: {dataType: 'string', required: true},
+      secondSurname: {dataType: 'string'},
+      idDocument: {dataType: 'string', required: true},
+      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -73,274 +79,6 @@ export function RegisterRoutes(app: Router) {
   //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
-  app.get(
-    '/school/student/all',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getStudents),
-
-    async function SchoolController_getStudents(request: any, response: any, next: any) {
-      const args = {};
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.getStudents.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.get(
-    '/school/student/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getStudent),
-
-    async function SchoolController_getStudent(request: any, response: any, next: any) {
-      const args = {
-        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.getStudent.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.post(
-    '/school/student',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.registerStudent),
-
-    async function SchoolController_registerStudent(request: any, response: any, next: any) {
-      const args = {
-        student: {in: 'body', name: 'student', required: true, ref: 'IStudent'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.registerStudent.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.delete(
-    '/school/student/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.deleteStudent),
-
-    async function SchoolController_deleteStudent(request: any, response: any, next: any) {
-      const args = {
-        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.deleteStudent.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.get(
-    '/school/teacher/all',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getTeachers),
-
-    async function SchoolController_getTeachers(request: any, response: any, next: any) {
-      const args = {};
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.getTeachers.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.get(
-    '/school/teacher/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getTeacher),
-
-    async function SchoolController_getTeacher(request: any, response: any, next: any) {
-      const args = {
-        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.getTeacher.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.post(
-    '/school/teacher',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.registerTeacher),
-
-    async function SchoolController_registerTeacher(request: any, response: any, next: any) {
-      const args = {
-        teacher: {in: 'body', name: 'teacher', required: true, ref: 'ITeacher'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.registerTeacher.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  app.delete(
-    '/school/teacher/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.deleteTeacher),
-
-    async function SchoolController_deleteTeacher(request: any, response: any, next: any) {
-      const args = {
-        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
-      };
-
-      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-      let validatedArgs: any[] = [];
-      try {
-        validatedArgs = getValidatedArgs(args, request, response);
-
-        const container: IocContainer =
-          typeof iocContainer === 'function'
-            ? (iocContainer as IocContainerFactory)(request)
-            : iocContainer;
-
-        const controller: any = await container.get<SchoolController>(SchoolController);
-        if (typeof controller['setStatus'] === 'function') {
-          controller.setStatus(undefined);
-        }
-
-        const promise = controller.deleteTeacher.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
-      } catch (err) {
-        return next(err);
-      }
-    }
-  );
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
     '/school/group/all',
     ...fetchMiddlewares<RequestHandler>(SchoolController),
@@ -468,6 +206,274 @@ export function RegisterRoutes(app: Router) {
         }
 
         const promise = controller.deleteGroup.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/students/all',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.getStudents),
+
+    async function StudentsController_getStudents(request: any, response: any, next: any) {
+      const args = {};
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.getStudents.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/students/:id',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.getStudent),
+
+    async function StudentsController_getStudent(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.getStudent.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/students',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.registerStudent),
+
+    async function StudentsController_registerStudent(request: any, response: any, next: any) {
+      const args = {
+        student: {in: 'body', name: 'student', required: true, ref: 'IStudent'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.registerStudent.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.delete(
+    '/students/:id',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.deleteStudent),
+
+    async function StudentsController_deleteStudent(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.deleteStudent.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/teachers/all',
+    ...fetchMiddlewares<RequestHandler>(TeachersController),
+    ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.getTeachers),
+
+    async function TeachersController_getTeachers(request: any, response: any, next: any) {
+      const args = {};
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<TeachersController>(TeachersController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.getTeachers.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/teachers/:id',
+    ...fetchMiddlewares<RequestHandler>(TeachersController),
+    ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.getTeacher),
+
+    async function TeachersController_getTeacher(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<TeachersController>(TeachersController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.getTeacher.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/teachers',
+    ...fetchMiddlewares<RequestHandler>(TeachersController),
+    ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.registerTeacher),
+
+    async function TeachersController_registerTeacher(request: any, response: any, next: any) {
+      const args = {
+        teacher: {in: 'body', name: 'teacher', required: true, ref: 'ITeacher'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<TeachersController>(TeachersController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.registerTeacher.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.delete(
+    '/teachers/:id',
+    ...fetchMiddlewares<RequestHandler>(TeachersController),
+    ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.deleteTeacher),
+
+    async function TeachersController_deleteTeacher(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<TeachersController>(TeachersController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.deleteTeacher.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);
