@@ -17,7 +17,11 @@ export class BackendAdapterImpl implements BackendAdapter {
     return await this.db.getDocument<T>(collectionId, documentId, getCollectionConverter<T>());
   }
 
-  async deleteDocument(collectionId: string, documentId: string): Promise<any> {
+  async addDocument<T>(collectionId: string, data: T): Promise<string> {
+    return await this.db.addDocument(collectionId, data);
+  }
+
+  async deleteDocument(collectionId: string, documentId: string): Promise<boolean> {
     return await this.db.deleteDocument(collectionId, documentId);
   }
 }

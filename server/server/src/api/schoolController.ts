@@ -51,8 +51,7 @@ export class SchoolController extends Controller implements School {
 
   @Post(`teacher`)
   registerTeacher(@Body() teacher: ITeacher): Promise<string> {
-    console.log(teacher);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.addDocument<ITeacher>(TEACHERS_COLLECTION, teacher);
   }
 
   @Delete('teacher/{id}')

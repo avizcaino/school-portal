@@ -43,11 +43,20 @@ export class FirebaseDBImpl implements FirebaseDB {
     return snapshot.data() as T;
   }
 
-  async deleteDocument(collectionId: string, documentId: string): Promise<any> {
+  async addDocument<T>(collectionId: string, data: T): Promise<string> {
+    try {
+      const documentRef = await this.db.collection(collectionId).add(data as any);
+      return documentRef.id;
+    } catch (error: any) {
+      throw new Error(`Failed to add document: ${error.message}`);
+    }
+  }
+
+  async deleteDocument(collectionId: string, documentId: string): Promise<boolean> {
     try {
       const documentRef = this.db.collection(collectionId).doc(documentId);
       await documentRef.delete();
-      return;
+      return true;
     } catch (error: any) {
       throw new Error(`Failed to delete document: ${error.message}`);
     }
