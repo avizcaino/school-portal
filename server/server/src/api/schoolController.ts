@@ -2,7 +2,7 @@ import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Route} from 'tsoa';
 import {Controller} from '../controller';
 import {BackendAdapter} from '../domain/backend-adapter';
-import {TEACHERS_COLLECTION} from '../domain/collections';
+import {GROUPS_COLLECTION, STUDENTS_COLLECTION, TEACHERS_COLLECTION} from '../domain/collections';
 import {IGroup} from '../interfaces/group';
 import {School} from '../interfaces/school';
 import {IStudent} from '../interfaces/student';
@@ -18,25 +18,22 @@ export class SchoolController extends Controller implements School {
 
   @Get('student/all')
   getStudents(): Promise<IStudent[]> {
-    throw new Error('Not implemented');
+    return this.backendAdapter.getCollection<IStudent>(STUDENTS_COLLECTION);
   }
 
   @Get('student/{id}')
   getStudent(@Path() id: string): Promise<IStudent> {
-    console.log(id);
-    throw new Error('Not implemented');
+    return this.backendAdapter.getDocument<IStudent>(STUDENTS_COLLECTION, id);
   }
 
   @Post('student')
   registerStudent(@Body() student: IStudent): Promise<string> {
-    console.log(student);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.addDocument<IStudent>(STUDENTS_COLLECTION, student);
   }
 
   @Delete('student/{id}')
   deleteStudent(@Path() id: string): Promise<boolean> {
-    console.log(id);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.deleteDocument(STUDENTS_COLLECTION, id);
   }
 
   @Get('teacher/all')
@@ -61,24 +58,21 @@ export class SchoolController extends Controller implements School {
 
   @Get('group/all')
   getGroups(): Promise<IGroup[]> {
-    throw new Error('Not implemented');
+    return this.backendAdapter.getCollection<IGroup>(GROUPS_COLLECTION);
   }
 
   @Get('group/{id}')
   getGroup(@Path() id: string): Promise<IGroup> {
-    console.log(id);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.getDocument<IGroup>(GROUPS_COLLECTION, id);
   }
 
   @Post('group')
   addGroup(@Body() group: IGroup): Promise<string> {
-    console.log(group);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.addDocument<IGroup>(GROUPS_COLLECTION, group);
   }
 
   @Delete('group/{id}')
   deleteGroup(@Path() id: string): Promise<boolean> {
-    console.log(id);
-    throw new Error('Method not implemented.');
+    return this.backendAdapter.deleteDocument(GROUPS_COLLECTION, id);
   }
 }
