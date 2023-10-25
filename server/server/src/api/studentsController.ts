@@ -35,7 +35,7 @@ export class StudentsController extends Controller implements Students {
   }
 
   @Put('{id}')
-  updateStudent(id: string, data: IStudent): Promise<IStudent> {
+  updateStudent(@Path() id: string, @Body() data: IStudent): Promise<IStudent> {
     return this.backendAdapter.updateDocument<IStudent>(STUDENTS_COLLECTION, id, data);
   }
 }

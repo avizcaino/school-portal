@@ -36,8 +36,8 @@ const models: TsoaRoute.Models = {
       grade: {dataType: 'double', required: true},
       subGroup: {dataType: 'string', required: true},
       name: {dataType: 'string', required: true},
-      students: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
-      teachers: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
+      students: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
+      teachers: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
     },
     additionalProperties: false,
   },
@@ -46,9 +46,9 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      documentId: {dataType: 'string', required: true},
-      name: {dataType: 'string', required: true},
-      firstSurname: {dataType: 'string', required: true},
+      documentId: {dataType: 'string'},
+      name: {dataType: 'string'},
+      firstSurname: {dataType: 'string'},
       secondSurname: {dataType: 'string'},
       birthDate: {dataType: 'datetime', required: true},
       group: {ref: 'ID', required: true},
@@ -60,11 +60,11 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      documentId: {dataType: 'string', required: true},
-      name: {dataType: 'string', required: true},
-      firstSurname: {dataType: 'string', required: true},
+      documentId: {dataType: 'string'},
+      name: {dataType: 'string'},
+      firstSurname: {dataType: 'string'},
       secondSurname: {dataType: 'string'},
-      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
+      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
     },
     additionalProperties: false,
   },
@@ -340,6 +340,41 @@ export function RegisterRoutes(app: Router) {
         }
 
         const promise = controller.deleteStudent.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.put(
+    '/students/:id',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.updateStudent),
+
+    async function StudentsController_updateStudent(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+        data: {in: 'body', name: 'data', required: true, ref: 'IStudent'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.updateStudent.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);

@@ -2,7 +2,7 @@ import {ID} from './entity';
 import {Person} from './person';
 
 export interface ITeacher extends Person {
-  groups: ID[];
+  groups?: ID[];
 }
 
 export abstract class Teachers {

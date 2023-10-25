@@ -40,9 +40,7 @@
 				"required": [
 					"grade",
 					"subGroup",
-					"name",
-					"students",
-					"teachers"
+					"name"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -73,9 +71,6 @@
 					}
 				},
 				"required": [
-					"documentId",
-					"name",
-					"firstSurname",
 					"birthDate",
 					"group"
 				],
@@ -106,12 +101,6 @@
 						"type": "array"
 					}
 				},
-				"required": [
-					"documentId",
-					"name",
-					"firstSurname",
-					"groups"
-				],
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -332,6 +321,45 @@
 						}
 					}
 				]
+			},
+			"put": {
+				"operationId": "UpdateStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IStudent"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IStudent"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/students": {

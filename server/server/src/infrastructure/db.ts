@@ -1,33 +1,27 @@
 import * as _firestore from '@google-cloud/firestore';
 import admin, {ServiceAccount} from 'firebase-admin';
-import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import {injectable} from 'inversify';
 import serviceAccount from '../../serviceAccountKey.json';
-import {firebaseConfig} from '../config';
 import {Converter, DBFilter, FirebaseDB} from '../domain/db';
 import {Generic} from '../interfaces/entity';
 import {provideTransient} from '../ioc';
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as ServiceAccount),
+});
+// firebase.initializeApp(firebaseConfig);
+const db: _firestore.Firestore = admin.firestore();
+
 @injectable()
 @provideTransient(FirebaseDB)
 export class FirebaseDBImpl implements FirebaseDB {
-  private db: _firestore.Firestore;
-
-  constructor() {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as ServiceAccount),
-    });
-    firebase.initializeApp(firebaseConfig);
-    this.db = admin.firestore();
-  }
-
   getDB(): _firestore.Firestore {
-    return this.db;
+    return db;
   }
 
   async getCollection<T>(collectionId: string, converter: Converter<T>): Promise<T[]> {
-    const snapshot = await this.db.collection(collectionId).withConverter(converter).get();
+    const snapshot = await db.collection(collectionId).withConverter(converter).get();
     return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})) as T[];
   }
 
@@ -36,7 +30,7 @@ export class FirebaseDBImpl implements FirebaseDB {
     documentId: string,
     converter: Converter<T>
   ): Promise<T> {
-    const snapshot = await this.db
+    const snapshot = await db
       .collection(collectionId)
       .doc(documentId)
       .withConverter(converter)
@@ -46,7 +40,7 @@ export class FirebaseDBImpl implements FirebaseDB {
 
   async addDocument<T>(collectionId: string, data: T): Promise<string> {
     try {
-      const documentRef = await this.db.collection(collectionId).add(data as any);
+      const documentRef = await db.collection(collectionId).add(data as any);
       return documentRef.id;
     } catch (error: any) {
       throw new Error(`Failed to add document: ${error.message}`);
@@ -55,7 +49,7 @@ export class FirebaseDBImpl implements FirebaseDB {
 
   async findDocument<T>(collectionId: string, filters: DBFilter[]): Promise<T> {
     try {
-      const collectionRef = await this.db.collection(collectionId);
+      const collectionRef = await db.collection(collectionId);
       let query: any = collectionRef;
       filters?.forEach(f => {
         query = query.where(f.field, f.operator, f.value);
@@ -70,7 +64,7 @@ export class FirebaseDBImpl implements FirebaseDB {
 
   async updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T> {
     try {
-      const documentRef = await this.db.collection(collectionId).doc(id);
+      const documentRef = await db.collection(collectionId).doc(id);
       await documentRef.update(data);
       return await documentRef.get().then(d => d.data() as T);
     } catch (error: any) {
@@ -80,7 +74,7 @@ export class FirebaseDBImpl implements FirebaseDB {
 
   async deleteDocument(collectionId: string, documentId: string): Promise<boolean> {
     try {
-      const documentRef = this.db.collection(collectionId).doc(documentId);
+      const documentRef = db.collection(collectionId).doc(documentId);
       await documentRef.delete();
       return true;
     } catch (error: any) {
