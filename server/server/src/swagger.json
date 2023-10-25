@@ -52,6 +52,9 @@
 					"id": {
 						"type": "string"
 					},
+					"documentId": {
+						"type": "string"
+					},
 					"name": {
 						"type": "string"
 					},
@@ -65,18 +68,15 @@
 						"type": "string",
 						"format": "date-time"
 					},
-					"idalu": {
-						"type": "string"
-					},
 					"group": {
 						"$ref": "#/components/schemas/ID"
 					}
 				},
 				"required": [
+					"documentId",
 					"name",
 					"firstSurname",
 					"birthDate",
-					"idalu",
 					"group"
 				],
 				"type": "object",
@@ -85,6 +85,9 @@
 			"ITeacher": {
 				"properties": {
 					"id": {
+						"type": "string"
+					},
+					"documentId": {
 						"type": "string"
 					},
 					"name": {
@@ -96,9 +99,6 @@
 					"secondSurname": {
 						"type": "string"
 					},
-					"idDocument": {
-						"type": "string"
-					},
 					"groups": {
 						"items": {
 							"$ref": "#/components/schemas/ID"
@@ -107,9 +107,9 @@
 					}
 				},
 				"required": [
+					"documentId",
 					"name",
 					"firstSurname",
-					"idDocument",
 					"groups"
 				],
 				"type": "object",

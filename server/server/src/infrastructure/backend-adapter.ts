@@ -1,6 +1,7 @@
 import {inject, injectable} from 'inversify';
 import {BackendAdapter} from '../domain/backend-adapter';
-import {FirebaseDB} from '../domain/db';
+import {DBFilterOperator, FirebaseDB} from '../domain/db';
+import {Person} from '../interfaces/person';
 import {provideTransient} from '../ioc';
 import {getCollectionConverter} from '../mappers/collection-converter';
 
@@ -19,6 +20,15 @@ export class BackendAdapterImpl implements BackendAdapter {
 
   async addDocument<T>(collectionId: string, data: T): Promise<string> {
     return await this.db.addDocument(collectionId, data);
+  }
+
+  async addPerson<T extends Person>(collectionId: string, data: T): Promise<string> {
+    const exists: T = await this.db.findDocument<T>(collectionId, [
+      {field: 'documentId', operator: DBFilterOperator.equals, value: data.documentId},
+    ]);
+    console.log(exists);
+    if (!exists) return await this.db.addDocument(collectionId, data);
+    else return exists?.id as string;
   }
 
   async deleteDocument(collectionId: string, documentId: string): Promise<boolean> {

@@ -1,9 +1,8 @@
-import {Entity, ID} from './entity';
+import {ID} from './entity';
 import {Person} from './person';
 
-export interface IStudent extends Entity, Person {
+export interface IStudent extends Person {
   birthDate: Date;
-  idalu: string;
   group: ID;
 }
 

@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import {injectable} from 'inversify';
 import serviceAccount from '../../serviceAccountKey.json';
 import {firebaseConfig} from '../config';
-import {Converter, FirebaseDB} from '../domain/db';
+import {Converter, DBFilter, FirebaseDB} from '../domain/db';
 import {provideTransient} from '../ioc';
 
 @injectable()
@@ -49,6 +49,21 @@ export class FirebaseDBImpl implements FirebaseDB {
       return documentRef.id;
     } catch (error: any) {
       throw new Error(`Failed to add document: ${error.message}`);
+    }
+  }
+
+  async findDocument<T>(collectionId: string, filters: DBFilter[]): Promise<T> {
+    try {
+      const collectionRef = await this.db.collection(collectionId);
+      let query: any = collectionRef;
+      filters?.forEach(f => {
+        query = query.where(f.field, f.operator, f.value);
+      });
+      const results: T[] = [];
+      (await query.get()).forEach((d: any) => results.push({id: d.id, ...(d.data() as T)}));
+      return results[0];
+    } catch (error: any) {
+      throw new Error(`Failed to find document: ${error.message}`);
     }
   }
 

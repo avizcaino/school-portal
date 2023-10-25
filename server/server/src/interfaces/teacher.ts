@@ -1,8 +1,7 @@
-import {Entity, ID} from './entity';
+import {ID} from './entity';
 import {Person} from './person';
 
-export interface ITeacher extends Entity, Person {
-  idDocument: string;
+export interface ITeacher extends Person {
   groups: ID[];
 }
 

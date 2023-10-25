@@ -26,7 +26,7 @@ export class TeachersController extends Controller implements Teachers {
 
   @Post('')
   registerTeacher(@Body() teacher: ITeacher): Promise<string> {
-    return this.backendAdapter.addDocument<ITeacher>(TEACHERS_COLLECTION, teacher);
+    return this.backendAdapter.addPerson<ITeacher>(TEACHERS_COLLECTION, teacher);
   }
 
   @Delete('{id}')
