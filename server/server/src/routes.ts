@@ -12,7 +12,7 @@ import {
   fetchMiddlewares,
 } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import {SchoolController} from './api/schoolController';
+import {GroupsController} from './api/groupsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {StudentsController} from './api/studentsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -81,11 +81,11 @@ export function RegisterRoutes(app: Router) {
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
   app.get(
-    '/school/group/all',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getGroups),
+    '/groups/all',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.getGroups),
 
-    async function SchoolController_getGroups(request: any, response: any, next: any) {
+    async function GroupsController_getGroups(request: any, response: any, next: any) {
       const args = {};
 
       // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -99,7 +99,7 @@ export function RegisterRoutes(app: Router) {
             ? (iocContainer as IocContainerFactory)(request)
             : iocContainer;
 
-        const controller: any = await container.get<SchoolController>(SchoolController);
+        const controller: any = await container.get<GroupsController>(GroupsController);
         if (typeof controller['setStatus'] === 'function') {
           controller.setStatus(undefined);
         }
@@ -113,11 +113,11 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
-    '/school/group/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.getGroup),
+    '/groups/:id',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.getGroup),
 
-    async function SchoolController_getGroup(request: any, response: any, next: any) {
+    async function GroupsController_getGroup(request: any, response: any, next: any) {
       const args = {
         id: {in: 'path', name: 'id', required: true, dataType: 'string'},
       };
@@ -133,7 +133,7 @@ export function RegisterRoutes(app: Router) {
             ? (iocContainer as IocContainerFactory)(request)
             : iocContainer;
 
-        const controller: any = await container.get<SchoolController>(SchoolController);
+        const controller: any = await container.get<GroupsController>(GroupsController);
         if (typeof controller['setStatus'] === 'function') {
           controller.setStatus(undefined);
         }
@@ -147,11 +147,11 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.post(
-    '/school/group',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.createGroup),
+    '/groups',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.createGroup),
 
-    async function SchoolController_createGroup(request: any, response: any, next: any) {
+    async function GroupsController_createGroup(request: any, response: any, next: any) {
       const args = {
         group: {in: 'body', name: 'group', required: true, ref: 'IGroup'},
       };
@@ -167,7 +167,7 @@ export function RegisterRoutes(app: Router) {
             ? (iocContainer as IocContainerFactory)(request)
             : iocContainer;
 
-        const controller: any = await container.get<SchoolController>(SchoolController);
+        const controller: any = await container.get<GroupsController>(GroupsController);
         if (typeof controller['setStatus'] === 'function') {
           controller.setStatus(undefined);
         }
@@ -181,11 +181,11 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.put(
-    '/school/group/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.updateGroup),
+    '/groups/:id',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.updateGroup),
 
-    async function SchoolController_updateGroup(request: any, response: any, next: any) {
+    async function GroupsController_updateGroup(request: any, response: any, next: any) {
       const args = {
         id: {in: 'path', name: 'id', required: true, dataType: 'string'},
         group: {in: 'body', name: 'group', required: true, ref: 'IGroup'},
@@ -202,7 +202,7 @@ export function RegisterRoutes(app: Router) {
             ? (iocContainer as IocContainerFactory)(request)
             : iocContainer;
 
-        const controller: any = await container.get<SchoolController>(SchoolController);
+        const controller: any = await container.get<GroupsController>(GroupsController);
         if (typeof controller['setStatus'] === 'function') {
           controller.setStatus(undefined);
         }
@@ -216,11 +216,11 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.delete(
-    '/school/group/:id',
-    ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.deleteGroup),
+    '/groups/:id',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.deleteGroup),
 
-    async function SchoolController_deleteGroup(request: any, response: any, next: any) {
+    async function GroupsController_deleteGroup(request: any, response: any, next: any) {
       const args = {
         id: {in: 'path', name: 'id', required: true, dataType: 'string'},
       };
@@ -236,7 +236,7 @@ export function RegisterRoutes(app: Router) {
             ? (iocContainer as IocContainerFactory)(request)
             : iocContainer;
 
-        const controller: any = await container.get<SchoolController>(SchoolController);
+        const controller: any = await container.get<GroupsController>(GroupsController);
         if (typeof controller['setStatus'] === 'function') {
           controller.setStatus(undefined);
         }

@@ -1,6 +1,6 @@
 import {IGroup} from '../interfaces/group';
 
-export abstract class SchoolBackendAdapter {
+export abstract class GroupsBackendAdapter {
   abstract getGroups(): Promise<IGroup[]>;
   abstract getGroup(id: string): Promise<IGroup>;
   abstract createGroup(group: IGroup): Promise<string>;

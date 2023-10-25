@@ -133,7 +133,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/school/group/all": {
+		"/groups/all": {
 			"get": {
 				"operationId": "GetGroups",
 				"responses": {
@@ -152,13 +152,13 @@
 					}
 				},
 				"tags": [
-					"school"
+					"groups"
 				],
 				"security": [],
 				"parameters": []
 			}
 		},
-		"/school/group/{id}": {
+		"/groups/{id}": {
 			"get": {
 				"operationId": "GetGroup",
 				"responses": {
@@ -174,7 +174,7 @@
 					}
 				},
 				"tags": [
-					"school"
+					"groups"
 				],
 				"security": [],
 				"parameters": [
@@ -203,7 +203,7 @@
 					}
 				},
 				"tags": [
-					"school"
+					"groups"
 				],
 				"security": [],
 				"parameters": [
@@ -242,7 +242,7 @@
 					}
 				},
 				"tags": [
-					"school"
+					"groups"
 				],
 				"security": [],
 				"parameters": [
@@ -257,7 +257,7 @@
 				]
 			}
 		},
-		"/school/group": {
+		"/groups": {
 			"post": {
 				"operationId": "CreateGroup",
 				"responses": {
@@ -273,7 +273,7 @@
 					}
 				},
 				"tags": [
-					"school"
+					"groups"
 				],
 				"security": [],
 				"parameters": [],

@@ -1,15 +1,15 @@
 import {inject, injectable} from 'inversify';
 import {GROUPS_COLLECTION, STUDENTS_COLLECTION, TEACHERS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
-import {SchoolBackendAdapter} from '../domain/school-backend-adapter';
+import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {IGroup} from '../interfaces/group';
 import {IStudent} from '../interfaces/student';
 import {ITeacher} from '../interfaces/teacher';
 import {provideTransient} from '../ioc';
 
 @injectable()
-@provideTransient(SchoolBackendAdapter)
-export class SchoolBackendAdapterImpl implements SchoolBackendAdapter {
+@provideTransient(GroupsBackendAdapter)
+export class GroupsBackendAdapterImpl implements GroupsBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
   async getGroups(): Promise<IGroup[]> {

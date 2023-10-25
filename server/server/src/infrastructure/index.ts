@@ -1,3 +1,3 @@
 import './backend-adapter';
 import './db';
-import './school-backend-adapter';
+import './groups-backend-adapter';
