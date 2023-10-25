@@ -11,4 +11,5 @@ export abstract class Students {
   abstract deleteStudent(id: string): Promise<boolean>;
   abstract getStudents(): Promise<IStudent[]>;
   abstract getStudent(id: string): Promise<IStudent>;
+  abstract updateStudent(id: string, data: IStudent): Promise<IStudent>;
 }

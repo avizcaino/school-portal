@@ -12,9 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/avizcaino/school-portal.git"
   },
-  "scripts": {
-    "test": "node ./__tests__/@school-portal/core.test.js"
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/avizcaino/school-portal/issues"
   },

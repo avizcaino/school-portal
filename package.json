@@ -16,6 +16,8 @@
     "server/*"
   ],
   "scripts": {
+    "test": "lerna run test --stream",
+    "tdd": "lerna run tdd --stream",
     "dev": "lerna run dev --scope @school-portal/app --verbose",
     "prepare": "husky install",
     "server:build": "lerna run build --scope @school-portal/server --verbose",

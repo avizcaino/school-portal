@@ -36,6 +36,6 @@ export class TeachersController extends Controller implements Teachers {
 
   @Put('{id}')
   updateTeacher(@Path() id: string, @Body() data: ITeacher): Promise<ITeacher> {
-    return this.backendAdapter.updatePerson<ITeacher>(TEACHERS_COLLECTION, id, data);
+    return this.backendAdapter.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, data);
   }
 }

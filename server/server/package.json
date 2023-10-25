@@ -14,9 +14,11 @@
     "url": "git+https://github.com/avizcaino/school-portal.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@school-portal/server.test.js",
     "build": "tsoa spec-and-routes",
-    "start": "node -r reflect-metadata -r dotenv/config -r ts-node/register --inspect src/server.ts dotenv_config_path=.env.development"
+    "start": "node -r reflect-metadata -r dotenv/config -r ts-node/register --inspect src/server.ts dotenv_config_path=.env.development",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "tdd": "vitest --watch"
   },
   "bugs": {
     "url": "https://github.com/avizcaino/school-portal/issues"
@@ -35,6 +37,7 @@
     "inversify": "^6.0.2",
     "inversify-binding-decorators": "^4.0.0",
     "swagger-ui-express": "^5.0.0",
-    "tsoa": "^5.1.1"
+    "tsoa": "^5.1.1",
+    "vitest": "^0.34.6"
   }
 }
