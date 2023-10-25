@@ -29,10 +29,13 @@ export class DummyDB implements FirebaseDB {
     return Promise.resolve(this.data[collectionId]?.find(d => d.id === documentId));
   }
   addDocument<T>(collectionId: string, data: T): Promise<string> {
-    throw new Error('Method not implemented.');
+    this.data[collectionId]?.push(data);
+    return Promise.resolve('dummy-id');
   }
   findDocument<T>(collectionId: string, filters?: DBFilter[]): Promise<T> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(
+      this.data[collectionId]?.find(d => filters?.every(f => applyFilter(d, f)))
+    );
   }
   findDocuments<T>(collectionId: string, filters?: DBFilter[]): Promise<T[]> {
     return Promise.resolve(
@@ -40,9 +43,20 @@ export class DummyDB implements FirebaseDB {
     );
   }
   updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T> {
-    throw new Error('Method not implemented.');
+    const document = this.data[collectionId]?.find(g => g.id === id);
+    if (document) {
+      this.data[collectionId] = this.data[collectionId]?.map(i => {
+        if (i.id === id) i = {...i, ...data};
+        return i;
+      });
+      return {...document, ...data};
+    } else throw new Error(`Document with ID ${id} not found`);
   }
-  deleteDocument(collectionId: string, documentId: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  deleteDocument(collectionId: string, id: string): Promise<boolean> {
+    const index = this.data[collectionId]?.find(g => g.id === id);
+    if (index) {
+      this.data[collectionId] = this.data[collectionId].slice(index, 0);
+      return Promise.resolve(true);
+    } else throw new Error(`Document with ID ${id} not found`);
   }
 }

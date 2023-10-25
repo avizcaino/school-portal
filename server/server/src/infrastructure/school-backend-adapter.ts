@@ -1,11 +1,14 @@
-import {inject} from 'inversify';
+import {inject, injectable} from 'inversify';
 import {IGroup} from 'src/interfaces/group';
 import {IStudent} from 'src/interfaces/student';
+import {provideTransient} from 'src/ioc';
 import {GROUPS_COLLECTION, STUDENTS_COLLECTION, TEACHERS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
 import {SchoolBackendAdapter} from '../domain/school-backend-adapter';
 import {ITeacher} from '../interfaces/teacher';
 
+@injectable()
+@provideTransient(SchoolBackendAdapter)
 export class SchoolBackendAdapterImpl implements SchoolBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
@@ -24,5 +27,20 @@ export class SchoolBackendAdapterImpl implements SchoolBackendAdapter {
       ]);
       return {...group, teachers, students};
     } else throw new Error(`Couldn't find group ${id}`);
+  }
+
+  async createGroup(group: IGroup): Promise<string> {
+    const exists = await this.db.findDocument(GROUPS_COLLECTION, [
+      {field: 'internalId', operator: DBFilterOperator.equals, value: group.internalId},
+    ]);
+    if (exists) throw new Error(`Group with ID ${group.internalId} already exists`);
+    else return this.db.addDocument<IGroup>(GROUPS_COLLECTION, group);
+  }
+
+  updateGroup(id: string, group: IGroup): Promise<IGroup> {
+    return this.db.updateDocument<IGroup>(GROUPS_COLLECTION, id, group);
+  }
+  deleteGroup(id: string): Promise<boolean> {
+    return this.db.deleteDocument(GROUPS_COLLECTION, id);
   }
 }

@@ -29,5 +29,5 @@ export abstract class FirebaseDB {
   abstract findDocument<T>(collectionId: string, filters?: DBFilter[]): Promise<T>;
   abstract findDocuments<T>(collectionId: string, filters?: DBFilter[]): Promise<T[]>;
   abstract updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T>;
-  abstract deleteDocument(collectionId: string, documentId: string): Promise<boolean>;
+  abstract deleteDocument(collectionId: string, id: string): Promise<boolean>;
 }
