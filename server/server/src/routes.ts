@@ -70,6 +70,14 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  IStudentExtended: {
+    dataType: 'refObject',
+    properties: {
+      group: {ref: 'IGroup', required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   ITeacherExtended: {
     dataType: 'refObject',
     properties: {
@@ -258,7 +266,7 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
-    '/students/all',
+    '/students',
     ...fetchMiddlewares<RequestHandler>(StudentsController),
     ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.getStudents),
 
@@ -330,7 +338,7 @@ export function RegisterRoutes(app: Router) {
 
     async function StudentsController_registerStudent(request: any, response: any, next: any) {
       const args = {
-        student: {in: 'body', name: 'student', required: true, ref: 'IStudent'},
+        teacher: {in: 'body', name: 'teacher', required: true, ref: 'IStudent'},
       };
 
       // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

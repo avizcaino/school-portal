@@ -116,6 +116,18 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IStudentExtended": {
+				"properties": {
+					"group": {
+						"$ref": "#/components/schemas/IGroup"
+					}
+				},
+				"required": [
+					"group"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ITeacherExtended": {
 				"properties": {
 					"groups": {
@@ -299,7 +311,7 @@
 				]
 			}
 		},
-		"/students/all": {
+		"/students": {
 			"get": {
 				"operationId": "GetStudents",
 				"responses": {
@@ -322,6 +334,36 @@
 				],
 				"security": [],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "RegisterStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IStudent"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/students/{id}": {
@@ -333,7 +375,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/IStudent"
+									"$ref": "#/components/schemas/IStudentExtended"
 								}
 							}
 						}
@@ -411,38 +453,6 @@
 						}
 					}
 				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/IStudent"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/students": {
-			"post": {
-				"operationId": "RegisterStudent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"students"
-				],
-				"security": [],
-				"parameters": [],
 				"requestBody": {
 					"required": true,
 					"content": {

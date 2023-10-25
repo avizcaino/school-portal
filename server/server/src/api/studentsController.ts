@@ -1,41 +1,40 @@
 import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
-import {BackendAdapter} from '../domain/backend-adapter';
-import {STUDENTS_COLLECTION} from '../domain/collections';
-import {IStudent, Students} from '../interfaces/student';
+import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
+import {IStudent, IStudentExtended} from '../interfaces/student';
 import {provideSingleton} from '../ioc';
 
 @Route('students')
 @Tags('students')
 @provideSingleton(StudentsController)
-export class StudentsController extends Controller implements Students {
-  constructor(@inject(BackendAdapter) protected backendAdapter: BackendAdapter) {
+export class StudentsController extends Controller implements StudentsBackendAdapter {
+  constructor(@inject(StudentsBackendAdapter) protected backendAdapter: StudentsBackendAdapter) {
     super();
   }
 
-  @Get('all')
+  @Get('')
   getStudents(): Promise<IStudent[]> {
-    return this.backendAdapter.getCollection<IStudent>(STUDENTS_COLLECTION);
+    return this.backendAdapter.getStudents();
   }
 
   @Get('{id}')
-  getStudent(@Path() id: string): Promise<IStudent> {
-    return this.backendAdapter.getDocument<IStudent>(STUDENTS_COLLECTION, id);
+  getStudent(@Path() id: string): Promise<IStudentExtended> {
+    return this.backendAdapter.getStudent(id);
   }
 
   @Post('')
-  registerStudent(@Body() student: IStudent): Promise<string> {
-    return this.backendAdapter.addPerson<IStudent>(STUDENTS_COLLECTION, student);
+  registerStudent(@Body() teacher: IStudent): Promise<string> {
+    return this.backendAdapter.registerStudent(teacher);
   }
 
   @Delete('{id}')
   deleteStudent(@Path() id: string): Promise<boolean> {
-    return this.backendAdapter.deleteDocument(STUDENTS_COLLECTION, id);
+    return this.backendAdapter.deleteStudent(id);
   }
 
   @Put('{id}')
   updateStudent(@Path() id: string, @Body() data: IStudent): Promise<IStudent> {
-    return this.backendAdapter.updateDocument<IStudent>(STUDENTS_COLLECTION, id, data);
+    return this.backendAdapter.updateStudent(id, data);
   }
 }
