@@ -13,7 +13,7 @@ export class GroupsController extends Controller implements GroupsBackendAdapter
     super();
   }
 
-  @Get('all')
+  @Get('')
   getGroups(): Promise<IGroup[]> {
     return this.backendAdapter.getGroups();
   }

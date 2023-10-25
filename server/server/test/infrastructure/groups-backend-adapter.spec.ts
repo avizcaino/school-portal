@@ -1,69 +1,31 @@
 import 'reflect-metadata';
 import {beforeAll, describe, expect, it} from 'vitest';
-import {
-  GROUPS_COLLECTION,
-  STUDENTS_COLLECTION,
-  TEACHERS_COLLECTION,
-} from '../../src/domain/collections';
 import {FirebaseDB} from '../../src/domain/db';
-import {SchoolBackendAdapter} from '../../src/domain/school-backend-adapter';
-import {SchoolBackendAdapterImpl} from '../../src/infrastructure/school-backend-adapter';
-import {DummyDB, DummyDBData} from '../assets/dummy-db';
+import {GroupsBackendAdapter} from '../../src/domain/groups-backend-adapter';
+import {GroupsBackendAdapterImpl} from '../../src/infrastructure/groups-backend-adapter';
+import {dummyData} from '../assets/dummy-data';
+import {DummyDB} from '../assets/dummy-db';
 
-const defaultData: DummyDBData = {
-  [GROUPS_COLLECTION]: [
-    {id: 'g3a', internalId: 'g3a', grade: 3, subGroup: 'A', name: 'I3A'},
-    {id: 'g3b', internalId: 'g3b', grade: 3, subGroup: 'B', name: 'I3B'},
-  ],
-  [TEACHERS_COLLECTION]: [
-    {name: 'John', firstSurname: 'Doe', internalId: '48001122X', groups: ['g3a']},
-    {name: 'Jane', firstSurname: 'Doe', internalId: '49003344Y', groups: ['g3b']},
-  ],
-  [STUDENTS_COLLECTION]: [
-    {
-      name: 'Peter',
-      firstSurname: 'Smith',
-      internalId: '00112233A',
-      birthDate: new Date(),
-      group: 'g3a',
-    },
-    {
-      name: 'Pat',
-      firstSurname: 'Smith',
-      internalId: '44556677B',
-      birthDate: new Date(),
-      group: 'g3a',
-    },
-    {
-      name: 'David',
-      firstSurname: 'James',
-      internalId: '88990000C',
-      birthDate: new Date(),
-      group: 'g3b',
-    },
-  ],
-};
-
-describe('Given the school backend adapter', () => {
-  let backend: SchoolBackendAdapter, db: FirebaseDB;
+describe('Given the groups backend adapter', () => {
+  let backend: GroupsBackendAdapter, db: FirebaseDB;
 
   beforeAll(() => {
-    db = new DummyDB(defaultData);
-    backend = new SchoolBackendAdapterImpl(db);
+    db = new DummyDB(dummyData);
+    backend = new GroupsBackendAdapterImpl(db);
   });
-  describe('When fetching school groups', () => {
-    it('should return an array of school groups', async () => {
+  describe('When fetching groups', () => {
+    it('should return an array of groups', async () => {
       const groups = await backend.getGroups();
-      expect(groups.length).toEqual(defaultData.groups.length);
+      expect(groups.length).toEqual(dummyData.groups.length);
     });
   });
-  describe('When fetching a school group', () => {
-    it('should return a school group with its teachers and students', async () => {
+  describe('When fetching a group', () => {
+    it('should return a group with its teachers and students', async () => {
       const GROUP_ID = 'g3a';
-      const defaultGroupTeachers = defaultData.teachers.filter(
+      const defaultGroupTeachers = dummyData.teachers.filter(
         (g: any) => g.groups?.indexOf(GROUP_ID) > -1
       );
-      const defaultGroupStudents = defaultData.students.filter(g => g.group === GROUP_ID);
+      const defaultGroupStudents = dummyData.students.filter(g => g.group === GROUP_ID);
       const group = await backend.getGroup(GROUP_ID);
       expect(group).toBeDefined();
       expect(group.teachers).toEqual(defaultGroupTeachers);
@@ -78,7 +40,7 @@ describe('Given the school backend adapter', () => {
       }
     });
   });
-  describe('When creating a school group', () => {
+  describe('When creating a group', () => {
     it('should return its id', async () => {
       const id = await backend.createGroup({
         internalId: 'g4b',
@@ -101,7 +63,7 @@ describe('Given the school backend adapter', () => {
       }
     });
   });
-  describe('When updating a school group', () => {
+  describe('When updating a group', () => {
     it('should return new updated group', async () => {
       const group = await backend.updateGroup('g3a', {
         internalId: 'g3a',
@@ -121,7 +83,7 @@ describe('Given the school backend adapter', () => {
       }
     });
   });
-  describe('When deleting a school group', () => {
+  describe('When deleting a group', () => {
     it('should return true if group exists', async () => {
       const groups = await backend.getGroups();
       const result = await backend.deleteGroup('g3a');

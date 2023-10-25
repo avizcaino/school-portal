@@ -1,14 +1,11 @@
 import {ID} from './entity';
+import {IGroup} from './group';
 import {Person} from './person';
 
 export interface ITeacher extends Person {
   groups?: ID[];
 }
 
-export abstract class Teachers {
-  abstract registerTeacher(teacher: ITeacher): Promise<ID>;
-  abstract deleteTeacher(id: string): Promise<boolean>;
-  abstract getTeachers(): Promise<ITeacher[]>;
-  abstract getTeacher(id: string): Promise<ITeacher>;
-  abstract updateTeacher(id: string, data: ITeacher): Promise<ITeacher>;
+export interface ITeacherExtended extends Omit<ITeacher, 'groups'> {
+  groups?: IGroup[];
 }

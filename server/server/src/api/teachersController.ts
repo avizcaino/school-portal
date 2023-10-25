@@ -1,20 +1,21 @@
 import {inject} from 'inversify';
+import {TeachersBackendAdapter} from 'src/domain/teachers-backend-adapter';
 import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {BackendAdapter} from '../domain/backend-adapter';
 import {TEACHERS_COLLECTION} from '../domain/collections';
-import {ITeacher, Teachers} from '../interfaces/teacher';
+import {ITeacher} from '../interfaces/teacher';
 import {provideSingleton} from '../ioc';
 
 @Route('teachers')
 @Tags('teachers')
 @provideSingleton(TeachersController)
-export class TeachersController extends Controller implements Teachers {
+export class TeachersController extends Controller implements TeachersBackendAdapter {
   constructor(@inject(BackendAdapter) protected backendAdapter: BackendAdapter) {
     super();
   }
 
-  @Get('all')
+  @Get('')
   getTeachers(): Promise<ITeacher[]> {
     return this.backendAdapter.getCollection<ITeacher>(TEACHERS_COLLECTION);
   }
