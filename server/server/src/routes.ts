@@ -70,6 +70,14 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  ITeacherExtended: {
+    dataType: 'refObject',
+    properties: {
+      groups: {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -81,7 +89,7 @@ export function RegisterRoutes(app: Router) {
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
   app.get(
-    '/groups/all',
+    '/groups',
     ...fetchMiddlewares<RequestHandler>(GroupsController),
     ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.getGroups),
 
@@ -419,7 +427,7 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
-    '/teachers/all',
+    '/teachers',
     ...fetchMiddlewares<RequestHandler>(TeachersController),
     ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.getTeachers),
 

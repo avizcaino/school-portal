@@ -35,7 +35,7 @@ export class FirebaseDBImpl implements FirebaseDB {
       .doc(documentId)
       .withConverter(converter)
       .get();
-    return snapshot.data() as T;
+    return {id: snapshot.id, ...snapshot.data()} as T;
   }
 
   async addDocument<T>(collectionId: string, data: T): Promise<string> {

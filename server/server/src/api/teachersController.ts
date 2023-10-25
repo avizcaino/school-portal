@@ -1,42 +1,40 @@
 import {inject} from 'inversify';
-import {TeachersBackendAdapter} from 'src/domain/teachers-backend-adapter';
 import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
-import {BackendAdapter} from '../domain/backend-adapter';
-import {TEACHERS_COLLECTION} from '../domain/collections';
-import {ITeacher} from '../interfaces/teacher';
+import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
+import {ITeacher, ITeacherExtended} from '../interfaces/teacher';
 import {provideSingleton} from '../ioc';
 
 @Route('teachers')
 @Tags('teachers')
 @provideSingleton(TeachersController)
 export class TeachersController extends Controller implements TeachersBackendAdapter {
-  constructor(@inject(BackendAdapter) protected backendAdapter: BackendAdapter) {
+  constructor(@inject(TeachersBackendAdapter) protected backendAdapter: TeachersBackendAdapter) {
     super();
   }
 
   @Get('')
   getTeachers(): Promise<ITeacher[]> {
-    return this.backendAdapter.getCollection<ITeacher>(TEACHERS_COLLECTION);
+    return this.backendAdapter.getTeachers();
   }
 
   @Get('{id}')
-  getTeacher(@Path() id: string): Promise<ITeacher> {
-    return this.backendAdapter.getDocument<ITeacher>(TEACHERS_COLLECTION, id);
+  getTeacher(@Path() id: string): Promise<ITeacherExtended> {
+    return this.backendAdapter.getTeacher(id);
   }
 
   @Post('')
   registerTeacher(@Body() teacher: ITeacher): Promise<string> {
-    return this.backendAdapter.addPerson<ITeacher>(TEACHERS_COLLECTION, teacher);
+    return this.backendAdapter.registerTeacher(teacher);
   }
 
   @Delete('{id}')
   deleteTeacher(@Path() id: string): Promise<boolean> {
-    return this.backendAdapter.deleteDocument(TEACHERS_COLLECTION, id);
+    return this.backendAdapter.deleteTeacher(id);
   }
 
   @Put('{id}')
   updateTeacher(@Path() id: string, @Body() data: ITeacher): Promise<ITeacher> {
-    return this.backendAdapter.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, data);
+    return this.backendAdapter.updateTeacher(id, data);
   }
 }
