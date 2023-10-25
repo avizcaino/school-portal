@@ -29,26 +29,13 @@ const models: TsoaRoute.Models = {
     type: {dataType: 'string', validators: {}},
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  IGroup: {
-    dataType: 'refObject',
-    properties: {
-      id: {dataType: 'string'},
-      grade: {dataType: 'double', required: true},
-      subGroup: {dataType: 'string', required: true},
-      name: {dataType: 'string', required: true},
-      students: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
-      teachers: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
-    },
-    additionalProperties: false,
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   IStudent: {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      documentId: {dataType: 'string'},
-      name: {dataType: 'string'},
-      firstSurname: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
+      name: {dataType: 'string', required: true},
+      firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
       birthDate: {dataType: 'datetime', required: true},
       group: {ref: 'ID', required: true},
@@ -60,11 +47,25 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      documentId: {dataType: 'string'},
-      name: {dataType: 'string'},
-      firstSurname: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
+      name: {dataType: 'string', required: true},
+      firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
       groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  IGroup: {
+    dataType: 'refObject',
+    properties: {
+      id: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
+      grade: {dataType: 'double', required: true},
+      subGroup: {dataType: 'string', required: true},
+      name: {dataType: 'string', required: true},
+      students: {dataType: 'array', array: {dataType: 'refObject', ref: 'IStudent'}},
+      teachers: {dataType: 'array', array: {dataType: 'refObject', ref: 'ITeacher'}},
     },
     additionalProperties: false,
   },
@@ -148,9 +149,9 @@ export function RegisterRoutes(app: Router) {
   app.post(
     '/school/group',
     ...fetchMiddlewares<RequestHandler>(SchoolController),
-    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.addGroup),
+    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.createGroup),
 
-    async function SchoolController_addGroup(request: any, response: any, next: any) {
+    async function SchoolController_createGroup(request: any, response: any, next: any) {
       const args = {
         group: {in: 'body', name: 'group', required: true, ref: 'IGroup'},
       };
@@ -171,7 +172,42 @@ export function RegisterRoutes(app: Router) {
           controller.setStatus(undefined);
         }
 
-        const promise = controller.addGroup.apply(controller, validatedArgs as any);
+        const promise = controller.createGroup.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.put(
+    '/school/group/:id',
+    ...fetchMiddlewares<RequestHandler>(SchoolController),
+    ...fetchMiddlewares<RequestHandler>(SchoolController.prototype.updateGroup),
+
+    async function SchoolController_updateGroup(request: any, response: any, next: any) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+        group: {in: 'body', name: 'group', required: true, ref: 'IGroup'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<SchoolController>(SchoolController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.updateGroup.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);

@@ -62,6 +62,21 @@ export class FirebaseDBImpl implements FirebaseDB {
     }
   }
 
+  async findDocuments<T>(collectionId: string, filters: DBFilter[]): Promise<T[]> {
+    try {
+      const collectionRef = await db.collection(collectionId);
+      let query: any = collectionRef;
+      filters?.forEach(f => {
+        query = query.where(f.field, f.operator, f.value);
+      });
+      const results: T[] = [];
+      (await query.get()).forEach((d: any) => results.push({id: d.id, ...(d.data() as T)}));
+      return results;
+    } catch (error: any) {
+      throw new Error(`Failed to find document: ${error.message}`);
+    }
+  }
+
   async updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T> {
     try {
       const documentRef = await db.collection(collectionId).doc(id);

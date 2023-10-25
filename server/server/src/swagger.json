@@ -9,48 +9,12 @@
 			"ID": {
 				"type": "string"
 			},
-			"IGroup": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"grade": {
-						"type": "number",
-						"format": "double"
-					},
-					"subGroup": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"students": {
-						"items": {
-							"$ref": "#/components/schemas/ID"
-						},
-						"type": "array"
-					},
-					"teachers": {
-						"items": {
-							"$ref": "#/components/schemas/ID"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"grade",
-					"subGroup",
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"IStudent": {
 				"properties": {
 					"id": {
 						"type": "string"
 					},
-					"documentId": {
+					"internalId": {
 						"type": "string"
 					},
 					"name": {
@@ -71,6 +35,9 @@
 					}
 				},
 				"required": [
+					"internalId",
+					"name",
+					"firstSurname",
 					"birthDate",
 					"group"
 				],
@@ -82,7 +49,7 @@
 					"id": {
 						"type": "string"
 					},
-					"documentId": {
+					"internalId": {
 						"type": "string"
 					},
 					"name": {
@@ -101,6 +68,51 @@
 						"type": "array"
 					}
 				},
+				"required": [
+					"internalId",
+					"name",
+					"firstSurname"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IGroup": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"internalId": {
+						"type": "string"
+					},
+					"grade": {
+						"type": "number",
+						"format": "double"
+					},
+					"subGroup": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"students": {
+						"items": {
+							"$ref": "#/components/schemas/IStudent"
+						},
+						"type": "array"
+					},
+					"teachers": {
+						"items": {
+							"$ref": "#/components/schemas/ITeacher"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"internalId",
+					"grade",
+					"subGroup",
+					"name"
+				],
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -176,6 +188,45 @@
 					}
 				]
 			},
+			"put": {
+				"operationId": "UpdateGroup",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IGroup"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"school"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IGroup"
+							}
+						}
+					}
+				}
+			},
 			"delete": {
 				"operationId": "DeleteGroup",
 				"responses": {
@@ -208,7 +259,7 @@
 		},
 		"/school/group": {
 			"post": {
-				"operationId": "AddGroup",
+				"operationId": "CreateGroup",
 				"responses": {
 					"200": {
 						"description": "Ok",

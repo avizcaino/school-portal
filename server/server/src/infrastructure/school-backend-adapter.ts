@@ -1,11 +1,11 @@
 import {inject, injectable} from 'inversify';
-import {IGroup} from 'src/interfaces/group';
-import {IStudent} from 'src/interfaces/student';
-import {provideTransient} from 'src/ioc';
 import {GROUPS_COLLECTION, STUDENTS_COLLECTION, TEACHERS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
 import {SchoolBackendAdapter} from '../domain/school-backend-adapter';
+import {IGroup} from '../interfaces/group';
+import {IStudent} from '../interfaces/student';
 import {ITeacher} from '../interfaces/teacher';
+import {provideTransient} from '../ioc';
 
 @injectable()
 @provideTransient(SchoolBackendAdapter)

@@ -8,7 +8,7 @@ export interface Converter<T> {
 
 export const enum DBFilterOperator {
   equals = '==',
-  contains = 'in',
+  contains = 'array-contains',
 }
 
 export interface DBFilter {
