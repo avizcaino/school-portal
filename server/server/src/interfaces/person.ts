@@ -1,6 +1,6 @@
-import {Entity} from './entity';
+import {Entity, Generic} from './entity';
 
-export interface Person extends Entity {
+export interface Person extends Entity, Generic {
   documentId: string;
   name: string;
   firstSurname: string;

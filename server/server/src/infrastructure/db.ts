@@ -6,6 +6,7 @@ import {injectable} from 'inversify';
 import serviceAccount from '../../serviceAccountKey.json';
 import {firebaseConfig} from '../config';
 import {Converter, DBFilter, FirebaseDB} from '../domain/db';
+import {Generic} from '../interfaces/entity';
 import {provideTransient} from '../ioc';
 
 @injectable()
@@ -64,6 +65,16 @@ export class FirebaseDBImpl implements FirebaseDB {
       return results[0];
     } catch (error: any) {
       throw new Error(`Failed to find document: ${error.message}`);
+    }
+  }
+
+  async updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T> {
+    try {
+      const documentRef = await this.db.collection(collectionId).doc(id);
+      await documentRef.update(data);
+      return await documentRef.get().then(d => d.data() as T);
+    } catch (error: any) {
+      throw new Error(`Failed to update document: ${error.message}`);
     }
   }
 

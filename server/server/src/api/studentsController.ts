@@ -1,5 +1,5 @@
 import {inject} from 'inversify';
-import {Body, Delete, Get, Path, Post, Route, Tags} from 'tsoa';
+import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {BackendAdapter} from '../domain/backend-adapter';
 import {STUDENTS_COLLECTION} from '../domain/collections';
@@ -32,5 +32,10 @@ export class StudentsController extends Controller implements Students {
   @Delete('{id}')
   deleteStudent(@Path() id: string): Promise<boolean> {
     return this.backendAdapter.deleteDocument(STUDENTS_COLLECTION, id);
+  }
+
+  @Put('{id}')
+  updateTeacher(id: string, data: IStudent): Promise<IStudent> {
+    return this.backendAdapter.updatePerson<IStudent>(STUDENTS_COLLECTION, id, data);
   }
 }

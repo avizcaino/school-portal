@@ -3,3 +3,4 @@ export interface Entity {
 }
 
 export type ID = string;
+export type Generic = {[id: string]: unknown};

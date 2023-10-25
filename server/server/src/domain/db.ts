@@ -1,4 +1,5 @@
 import * as _firestore from '@google-cloud/firestore';
+import {Generic} from '../interfaces/entity';
 
 export interface Converter<T> {
   toFirestore: (data: T[]) => T[];
@@ -25,5 +26,6 @@ export abstract class FirebaseDB {
   ): Promise<T>;
   abstract addDocument<T>(collectionId: string, data: T): Promise<string>;
   abstract findDocument<T>(collectionId: string, filters: DBFilter[]): Promise<T>;
+  abstract updateDocument<T extends Generic>(collectionId: string, id: string, data: T): Promise<T>;
   abstract deleteDocument(collectionId: string, documentId: string): Promise<boolean>;
 }

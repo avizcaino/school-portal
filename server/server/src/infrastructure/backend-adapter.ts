@@ -31,6 +31,10 @@ export class BackendAdapterImpl implements BackendAdapter {
     else return exists?.id as string;
   }
 
+  async updatePerson<T extends Person>(collectionId: string, id: string, data: T): Promise<T> {
+    return await this.db.updateDocument(collectionId, id, data);
+  }
+
   async deleteDocument(collectionId: string, documentId: string): Promise<boolean> {
     return await this.db.deleteDocument(collectionId, documentId);
   }

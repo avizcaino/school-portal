@@ -10,4 +10,5 @@ export abstract class Teachers {
   abstract deleteTeacher(id: string): Promise<boolean>;
   abstract getTeachers(): Promise<ITeacher[]>;
   abstract getTeacher(id: string): Promise<ITeacher>;
+  abstract updateTeacher(id: string, data: ITeacher): Promise<ITeacher>;
 }
