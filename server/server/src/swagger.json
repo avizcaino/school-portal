@@ -12,13 +12,30 @@
 						"type": "string",
 						"format": "date-time"
 					},
-					"attendance": {
+					"present": {
 						"type": "boolean"
 					}
 				},
 				"required": [
 					"date",
-					"attendance"
+					"present"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IStudentAttendanceRecord": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"present": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"date",
+					"present"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -52,7 +69,6 @@
 					}
 				},
 				"required": [
-					"internalId",
 					"name",
 					"firstSurname",
 					"birthDate",
@@ -86,7 +102,6 @@
 					}
 				},
 				"required": [
-					"internalId",
 					"name",
 					"firstSurname"
 				],
@@ -125,7 +140,6 @@
 					}
 				},
 				"required": [
-					"internalId",
 					"grade",
 					"subGroup",
 					"name"
@@ -176,7 +190,7 @@
 	"paths": {
 		"/attendance/student/{id}": {
 			"put": {
-				"operationId": "SetStudentsAttendance",
+				"operationId": "SetStudentAttendance",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -213,6 +227,38 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetStudentAttendance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IStudentAttendanceRecord"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"attendance"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/groups": {

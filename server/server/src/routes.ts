@@ -30,7 +30,16 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       date: {dataType: 'datetime', required: true},
-      attendance: {dataType: 'boolean', required: true},
+      present: {dataType: 'boolean', required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  IStudentAttendanceRecord: {
+    dataType: 'refObject',
+    properties: {
+      date: {dataType: 'datetime', required: true},
+      present: {dataType: 'boolean', required: true},
     },
     additionalProperties: false,
   },
@@ -44,7 +53,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      internalId: {dataType: 'string', required: true},
+      internalId: {dataType: 'string'},
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
@@ -58,7 +67,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      internalId: {dataType: 'string', required: true},
+      internalId: {dataType: 'string'},
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
@@ -71,7 +80,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      internalId: {dataType: 'string', required: true},
+      internalId: {dataType: 'string'},
       grade: {dataType: 'double', required: true},
       subGroup: {dataType: 'string', required: true},
       name: {dataType: 'string', required: true},
@@ -110,9 +119,9 @@ export function RegisterRoutes(app: Router) {
   app.put(
     '/attendance/student/:id',
     ...fetchMiddlewares<RequestHandler>(AttendanceController),
-    ...fetchMiddlewares<RequestHandler>(AttendanceController.prototype.setStudentsAttendance),
+    ...fetchMiddlewares<RequestHandler>(AttendanceController.prototype.setStudentAttendance),
 
-    async function AttendanceController_setStudentsAttendance(
+    async function AttendanceController_setStudentAttendance(
       request: any,
       response: any,
       next: any
@@ -138,7 +147,45 @@ export function RegisterRoutes(app: Router) {
           controller.setStatus(undefined);
         }
 
-        const promise = controller.setStudentsAttendance.apply(controller, validatedArgs as any);
+        const promise = controller.setStudentAttendance.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/attendance/student/:id',
+    ...fetchMiddlewares<RequestHandler>(AttendanceController),
+    ...fetchMiddlewares<RequestHandler>(AttendanceController.prototype.getStudentAttendance),
+
+    async function AttendanceController_getStudentAttendance(
+      request: any,
+      response: any,
+      next: any
+    ) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<AttendanceController>(AttendanceController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.getStudentAttendance.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);

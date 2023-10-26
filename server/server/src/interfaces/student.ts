@@ -10,3 +10,8 @@ export interface IStudent extends Person {
 export interface IStudentExtended extends Omit<IStudent, 'group'> {
   group: IGroup;
 }
+
+export interface IStudentAttendanceRecord {
+  date: Date;
+  present: boolean;
+}

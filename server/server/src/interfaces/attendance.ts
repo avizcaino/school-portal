@@ -10,5 +10,5 @@ export type AttendanceRecordType = {[id: string]: AttendanceRecord[]};
 
 export interface AttendancePayload {
   date: Date;
-  attendance: boolean;
+  present: boolean;
 }
