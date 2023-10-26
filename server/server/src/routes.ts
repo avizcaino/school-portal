@@ -12,6 +12,8 @@ import {
   fetchMiddlewares,
 } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import {AttendanceController} from './api/attendanceController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {GroupsController} from './api/groupsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {StudentsController} from './api/studentsController';
@@ -24,6 +26,15 @@ import type {RequestHandler, Router} from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+  AttendancePayload: {
+    dataType: 'refObject',
+    properties: {
+      date: {dataType: 'datetime', required: true},
+      attendance: {dataType: 'boolean', required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   ID: {
     dataType: 'refAlias',
     type: {dataType: 'string', validators: {}},
@@ -96,6 +107,45 @@ export function RegisterRoutes(app: Router) {
   //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
+  app.put(
+    '/attendance/student/:id',
+    ...fetchMiddlewares<RequestHandler>(AttendanceController),
+    ...fetchMiddlewares<RequestHandler>(AttendanceController.prototype.setStudentsAttendance),
+
+    async function AttendanceController_setStudentsAttendance(
+      request: any,
+      response: any,
+      next: any
+    ) {
+      const args = {
+        id: {in: 'path', name: 'id', required: true, dataType: 'string'},
+        data: {in: 'body', name: 'data', required: true, ref: 'AttendancePayload'},
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<AttendanceController>(AttendanceController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.setStudentsAttendance.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
     '/groups',
     ...fetchMiddlewares<RequestHandler>(GroupsController),

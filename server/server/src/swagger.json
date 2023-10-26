@@ -6,6 +6,23 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"AttendancePayload": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"attendance": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"date",
+					"attendance"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ID": {
 				"type": "string"
 			},
@@ -157,6 +174,47 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/attendance/student/{id}": {
+			"put": {
+				"operationId": "SetStudentsAttendance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"attendance"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AttendancePayload"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/groups": {
 			"get": {
 				"operationId": "GetGroups",
