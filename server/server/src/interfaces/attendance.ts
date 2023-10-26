@@ -1,7 +1,7 @@
 import {Entity, ID} from './entity';
 
 export interface AttendanceRecord extends Entity {
-  date: Date;
+  date: Date | string;
   presentStudents: ID[];
   absentStudents: ID[];
 }
