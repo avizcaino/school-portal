@@ -18,6 +18,7 @@ export const dummyData: DummyDBData = {
     {
       name: 'Peter',
       firstSurname: 'Smith',
+      id: '00112233A',
       internalId: '00112233A',
       birthDate: new Date(),
       group: 'g3a',
@@ -25,6 +26,7 @@ export const dummyData: DummyDBData = {
     {
       name: 'Pat',
       firstSurname: 'Smith',
+      id: '44556677B',
       internalId: '44556677B',
       birthDate: new Date(),
       group: 'g3a',
@@ -32,6 +34,7 @@ export const dummyData: DummyDBData = {
     {
       name: 'David',
       firstSurname: 'James',
+      id: '88990000C',
       internalId: '88990000C',
       birthDate: new Date(),
       group: 'g3b',
