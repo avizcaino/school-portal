@@ -6,7 +6,8 @@ services:
     working_dir: /code
     ports:
       - 3002:3002 # Used by 'server'
-      - 5173:5173 # Used by 'vite serve'
+      - 4173:4173 # Used by 'vite serve (backoffice)'
+      - 5173:5173 # Used by 'vite serve (app)'
       - 5174:5174 # Used by 'vite serve' once the default port is used
     volumes:
       - ./:/code:Z

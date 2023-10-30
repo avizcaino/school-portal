@@ -13,12 +13,15 @@
   },
   "workspaces": [
     "app/*",
-    "server/*"
+    "server/*",
+    "backoffice/*",
+    "shared/*"
   ],
   "scripts": {
     "test": "lerna run test --stream",
     "tdd": "lerna run tdd --stream",
-    "dev": "lerna run dev --scope @school-portal/app --verbose",
+    "app:dev": "lerna run dev --scope @school-portal/app --verbose",
+    "bo:dev": "lerna run dev --scope @school-backoffice/app --verbose",
     "prepare": "husky install",
     "server:build": "lerna run build --scope @school-server/server --verbose",
     "server:start": "lerna run start --scope @school-server/server --verbose"
