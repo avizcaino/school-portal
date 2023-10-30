@@ -1,4 +1,4 @@
 {
-  "include": ["src", "../../env.d.ts", "../groups/infrastructure/groups-backend-adapter.ts"],
+  "include": ["src", "../../env.d.ts"],
   "extends": "../../tsconfig.json"
 }
