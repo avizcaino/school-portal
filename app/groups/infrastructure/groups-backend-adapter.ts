@@ -3,7 +3,6 @@ import {GroupsBackendAdapter, IGroup} from '@school-server/server';
 import {provideSingleton} from '@uxland/ioc';
 import {inject, injectable} from 'inversify';
 
-console.log('groups backend adapter');
 @injectable()
 @provideSingleton(GroupsBackendAdapter)
 export class BackendAdapterImpl implements GroupsBackendAdapter {

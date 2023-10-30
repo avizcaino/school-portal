@@ -3,7 +3,6 @@ export * from './domain';
 
 export const initializeCore = () => {
   return setMediatorResolver(iocContainer).then(async () => {
-    console.log('mediator resolver');
     await import('./infrastructure');
     // await import('./application/handlers');
     await import('./bootstrapper');
