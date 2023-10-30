@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import {initializeCore} from '@school-portal/core';
+import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
@@ -25,8 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+initializeCore().then(async () => {
+  createRoot(document.getElementById('root')!).render(<App />);
+});

@@ -1,11 +1,11 @@
 {
-  "name": "@school-portal/server",
+  "name": "@school-server/server",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Alex Vizcaino <avizcainoluna@gmail.com>",
   "homepage": "https://github.com/avizcaino/school-portal#readme",
   "license": "MIT",
-  "main": "src/server.js",
+  "main": "src/index.js",
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },

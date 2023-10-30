@@ -175,7 +175,7 @@
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "@school-portal/server",
+		"title": "@school-server/server",
 		"version": "0.0.0",
 		"description": "> TODO: description",
 		"license": {

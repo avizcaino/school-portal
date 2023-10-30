@@ -20,7 +20,10 @@
     "tdd": "lerna run tdd --stream",
     "dev": "lerna run dev --scope @school-portal/app --verbose",
     "prepare": "husky install",
-    "server:build": "lerna run build --scope @school-portal/server --verbose",
-    "server:start": "lerna run start --scope @school-portal/server --verbose"
+    "server:build": "lerna run build --scope @school-server/server --verbose",
+    "server:start": "lerna run start --scope @school-server/server --verbose"
+  },
+  "resolutions": {
+    "mediatr-ts": "^1.2.1"
   }
 }

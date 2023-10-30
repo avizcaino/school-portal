@@ -1,4 +1,4 @@
 {
-  "include": ["src"],
+  "include": ["src", "../groups/application/groups"],
   "extends": "../../tsconfig.json"
 }

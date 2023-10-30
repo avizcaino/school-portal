@@ -22,7 +22,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@school-app/*": ["./app/*/"]
+      "@school-app/*": ["./app/*/"],
+      "@school-server/*": ["./server/*/"]
     }
   },
   "references": [{"path": "./tsconfig.node.json"}]
