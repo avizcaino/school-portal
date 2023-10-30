@@ -1,15 +1,20 @@
 import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
+import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
 import {IStudent, IStudentExtended} from '../interfaces/student';
 import {provideSingleton} from '../ioc';
+import {studentsBatchInput} from '../utils/batch';
 
 @Route('students')
 @Tags('students')
 @provideSingleton(StudentsController)
 export class StudentsController extends Controller implements StudentsBackendAdapter {
-  constructor(@inject(StudentsBackendAdapter) protected backendAdapter: StudentsBackendAdapter) {
+  constructor(
+    @inject(StudentsBackendAdapter) protected backendAdapter: StudentsBackendAdapter,
+    @inject(GroupsBackendAdapter) protected groupsAdapter: GroupsBackendAdapter
+  ) {
     super();
   }
 
@@ -26,6 +31,12 @@ export class StudentsController extends Controller implements StudentsBackendAda
   @Post('')
   registerStudent(@Body() teacher: IStudent): Promise<string> {
     return this.backendAdapter.registerStudent(teacher);
+  }
+
+  @Post('batch')
+  async batchRegistry(): Promise<void> {
+    const groups = await this.groupsAdapter.getGroups();
+    return studentsBatchInput(groups, this.backendAdapter);
   }
 
   @Delete('{id}')

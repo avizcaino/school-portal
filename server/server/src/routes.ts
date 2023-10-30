@@ -53,7 +53,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      internalId: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
@@ -67,7 +67,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       id: {dataType: 'string'},
-      internalId: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
@@ -455,6 +455,38 @@ export function RegisterRoutes(app: Router) {
         }
 
         const promise = controller.registerStudent.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/students/batch',
+    ...fetchMiddlewares<RequestHandler>(StudentsController),
+    ...fetchMiddlewares<RequestHandler>(StudentsController.prototype.batchRegistry),
+
+    async function StudentsController_batchRegistry(request: any, response: any, next: any) {
+      const args = {};
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<StudentsController>(StudentsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.batchRegistry.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);

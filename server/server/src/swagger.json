@@ -69,6 +69,7 @@
 					}
 				},
 				"required": [
+					"internalId",
 					"name",
 					"firstSurname",
 					"birthDate",
@@ -102,6 +103,7 @@
 					}
 				},
 				"required": [
+					"internalId",
 					"name",
 					"firstSurname"
 				],
@@ -567,6 +569,21 @@
 						}
 					}
 				}
+			}
+		},
+		"/students/batch": {
+			"post": {
+				"operationId": "BatchRegistry",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"students"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/teachers": {
