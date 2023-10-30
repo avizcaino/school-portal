@@ -48,10 +48,10 @@ export const Groups = () => {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: {page: 0, pageSize: 5},
+            paginationModel: {page: 0, pageSize: 20},
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[20, 30]}
         checkboxSelection
       />
       <FormProvider {...methods}>
