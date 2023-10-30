@@ -31,9 +31,10 @@ export class GroupsBackendAdapterImpl implements GroupsBackendAdapter {
 
   async createGroup(group: IGroup): Promise<string> {
     const exists = await this.db.findDocument(GROUPS_COLLECTION, [
-      {field: 'internalId', operator: DBFilterOperator.equals, value: group.internalId},
+      {field: 'grade', operator: DBFilterOperator.equals, value: group.grade},
+      {field: 'subGroup', operator: DBFilterOperator.equals, value: group.subGroup},
     ]);
-    if (exists) throw new Error(`Group with ID ${group.internalId} already exists`);
+    if (exists) throw new Error(`Group ${group.grade}:${group.subGroup} already exists`);
     else return this.db.addDocument<IGroup>(GROUPS_COLLECTION, group);
   }
 
