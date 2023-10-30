@@ -1,12 +1,14 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
 import {IGroup} from '@school-server/server';
+import {GroupValidator} from '@school-shared/core';
+import {Guid} from 'guid-typescript';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {GroupValidator} from '../../../shared/core/src/application/groups/validator';
+import {createGroup} from '../application/create-group/action';
+import {CreateGroupCommand} from '../application/create-group/command';
+import {fetchGroups} from '../application/get-groups/action';
 import {GroupForm} from './GroupForm';
-import {CreateGroupCommand} from './application/create-group/command';
-import {fetchGroups} from './application/get-groups/action';
 
 const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
 export const Groups = () => {
@@ -17,15 +19,13 @@ export const Groups = () => {
   }, []);
 
   const methods = useForm<GroupValidator>({
-    resolver: (data, context, options) => {
-      console.log(data, context, options);
-      return resolver(data, context, options);
-    },
+    resolver,
   });
 
   const onSuccess = async (data: CreateGroupCommand, event: unknown) => {
-    console.log('success');
-    console.log(data);
+    createGroup({...data, internalId: Guid.create().toString()}).then(r =>
+      fetchGroups().then(g => setGroups(g))
+    );
   };
 
   const onError = (errors: FieldErrors<IGroup>, event?: BaseSyntheticEvent) => {

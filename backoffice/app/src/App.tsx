@@ -1,7 +1,7 @@
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import './App.css';
+import {Groups} from './components/Groups';
 import {Dashboard} from './Dashboard';
-import {Groups} from './Groups';
 import {Students} from './Students';
 import {Teachers} from './Teachers';
 

@@ -38,6 +38,7 @@
     "@school-server/server": "^0.0.0",
     "@school-shared/components": "^0.0.0",
     "@school-shared/core": "^0.0.0",
+    "guid-typescript": "^1.0.9",
     "inversify": "^6.0.2",
     "mediatr-ts": "^1.2.1",
     "react": "^18.2.0",

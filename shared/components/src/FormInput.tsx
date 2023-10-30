@@ -20,8 +20,6 @@ export const FormInput = (props: IFormInput) => {
     defaultValue: props.defaultValue ?? undefined,
   });
 
-  console.log(field, fieldState, formState);
-
   return (
     <TextField
       {...field}

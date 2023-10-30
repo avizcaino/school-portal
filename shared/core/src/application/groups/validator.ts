@@ -3,7 +3,6 @@ import {IsNotEmpty, IsOptional} from 'class-validator';
 
 export class GroupValidator implements IGroup {
   constructor(data: IGroup) {
-    console.log(data);
     Object.assign(this, data);
   }
 
