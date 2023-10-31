@@ -18,6 +18,7 @@ export class StudentsController extends Controller implements StudentsBackendAda
     super();
   }
 
+  // TODO: change return interface to be IStudent or IStudentExtended
   @Get('')
   getStudents(@Query() extended: boolean): Promise<IStudent[]> {
     return this.backendAdapter.getStudents(extended);

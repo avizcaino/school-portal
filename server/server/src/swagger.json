@@ -161,7 +161,8 @@
 				"required": [
 					"internalId",
 					"name",
-					"firstSurname"
+					"firstSurname",
+					"groups"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -187,6 +188,9 @@
 						"type": "array"
 					}
 				},
+				"required": [
+					"groups"
+				],
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -773,6 +777,21 @@
 						}
 					}
 				}
+			}
+		},
+		"/teachers/batch": {
+			"post": {
+				"operationId": "BatchRegistry",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"teachers"
+				],
+				"security": [],
+				"parameters": []
 			}
 		}
 	},
