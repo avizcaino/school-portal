@@ -1,8 +1,8 @@
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import './App.css';
 import {Groups} from './components/Groups';
+import {Students} from './components/Students';
 import {Dashboard} from './Dashboard';
-import {Students} from './Students';
 import {Teachers} from './Teachers';
 
 function App() {

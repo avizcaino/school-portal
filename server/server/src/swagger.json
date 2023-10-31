@@ -43,6 +43,45 @@
 			"ID": {
 				"type": "string"
 			},
+			"IGroup": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"internalId": {
+						"type": "string"
+					},
+					"grade": {
+						"type": "number",
+						"format": "double"
+					},
+					"subGroup": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"students": {
+						"items": {
+							"$ref": "#/components/schemas/IStudent"
+						},
+						"type": "array"
+					},
+					"teachers": {
+						"items": {
+							"$ref": "#/components/schemas/ITeacher"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"grade",
+					"subGroup",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IStudent": {
 				"properties": {
 					"id": {
@@ -65,7 +104,14 @@
 						"format": "date-time"
 					},
 					"group": {
-						"$ref": "#/components/schemas/ID"
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/ID"
+							},
+							{
+								"$ref": "#/components/schemas/IGroup"
+							}
+						]
 					}
 				},
 				"required": [
@@ -106,45 +152,6 @@
 					"internalId",
 					"name",
 					"firstSurname"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"IGroup": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"internalId": {
-						"type": "string"
-					},
-					"grade": {
-						"type": "number",
-						"format": "double"
-					},
-					"subGroup": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"students": {
-						"items": {
-							"$ref": "#/components/schemas/IStudent"
-						},
-						"type": "array"
-					},
-					"teachers": {
-						"items": {
-							"$ref": "#/components/schemas/ITeacher"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"grade",
-					"subGroup",
-					"name"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -439,7 +446,16 @@
 					"students"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "extended",
+						"required": true,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "RegisterStudent",

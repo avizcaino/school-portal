@@ -5,7 +5,7 @@ import {BackendAdapterBase} from './backend-adapter-base';
 
 @injectable()
 @provideSingleton(GroupsBackendAdapter)
-export class BackendAdapterImpl implements GroupsBackendAdapter {
+export class GroupsBackendAdapterImpl implements GroupsBackendAdapter {
   constructor(@inject(BackendAdapterBase) protected adapter: BackendAdapterBase) {}
   getGroups(): Promise<IGroup[]> {
     return this.adapter.fetch('/groups', 'get');

@@ -1,3 +1,4 @@
+import {groupBy} from '@school-shared/core/src/utils/mappers';
 import {inject, injectable} from 'inversify';
 import {GROUPS_COLLECTION, STUDENTS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
@@ -11,13 +12,28 @@ import {provideTransient} from '../ioc';
 export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
-  async getStudents(): Promise<IStudent[]> {
-    return await this.db.getCollection(STUDENTS_COLLECTION);
+  async getStudents(extended?: boolean): Promise<IStudent[]> {
+    const students = await this.db.getCollection<IStudent>(STUDENTS_COLLECTION);
+    if (!extended) return students;
+    else {
+      const studentsGroups = Object.keys(groupBy('group')(students));
+      const groupsDataPromises = studentsGroups.map(gId =>
+        this.db.getDocument(GROUPS_COLLECTION, gId)
+      );
+      const groupsDataResults = await Promise.allSettled(groupsDataPromises);
+      const groupsData: IGroup[] = groupBy('status')(groupsDataResults)?.fulfilled?.map(
+        (r: PromiseFulfilledResult<IGroup>) => r.value
+      );
+      return students?.map(s => ({
+        ...s,
+        group: groupsData?.find(g => g.id === s.group),
+      })) as IStudent[];
+    }
   }
 
   async getStudent(id: string): Promise<IStudentExtended> {
     const student = await this.db.getDocument<IStudent>(STUDENTS_COLLECTION, id);
-    const group = await this.db.getDocument<IGroup>(GROUPS_COLLECTION, student?.group);
+    const group = await this.db.getDocument<IGroup>(GROUPS_COLLECTION, student?.group as string);
     return {...student, group};
   }
 
