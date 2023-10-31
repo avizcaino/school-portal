@@ -2,8 +2,8 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import './App.css';
 import {Groups} from './components/Groups';
 import {Students} from './components/Students';
+import {Teachers} from './components/Teachers';
 import {Dashboard} from './Dashboard';
-import {Teachers} from './Teachers';
 
 function App() {
   const router = createBrowserRouter([

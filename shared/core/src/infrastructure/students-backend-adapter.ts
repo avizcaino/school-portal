@@ -7,7 +7,7 @@ import {BackendAdapterBase} from './backend-adapter-base';
 @provideSingleton(StudentsBackendAdapter)
 export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
   constructor(@inject(BackendAdapterBase) protected adapter: BackendAdapterBase) {}
-  getStudents(extended?: boolean): Promise<IStudent[]> {
+  getStudents(extended?: boolean): Promise<IStudent[] | IStudentExtended[]> {
     return this.adapter.fetch(`/students?extended=${extended}`, 'get');
   }
   getStudent(id: string): Promise<IStudentExtended> {

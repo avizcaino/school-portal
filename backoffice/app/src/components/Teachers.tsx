@@ -1,19 +1,19 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
-import {IStudent, IStudentExtended} from '@school-server/server';
+import {ITeacher, ITeacherExtended} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
 import {CreateGroupCommand} from '../application/create-group/command';
-import {fetchStudents} from '../application/get-students/action';
+import {fetchTeachers} from '../application/get-teachers/action';
 import {GroupForm} from './GroupForm';
 
 const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
-export const Students = () => {
-  const [students, setStudents] = useState<IStudentExtended[]>([]);
+export const Teachers = () => {
+  const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
   useEffect(() => {
-    fetchStudents().then(g => setStudents(g));
+    fetchTeachers().then(t => setTeachers(t));
   }, []);
 
   const methods = useForm<GroupValidator>({
@@ -24,7 +24,7 @@ export const Students = () => {
     console.log(data);
   };
 
-  const onError = (errors: FieldErrors<IStudent>, event?: BaseSyntheticEvent) => {
+  const onError = (errors: FieldErrors<ITeacher>, event?: BaseSyntheticEvent) => {
     console.log(errors, event);
   };
 
@@ -35,17 +35,20 @@ export const Students = () => {
     {field: 'name', headerName: 'Nom', width: 130},
     {field: 'firstSurname', headerName: 'Cognom', width: 130},
     {
-      field: 'groupName',
-      headerName: 'Curs',
+      field: 'groups',
+      headerName: 'Cursos',
       width: 130,
-      valueGetter: (params: GridValueGetterParams) => params.row.group.name,
+      valueGetter: (params: GridValueGetterParams<ITeacherExtended>) => {
+        console.log(params.row);
+        return params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), '');
+      },
     },
   ];
 
   return (
     <>
       <DataGrid
-        rows={students}
+        rows={teachers}
         columns={columns}
         initialState={{
           pagination: {
