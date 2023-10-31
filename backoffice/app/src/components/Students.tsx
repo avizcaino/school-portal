@@ -4,6 +4,7 @@ import {IStudent, IStudentExtended} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
+import {Navbar} from '../Navbar';
 import {CreateGroupCommand} from '../application/create-group/command';
 import {fetchStudents} from '../application/get-students/action';
 import {GroupForm} from './GroupForm';
@@ -44,6 +45,8 @@ export const Students = () => {
 
   return (
     <>
+      <Navbar />
+
       <DataGrid
         rows={students}
         columns={columns}

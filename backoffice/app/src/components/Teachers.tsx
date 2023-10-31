@@ -4,6 +4,7 @@ import {ITeacher, ITeacherExtended} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
+import {Navbar} from '../Navbar';
 import {CreateGroupCommand} from '../application/create-group/command';
 import {fetchTeachers} from '../application/get-teachers/action';
 import {GroupForm} from './GroupForm';
@@ -38,15 +39,15 @@ export const Teachers = () => {
       field: 'groups',
       headerName: 'Cursos',
       width: 130,
-      valueGetter: (params: GridValueGetterParams<ITeacherExtended>) => {
-        console.log(params.row);
-        return params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), '');
-      },
+      valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
+        params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
     },
   ];
 
   return (
     <>
+      <Navbar />
+
       <DataGrid
         rows={teachers}
         columns={columns}

@@ -5,6 +5,7 @@ import {GroupValidator} from '@school-shared/core';
 import {Guid} from 'guid-typescript';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
+import {Navbar} from '../Navbar';
 import {createGroup} from '../application/create-group/action';
 import {CreateGroupCommand} from '../application/create-group/command';
 import {fetchGroups} from '../application/get-groups/action';
@@ -43,6 +44,8 @@ export const Groups = () => {
 
   return (
     <>
+      <Navbar />
+
       <DataGrid
         rows={groups}
         columns={columns}
