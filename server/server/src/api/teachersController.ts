@@ -18,9 +18,8 @@ export class TeachersController extends Controller implements TeachersBackendAda
     super();
   }
 
-  // TODO: change return interface to be ITeacher or ITeacherExtended
   @Get('')
-  getTeachers(@Query() extended?: boolean): Promise<ITeacher[]> {
+  getTeachers(@Query() extended?: boolean): Promise<ITeacher[] | ITeacherExtended[]> {
     return this.backendAdapter.getTeachers(extended);
   }
 

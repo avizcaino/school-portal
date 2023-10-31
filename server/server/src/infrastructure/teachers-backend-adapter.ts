@@ -13,7 +13,7 @@ import {provideTransient} from '../ioc';
 export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
-  async getTeachers(extended?: boolean): Promise<ITeacher[]> {
+  async getTeachers(extended?: boolean): Promise<ITeacher[] | ITeacherExtended[]> {
     const teachers = await this.db.getCollection<ITeacher>(TEACHERS_COLLECTION);
     if (!extended) return teachers;
     else {
@@ -28,7 +28,7 @@ export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
       return teachers?.map(t => ({
         ...t,
         groups: t.groups?.map(g => groupsData.find(gd => gd.id === g)),
-      })) as ITeacher[];
+      })) as ITeacherExtended[];
     }
   }
 

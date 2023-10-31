@@ -4,7 +4,7 @@ import {Person} from './person';
 
 export interface IStudent extends Person {
   birthDate: Date;
-  group: ID | IGroup; // TODO: this must be only ID[]
+  group: ID;
 }
 
 export interface IStudentExtended extends Omit<IStudent, 'group'> {

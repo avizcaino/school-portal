@@ -12,7 +12,7 @@ import {provideTransient} from '../ioc';
 export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 
-  async getStudents(extended?: boolean): Promise<IStudent[]> {
+  async getStudents(extended?: boolean): Promise<IStudent[] | IStudentExtended[]> {
     const students = await this.db.getCollection<IStudent>(STUDENTS_COLLECTION);
     if (!extended) return students;
     else {
@@ -27,7 +27,7 @@ export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
       return students?.map(s => ({
         ...s,
         group: groupsData?.find(g => g.id === s.group),
-      })) as IStudent[];
+      })) as IStudentExtended[];
     }
   }
 
