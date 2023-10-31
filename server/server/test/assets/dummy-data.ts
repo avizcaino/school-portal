@@ -11,7 +11,13 @@ export const dummyData: DummyDBData = {
     {id: 'g3b', internalId: 'g3b', grade: 3, subGroup: 'B', name: 'I3B'},
   ],
   [TEACHERS_COLLECTION]: [
-    {id: '48001122X', name: 'John', firstSurname: 'Doe', internalId: '48001122X', groups: ['g3a']},
+    {
+      id: '48001122X',
+      name: 'John',
+      firstSurname: 'Doe',
+      internalId: '48001122X',
+      groups: ['g3a', 'g3b'],
+    },
     {id: '49003344Y', name: 'Jane', firstSurname: 'Doe', internalId: '49003344Y', groups: ['g3b']},
   ],
   [STUDENTS_COLLECTION]: [

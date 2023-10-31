@@ -142,10 +142,20 @@
 						"type": "string"
 					},
 					"groups": {
-						"items": {
-							"$ref": "#/components/schemas/ID"
-						},
-						"type": "array"
+						"anyOf": [
+							{
+								"items": {
+									"$ref": "#/components/schemas/ID"
+								},
+								"type": "array"
+							},
+							{
+								"items": {
+									"$ref": "#/components/schemas/IGroup"
+								},
+								"type": "array"
+							}
+						]
 					}
 				},
 				"required": [
@@ -624,7 +634,16 @@
 					"teachers"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "extended",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "RegisterTeacher",

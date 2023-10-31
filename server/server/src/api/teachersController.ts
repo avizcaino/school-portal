@@ -1,5 +1,5 @@
 import {inject} from 'inversify';
-import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
+import {Body, Delete, Get, Path, Post, Put, Query, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
 import {ITeacher, ITeacherExtended} from '../interfaces/teacher';
@@ -14,8 +14,8 @@ export class TeachersController extends Controller implements TeachersBackendAda
   }
 
   @Get('')
-  getTeachers(): Promise<ITeacher[]> {
-    return this.backendAdapter.getTeachers();
+  getTeachers(@Query() extended?: boolean): Promise<ITeacher[]> {
+    return this.backendAdapter.getTeachers(extended);
   }
 
   @Get('{id}')

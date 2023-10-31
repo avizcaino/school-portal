@@ -3,6 +3,7 @@ import {beforeAll, describe, expect, it} from 'vitest';
 import {FirebaseDB} from '../../src/domain/db';
 import {TeachersBackendAdapter} from '../../src/domain/teachers-backend-adapter';
 import {TeachersBackendAdapterImpl} from '../../src/infrastructure/teachers-backend-adapter';
+import {IGroup} from '../../src/interfaces/group';
 import {dummyData} from '../assets/dummy-data';
 import {DummyDB} from '../assets/dummy-db';
 
@@ -17,6 +18,13 @@ describe('Given the teachers backend adapter', () => {
     it('should return an array of teachers', async () => {
       const teachers = await backend.getTeachers();
       expect(teachers.length).toEqual(dummyData.teachers.length);
+    });
+  });
+  describe('When fetching teachers in extended mode', () => {
+    it('should return an array of teachers with its groups informations', async () => {
+      const teachers = await backend.getTeachers(true);
+      expect(teachers.length).toEqual(dummyData.teachers.length);
+      expect((teachers[0].groups as IGroup[])[0]?.grade).toBeDefined();
     });
   });
   describe('When fetching a teacher', () => {

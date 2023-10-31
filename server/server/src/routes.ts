@@ -85,7 +85,13 @@ const models: TsoaRoute.Models = {
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
-      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
+      groups: {
+        dataType: 'union',
+        subSchemas: [
+          {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
+          {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}},
+        ],
+      },
     },
     additionalProperties: false,
   },
@@ -571,7 +577,9 @@ export function RegisterRoutes(app: Router) {
     ...fetchMiddlewares<RequestHandler>(TeachersController.prototype.getTeachers),
 
     async function TeachersController_getTeachers(request: any, response: any, next: any) {
-      const args = {};
+      const args = {
+        extended: {in: 'query', name: 'extended', dataType: 'boolean'},
+      };
 
       // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
