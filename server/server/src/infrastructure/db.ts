@@ -5,7 +5,6 @@ import {injectable} from 'inversify';
 import serviceAccount from '../../serviceAccountKey.json';
 import {Converter, DBFilter, FirebaseDB} from '../domain/db';
 import {Generic} from '../interfaces/entity';
-import {provideTransient} from '../ioc';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as ServiceAccount),
@@ -14,7 +13,6 @@ admin.initializeApp({
 const db: _firestore.Firestore = admin.firestore();
 
 @injectable()
-@provideTransient(FirebaseDB)
 export class FirebaseDBImpl implements FirebaseDB {
   getDB(): _firestore.Firestore {
     return db;

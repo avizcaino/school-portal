@@ -5,10 +5,8 @@ import {DBFilterOperator, FirebaseDB} from '../domain/db';
 import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
 import {IGroup} from '../interfaces/group';
 import {IStudent, IStudentExtended} from '../interfaces/student';
-import {provideTransient} from '../ioc';
 
 @injectable()
-@provideTransient(StudentsBackendAdapter)
 export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 

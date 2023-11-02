@@ -49,20 +49,6 @@ const models: TsoaRoute.Models = {
     type: {dataType: 'string', validators: {}},
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  IGroup: {
-    dataType: 'refObject',
-    properties: {
-      id: {dataType: 'string'},
-      internalId: {dataType: 'string'},
-      grade: {dataType: 'double', required: true},
-      subGroup: {dataType: 'string', required: true},
-      name: {dataType: 'string', required: true},
-      students: {dataType: 'array', array: {dataType: 'refObject', ref: 'IStudent'}},
-      teachers: {dataType: 'array', array: {dataType: 'refObject', ref: 'ITeacher'}},
-    },
-    additionalProperties: false,
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   IStudent: {
     dataType: 'refObject',
     properties: {
@@ -72,7 +58,7 @@ const models: TsoaRoute.Models = {
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
       birthDate: {dataType: 'datetime', required: true},
-      group: {dataType: 'union', subSchemas: [{ref: 'ID'}, {ref: 'IGroup'}], required: true},
+      group: {ref: 'ID', required: true},
     },
     additionalProperties: false,
   },
@@ -85,14 +71,21 @@ const models: TsoaRoute.Models = {
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
-      groups: {
-        dataType: 'union',
-        subSchemas: [
-          {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
-          {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}},
-        ],
-        required: true,
-      },
+      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  IGroup: {
+    dataType: 'refObject',
+    properties: {
+      id: {dataType: 'string'},
+      internalId: {dataType: 'string'},
+      grade: {dataType: 'double', required: true},
+      subGroup: {dataType: 'string', required: true},
+      name: {dataType: 'string', required: true},
+      students: {dataType: 'array', array: {dataType: 'refObject', ref: 'IStudent'}},
+      teachers: {dataType: 'array', array: {dataType: 'refObject', ref: 'ITeacher'}},
     },
     additionalProperties: false,
   },

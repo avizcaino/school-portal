@@ -5,10 +5,8 @@ import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {IGroup} from '../interfaces/group';
 import {IStudent} from '../interfaces/student';
 import {ITeacher} from '../interfaces/teacher';
-import {provideTransient} from '../ioc';
 
 @injectable()
-@provideTransient(GroupsBackendAdapter)
 export class GroupsBackendAdapterImpl implements GroupsBackendAdapter {
   constructor(@inject(FirebaseDB) protected db: FirebaseDB) {}
 

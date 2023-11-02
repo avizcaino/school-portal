@@ -43,6 +43,74 @@
 			"ID": {
 				"type": "string"
 			},
+			"IStudent": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"internalId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"firstSurname": {
+						"type": "string"
+					},
+					"secondSurname": {
+						"type": "string"
+					},
+					"birthDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"group": {
+						"$ref": "#/components/schemas/ID"
+					}
+				},
+				"required": [
+					"internalId",
+					"name",
+					"firstSurname",
+					"birthDate",
+					"group"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITeacher": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"internalId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"firstSurname": {
+						"type": "string"
+					},
+					"secondSurname": {
+						"type": "string"
+					},
+					"groups": {
+						"items": {
+							"$ref": "#/components/schemas/ID"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"internalId",
+					"name",
+					"firstSurname",
+					"groups"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IGroup": {
 				"properties": {
 					"id": {
@@ -78,91 +146,6 @@
 					"grade",
 					"subGroup",
 					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"IStudent": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"internalId": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"firstSurname": {
-						"type": "string"
-					},
-					"secondSurname": {
-						"type": "string"
-					},
-					"birthDate": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"group": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/ID"
-							},
-							{
-								"$ref": "#/components/schemas/IGroup"
-							}
-						]
-					}
-				},
-				"required": [
-					"internalId",
-					"name",
-					"firstSurname",
-					"birthDate",
-					"group"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ITeacher": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"internalId": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"firstSurname": {
-						"type": "string"
-					},
-					"secondSurname": {
-						"type": "string"
-					},
-					"groups": {
-						"anyOf": [
-							{
-								"items": {
-									"$ref": "#/components/schemas/ID"
-								},
-								"type": "array"
-							},
-							{
-								"items": {
-									"$ref": "#/components/schemas/IGroup"
-								},
-								"type": "array"
-							}
-						]
-					}
-				},
-				"required": [
-					"internalId",
-					"name",
-					"firstSurname",
-					"groups"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -447,10 +430,20 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/IStudent"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/IStudent"
+											},
+											"type": "array"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/IStudentExtended"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
@@ -625,10 +618,20 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/ITeacher"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/ITeacher"
+											},
+											"type": "array"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/ITeacherExtended"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
