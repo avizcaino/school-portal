@@ -57,6 +57,7 @@ const models: TsoaRoute.Models = {
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
+      profilePic: {dataType: 'string'},
       birthDate: {dataType: 'datetime', required: true},
       group: {ref: 'ID', required: true},
     },
@@ -71,6 +72,7 @@ const models: TsoaRoute.Models = {
       name: {dataType: 'string', required: true},
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
+      profilePic: {dataType: 'string'},
       groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
     },
     additionalProperties: false,
@@ -286,6 +288,38 @@ export function RegisterRoutes(app: Router) {
         }
 
         const promise = controller.createGroup.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/groups/batch',
+    ...fetchMiddlewares<RequestHandler>(GroupsController),
+    ...fetchMiddlewares<RequestHandler>(GroupsController.prototype.batchRegistry),
+
+    async function GroupsController_batchRegistry(request: any, response: any, next: any) {
+      const args = {};
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const container: IocContainer =
+          typeof iocContainer === 'function'
+            ? (iocContainer as IocContainerFactory)(request)
+            : iocContainer;
+
+        const controller: any = await container.get<GroupsController>(GroupsController);
+        if (typeof controller['setStatus'] === 'function') {
+          controller.setStatus(undefined);
+        }
+
+        const promise = controller.batchRegistry.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, undefined, next);
       } catch (err) {
         return next(err);

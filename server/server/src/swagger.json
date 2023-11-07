@@ -60,6 +60,9 @@
 					"secondSurname": {
 						"type": "string"
 					},
+					"profilePic": {
+						"type": "string"
+					},
 					"birthDate": {
 						"type": "string",
 						"format": "date-time"
@@ -93,6 +96,9 @@
 						"type": "string"
 					},
 					"secondSurname": {
+						"type": "string"
+					},
+					"profilePic": {
 						"type": "string"
 					},
 					"groups": {
@@ -419,6 +425,21 @@
 						}
 					}
 				]
+			}
+		},
+		"/groups/batch": {
+			"post": {
+				"operationId": "BatchRegistry",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"groups"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/students": {

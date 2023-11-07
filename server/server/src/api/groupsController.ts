@@ -4,6 +4,7 @@ import {Controller} from '../controller';
 import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {IGroup} from '../interfaces/group';
 import {provideSingleton} from '../ioc';
+import {groupsBatchInput} from '../utils/batch';
 
 @Route('groups')
 @Tags('groups')
@@ -26,6 +27,11 @@ export class GroupsController extends Controller implements GroupsBackendAdapter
   @Post('')
   createGroup(@Body() group: IGroup): Promise<string> {
     return this.backendAdapter.createGroup(group);
+  }
+
+  @Post('batch')
+  async batchRegistry(): Promise<void> {
+    return groupsBatchInput(this.backendAdapter);
   }
 
   @Put('{id}')
