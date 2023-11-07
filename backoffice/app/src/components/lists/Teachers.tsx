@@ -1,13 +1,13 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
+import Button from '@mui/material/Button/Button';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
 import {ITeacher, ITeacherExtended} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {Navbar} from '../Navbar';
-import {CreateGroupCommand} from '../application/create-group/command';
-import {fetchTeachers} from '../application/get-teachers/action';
-import {GroupForm} from './GroupForm';
+import {CreateGroupCommand} from '../../application/create-group/command';
+import {fetchTeachers} from '../../application/get-teachers/action';
+import {GroupForm} from '../forms/GroupForm';
 
 const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
 export const Teachers = () => {
@@ -44,10 +44,13 @@ export const Teachers = () => {
     },
   ];
 
-  return (
-    <>
-      <Navbar />
+  const addTeacher = () => {
+    console.log('');
+  };
 
+  return (
+    <div className="w-full px-4 py-4 flex flex-col">
+      <Button onClick={addTeacher}>Afegir Professor</Button>
       <DataGrid
         rows={teachers}
         columns={columns}
@@ -62,6 +65,6 @@ export const Teachers = () => {
       <FormProvider {...methods}>
         <GroupForm callback={createGroupCallback} />
       </FormProvider>
-    </>
+    </div>
   );
 };

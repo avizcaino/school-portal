@@ -1,11 +1,13 @@
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import './App.css';
-import {Groups} from './components/Groups';
-import {Students} from './components/Students';
-import {Teachers} from './components/Teachers';
+import {ThemeProvider} from '@mui/material';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Sidebar} from './components/Sidebar';
+import {Groups} from './components/lists/Groups';
+import {Students} from './components/lists/Students';
+import {Teachers} from './components/lists/Teachers';
+import {theme} from './styles/mui/theme';
 
 function App() {
-  const router = createBrowserRouter([
+  const routes = [
     {
       path: '/groups',
       element: <Groups />,
@@ -18,11 +20,22 @@ function App() {
       path: '/students',
       element: <Students />,
     },
-  ]);
+  ];
 
   return (
     <>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <div className="w-full flex flex-row">
+            <Sidebar />
+            <Routes>
+              {routes.map(r => (
+                <Route path={r.path} element={r.element} />
+              ))}
+            </Routes>
+          </div>
+        </ThemeProvider>
+      </BrowserRouter>
     </>
   );
 }

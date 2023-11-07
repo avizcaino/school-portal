@@ -4,10 +4,9 @@ import {IStudent, IStudentExtended} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {Navbar} from '../Navbar';
-import {CreateGroupCommand} from '../application/create-group/command';
-import {fetchStudents} from '../application/get-students/action';
-import {GroupForm} from './GroupForm';
+import {CreateGroupCommand} from '../../application/create-group/command';
+import {fetchStudents} from '../../application/get-students/action';
+import {GroupForm} from '../forms/GroupForm';
 
 const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
 export const Students = () => {
@@ -44,9 +43,7 @@ export const Students = () => {
   ];
 
   return (
-    <>
-      <Navbar />
-
+    <div className="w-full px-4 py-4 flex flex-col">
       <DataGrid
         rows={students}
         columns={columns}
@@ -61,6 +58,6 @@ export const Students = () => {
       <FormProvider {...methods}>
         <GroupForm callback={createGroupCallback} />
       </FormProvider>
-    </>
+    </div>
   );
 };

@@ -3,13 +3,17 @@ import {DataGrid, GridColDef} from '@mui/x-data-grid';
 import {IGroup} from '@school-server/server';
 import {GroupValidator} from '@school-shared/core';
 import {Guid} from 'guid-typescript';
+import {prop, sortWith} from 'ramda';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {Navbar} from '../Navbar';
-import {createGroup} from '../application/create-group/action';
-import {CreateGroupCommand} from '../application/create-group/command';
-import {fetchGroups} from '../application/get-groups/action';
-import {GroupForm} from './GroupForm';
+import {createGroup} from '../../application/create-group/action';
+import {CreateGroupCommand} from '../../application/create-group/command';
+import {fetchGroups} from '../../application/get-groups/action';
+import {GroupForm} from '../forms/GroupForm';
+
+const lensGrade = prop('grade');
+const lensSubGroup = prop('subGroup');
+const sortGroups = (groups: IGroup[]) => sortWith<IGroup>([lensGrade, lensSubGroup])(groups);
 
 const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
 export const Groups = () => {
@@ -36,18 +40,16 @@ export const Groups = () => {
   const createGroupCallback = methods?.handleSubmit(onSuccess, onError);
 
   const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID', width: 70},
-    {field: 'grade', headerName: 'Curs', type: 'number', width: 130},
-    {field: 'subGroup', headerName: 'Grup', width: 130},
-    {field: 'name', headerName: 'Nom', width: 130},
+    {field: 'id', headerName: 'ID'},
+    {field: 'grade', headerName: 'Curs', type: 'number'},
+    {field: 'subGroup', headerName: 'Grup'},
+    {field: 'name', headerName: 'Nom'},
   ];
 
   return (
-    <>
-      <Navbar />
-
+    <div className="w-full px-4 py-4 flex flex-col">
       <DataGrid
-        rows={groups}
+        rows={sortGroups(groups)}
         columns={columns}
         initialState={{
           pagination: {
@@ -55,11 +57,11 @@ export const Groups = () => {
           },
         }}
         pageSizeOptions={[20, 30]}
-        checkboxSelection
+        // checkboxSelection
       />
       <FormProvider {...methods}>
         <GroupForm callback={createGroupCallback} />
       </FormProvider>
-    </>
+    </div>
   );
 };

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .row-center {
+    @apply flex items-center justify-center;
+  }
+
+  .col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .row-center-justified {
+    @apply flex flex-row items-center justify-between;
+  }
+
+  .col-center-justified {
+    @apply flex flex-col items-center justify-between;
+  }
+}
+
+html,
+body,
+#root {
+  min-height: 1px;
+  height: 100%;
+}
+
+/* Autoprefixer check */
+::placeholder {
+  color: firebrick;
+}
