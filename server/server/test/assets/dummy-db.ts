@@ -49,12 +49,12 @@ export class DummyDB implements FirebaseDB {
         if (i.id === id) i = {...i, ...data};
         return i;
       });
-      return {...document, ...data};
+      return Promise.resolve({...document, ...data});
     } else throw new Error(`Document with ID ${id} not found`);
   }
   deleteDocument(collectionId: string, id: string): Promise<boolean> {
-    const index = this.data[collectionId]?.find(g => g.id === id);
-    if (index) {
+    const index = this.data[collectionId]?.findIndex(g => g.id === id);
+    if (index > -1) {
       this.data[collectionId] = this.data[collectionId].slice(index, 0);
       return Promise.resolve(true);
     } else throw new Error(`Document with ID ${id} not found`);

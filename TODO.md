@@ -1,0 +1,4 @@
+- [ ] Regles de negocis l'hora de registrar nous alumnes/professors als grups
+- [x] Ampliar interface de grups per afegir el número màxim d'alumnes
+- [ ] Afegir "gender"?
+- [x] API per generar avatars

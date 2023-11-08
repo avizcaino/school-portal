@@ -31,23 +31,33 @@ export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {
 
   async getStudent(id: string): Promise<IStudentExtended> {
     const student = await this.db.getDocument<IStudent>(STUDENTS_COLLECTION, id);
-    const group = await this.db.getDocument<IGroup>(GROUPS_COLLECTION, student?.group as string);
-    return {...student, group};
+    if (student) {
+      const group = await this.db.getDocument<IGroup>(GROUPS_COLLECTION, student?.group as string);
+      return {...student, group};
+    } else throw new Error(`Student with ID ${id} does not exists`);
   }
 
-  async registerStudent(group: IStudent): Promise<string> {
+  async registerStudent(student: IStudent): Promise<string> {
     const exists = await this.db.findDocument(STUDENTS_COLLECTION, [
-      {field: 'internalId', operator: DBFilterOperator.equals, value: group.internalId},
+      {field: 'internalId', operator: DBFilterOperator.equals, value: student.internalId},
     ]);
-    if (exists) throw new Error(`Group with ID ${group.internalId} already exists`);
-    else return this.db.addDocument<IStudent>(STUDENTS_COLLECTION, group);
+    if (exists) throw new Error(`Student with ID ${student.internalId} already exists`);
+    else {
+      const group = await this.db.getDocument<IGroup>(GROUPS_COLLECTION, student.group as string);
+      const students = await this.db.findDocuments<IStudent>(STUDENTS_COLLECTION, [
+        {field: 'group', operator: DBFilterOperator.equals, value: group.id},
+      ]);
+      if (group.maxStudents > students?.length)
+        return this.db.addDocument<IStudent>(STUDENTS_COLLECTION, student);
+      else throw new Error(`Group with ID ${group.internalId} is already full`);
+    }
   }
 
-  updateStudent(id: string, group: IStudent): Promise<IStudent> {
-    return this.db.updateDocument<IStudent>(STUDENTS_COLLECTION, id, group);
+  async updateStudent(id: string, student: IStudent): Promise<IStudent> {
+    return await this.db.updateDocument<IStudent>(STUDENTS_COLLECTION, id, student);
   }
 
-  deleteStudent(id: string): Promise<boolean> {
-    return this.db.deleteDocument(STUDENTS_COLLECTION, id);
+  async deleteStudent(id: string): Promise<boolean> {
+    return await this.db.deleteDocument(STUDENTS_COLLECTION, id);
   }
 }

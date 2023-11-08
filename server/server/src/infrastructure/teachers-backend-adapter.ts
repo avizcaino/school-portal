@@ -47,11 +47,11 @@ export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
     else return this.db.addDocument<ITeacher>(TEACHERS_COLLECTION, group);
   }
 
-  updateTeacher(id: string, group: ITeacher): Promise<ITeacher> {
-    return this.db.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, group);
+  async updateTeacher(id: string, group: ITeacher): Promise<ITeacher> {
+    return await this.db.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, group);
   }
 
-  deleteTeacher(id: string): Promise<boolean> {
-    return this.db.deleteDocument(TEACHERS_COLLECTION, id);
+  async deleteTeacher(id: string): Promise<boolean> {
+    return await this.db.deleteDocument(TEACHERS_COLLECTION, id);
   }
 }

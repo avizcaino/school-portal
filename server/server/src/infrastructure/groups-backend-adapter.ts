@@ -36,10 +36,10 @@ export class GroupsBackendAdapterImpl implements GroupsBackendAdapter {
     else return this.db.addDocument<IGroup>(GROUPS_COLLECTION, group);
   }
 
-  updateGroup(id: string, group: IGroup): Promise<IGroup> {
-    return this.db.updateDocument<IGroup>(GROUPS_COLLECTION, id, group);
+  async updateGroup(id: string, group: IGroup): Promise<IGroup> {
+    return await this.db.updateDocument<IGroup>(GROUPS_COLLECTION, id, group);
   }
-  deleteGroup(id: string): Promise<boolean> {
-    return this.db.deleteDocument(GROUPS_COLLECTION, id);
+  async deleteGroup(id: string): Promise<boolean> {
+    return await this.db.deleteDocument(GROUPS_COLLECTION, id);
   }
 }

@@ -7,8 +7,16 @@ import {DummyDBData} from './dummy-db';
 
 export const dummyData: DummyDBData = {
   [GROUPS_COLLECTION]: [
-    {id: 'g3a', internalId: 'g3a', grade: 3, subGroup: 'A', name: 'I3A'},
-    {id: 'g3b', internalId: 'g3b', grade: 3, subGroup: 'B', name: 'I3B'},
+    {id: 'g3a', internalId: 'g3a', grade: 3, subGroup: 'A', name: 'I3A', maxStudents: 100},
+    {id: 'g3b', internalId: 'g3b', grade: 3, subGroup: 'B', name: 'I3B', maxStudents: 100},
+    {
+      id: 'full-group',
+      internalId: 'full-group',
+      grade: 1,
+      subGroup: 'A',
+      name: 'Full Group',
+      maxStudents: 0,
+    },
   ],
   [TEACHERS_COLLECTION]: [
     {

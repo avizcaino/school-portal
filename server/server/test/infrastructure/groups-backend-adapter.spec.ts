@@ -33,11 +33,8 @@ describe('Given the groups backend adapter', () => {
     });
     it('should throw error if group does not exists', async () => {
       const GROUP_ID = 'dummy';
-      try {
-        await backend.getGroup(GROUP_ID);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const fn = () => backend.getGroup(GROUP_ID);
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When creating a group', () => {
@@ -47,20 +44,20 @@ describe('Given the groups backend adapter', () => {
         grade: 4,
         subGroup: 'A',
         name: 'I4A',
+        maxStudents: 0,
       });
       expect(id).toBeDefined();
     });
     it('should not add group if it already exists', async () => {
-      try {
-        await backend.createGroup({
+      const fn = () =>
+        backend.createGroup({
           internalId: 'g4b',
           grade: 4,
           subGroup: 'A',
           name: 'I4A',
+          maxStudents: 0,
         });
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When updating a group', () => {
@@ -70,17 +67,22 @@ describe('Given the groups backend adapter', () => {
         grade: 3,
         subGroup: 'A',
         name: 'NEW-G3A',
+        maxStudents: 0,
       });
 
       expect(group.internalId).toEqual('g3a');
       expect(group.name).toEqual('NEW-G3A');
     });
     it('should throw error if group does not exist', async () => {
-      try {
-        await backend.updateGroup('g3c', {internalId: 'g3c', grade: 3, subGroup: 'C', name: 'I3C'});
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const fn = () =>
+        backend.updateGroup('g3c', {
+          internalId: 'g3c',
+          grade: 3,
+          subGroup: 'C',
+          name: 'I3C',
+          maxStudents: 0,
+        });
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When deleting a group', () => {
@@ -92,11 +94,8 @@ describe('Given the groups backend adapter', () => {
       expect(groups.length).greaterThan(newGroups.length);
     });
     it('should throw error if group does not exist', async () => {
-      try {
-        await backend.deleteGroup('g3c');
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const fn = () => backend.deleteGroup('g3c');
+      expect(fn()).rejects.toThrow();
     });
   });
 });

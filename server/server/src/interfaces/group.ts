@@ -6,6 +6,7 @@ export interface IGroup extends Entity, Generic {
   grade: number;
   subGroup: string;
   name: string;
+  maxStudents: number;
   students?: IStudent[];
   teachers?: ITeacher[];
 }

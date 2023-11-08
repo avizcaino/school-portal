@@ -40,11 +40,8 @@ describe('Given the teachers backend adapter', () => {
     });
     it('should throw error if teacher does not exists', async () => {
       const TEACHER_ID = 'dummy';
-      try {
-        await backend.getTeacher(TEACHER_ID);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const fn = () => backend.getTeacher(TEACHER_ID);
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When creating a teacher', () => {
@@ -57,15 +54,13 @@ describe('Given the teachers backend adapter', () => {
       expect(id).toBeDefined();
     });
     it('should not add teacher if it already exists', async () => {
-      try {
-        await backend.registerTeacher({
+      const fn = () =>
+        backend.registerTeacher({
           internalId: 'new-id',
           name: 'Peter',
           firstSurname: 'Smith',
         });
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When updating a teacher', () => {
@@ -80,15 +75,13 @@ describe('Given the teachers backend adapter', () => {
       expect(teacher.firstSurname).toEqual('Parker');
     });
     it('should throw error if teacher does not exist', async () => {
-      try {
-        await backend.updateTeacher('48001122A', {
+      const fn = () =>
+        backend.updateTeacher('48001122A', {
           internalId: '48001122X',
           name: 'Peter',
           firstSurname: 'Parker',
         });
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      expect(fn()).rejects.toThrow();
     });
   });
   describe('When deleting a teacher', () => {
@@ -100,11 +93,8 @@ describe('Given the teachers backend adapter', () => {
       expect(teachers.length).greaterThan(newTeachers.length);
     });
     it('should throw error if teacher does not exist', async () => {
-      try {
-        await backend.deleteTeacher('g3c');
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const fn = () => backend.deleteTeacher('g3c');
+      expect(fn()).rejects.toThrow();
     });
   });
 });

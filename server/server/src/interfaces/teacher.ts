@@ -3,9 +3,9 @@ import {IGroup} from './group';
 import {Person} from './person';
 
 export interface ITeacher extends Person {
-  groups: ID[];
+  groups?: ID[];
 }
 
 export interface ITeacherExtended extends Omit<ITeacher, 'groups'> {
-  groups: IGroup[];
+  groups?: IGroup[];
 }

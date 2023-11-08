@@ -16,12 +16,14 @@ export const groupsBatchInput = (backendAdapter: GroupsBackendAdapter) => {
         subGroup: 'A',
         name: `I${i}A`,
         internalId: `I${i}A`,
+        maxStudents: 15,
       },
       {
         grade: i,
         subGroup: 'B',
         name: `I${i}B`,
         internalId: `I${i}B`,
+        maxStudents: 15,
       }
     );
   }
@@ -32,12 +34,14 @@ export const groupsBatchInput = (backendAdapter: GroupsBackendAdapter) => {
         subGroup: 'A',
         name: `${i - 5}A`,
         internalId: `${i - 5}A`,
+        maxStudents: 25,
       },
       {
         grade: i,
         subGroup: 'B',
         name: `${i - 5}B`,
         internalId: `${i - 5}B`,
+        maxStudents: 25,
       }
     );
   }
@@ -50,21 +54,34 @@ export const groupsBatchInput = (backendAdapter: GroupsBackendAdapter) => {
 
 export const studentsBatchInput = (groups: IGroup[], backendAdapter: StudentsBackendAdapter) => {
   const currentYear = new Date().getFullYear();
-  for (let i = 0; i < 500; i++) {
+  const students: IStudent[] = [];
+  for (let i = 0; i < 390; i++) {
     const name = chance.name({nationality: 'it'});
-    const group = groups[chance.integer({min: 0, max: groups.length - 1})];
-    const student: IStudent = {
+    let group;
+    while (!group) {
+      const index = chance.integer({min: 0, max: groups.length - 1});
+      const provGroup = groups[index];
+      const groupStudents = students.filter(s => s.group === provGroup.id);
+      if (provGroup.maxStudents > groupStudents?.length) {
+        group = provGroup;
+        break;
+      }
+    }
+    students.push({
       internalId: chance.ssn(),
       birthDate: chance.date({year: currentYear - group.grade}) as Date,
       group: group.id as string,
       name: name.split(' ')[0],
       firstSurname: name.split(' ')[1],
-      profilePic: chance.avatar(),
-    };
-    backendAdapter
-      .registerStudent(student)
-      .then(r => console.log(`Student with ID ${r} registered successfully!`));
+      profilePic: `https://robohash.org/${name.split(' ')[1]}`,
+    });
   }
+
+  students.forEach(s =>
+    backendAdapter
+      .registerStudent(s)
+      .then(r => console.log(`Student with ID ${r} registered successfully!`))
+  );
 };
 
 const getTeacherGroups = (groups: IGroup[]) => {
