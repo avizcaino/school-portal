@@ -26,7 +26,7 @@ function App() {
     <>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <div className="w-full flex flex-row">
+          <div className="h-full w-full flex flex-row">
             <Sidebar />
             <Routes>
               {routes.map(r => (

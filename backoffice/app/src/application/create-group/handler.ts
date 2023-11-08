@@ -9,7 +9,6 @@ export class CreateGroupCommandHandler implements IRequestHandler<CreateGroupCom
   constructor(@inject(GroupsBackendAdapter) protected backendAdapter: GroupsBackendAdapter) {}
 
   handle(value: CreateGroupCommand): Promise<string> {
-    console.log(value);
     return this.backendAdapter.createGroup(value as IGroup);
   }
 }

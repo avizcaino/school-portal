@@ -73,7 +73,7 @@ const models: TsoaRoute.Models = {
       firstSurname: {dataType: 'string', required: true},
       secondSurname: {dataType: 'string'},
       profilePic: {dataType: 'string'},
-      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}, required: true},
+      groups: {dataType: 'array', array: {dataType: 'refAlias', ref: 'ID'}},
     },
     additionalProperties: false,
   },
@@ -86,6 +86,7 @@ const models: TsoaRoute.Models = {
       grade: {dataType: 'double', required: true},
       subGroup: {dataType: 'string', required: true},
       name: {dataType: 'string', required: true},
+      maxStudents: {dataType: 'double', required: true},
       students: {dataType: 'array', array: {dataType: 'refObject', ref: 'IStudent'}},
       teachers: {dataType: 'array', array: {dataType: 'refObject', ref: 'ITeacher'}},
     },
@@ -103,7 +104,7 @@ const models: TsoaRoute.Models = {
   ITeacherExtended: {
     dataType: 'refObject',
     properties: {
-      groups: {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}, required: true},
+      groups: {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}},
     },
     additionalProperties: false,
   },

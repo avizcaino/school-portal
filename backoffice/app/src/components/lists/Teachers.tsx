@@ -2,14 +2,14 @@ import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import Button from '@mui/material/Button/Button';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
 import {ITeacher, ITeacherExtended} from '@school-server/server';
-import {GroupValidator} from '@school-shared/core';
+import {TeacherValidator} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {CreateGroupCommand} from '../../application/create-group/command';
 import {fetchTeachers} from '../../application/get-teachers/action';
+import {RegisterTeacherCommand} from '../../application/register-teacher/command';
 import {GroupForm} from '../forms/GroupForm';
 
-const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
+const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
 export const Teachers = () => {
   const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
@@ -17,11 +17,11 @@ export const Teachers = () => {
     fetchTeachers().then(t => setTeachers(t));
   }, []);
 
-  const methods = useForm<GroupValidator>({
+  const methods = useForm<TeacherValidator>({
     resolver,
   });
 
-  const onSuccess = async (data: CreateGroupCommand, event: unknown) => {
+  const onSuccess = async (data: RegisterTeacherCommand, event: unknown) => {
     console.log(data);
   };
 
@@ -29,16 +29,16 @@ export const Teachers = () => {
     console.log(errors, event);
   };
 
-  const createGroupCallback = methods?.handleSubmit(onSuccess, onError);
+  const createTeacherCallback = methods?.handleSubmit(onSuccess, onError);
 
   const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID', width: 70},
-    {field: 'name', headerName: 'Nom', width: 130},
-    {field: 'firstSurname', headerName: 'Cognom', width: 130},
+    // {field: 'id', headerName: 'ID'},
+    {field: 'name', headerName: 'Nom'},
+    {field: 'firstSurname', headerName: 'Cognom'},
+    {field: 'secondSurname', headerName: 'Cognom'},
     {
       field: 'groups',
       headerName: 'Cursos',
-      width: 130,
       valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
         params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
     },
@@ -63,7 +63,7 @@ export const Teachers = () => {
         checkboxSelection
       />
       <FormProvider {...methods}>
-        <GroupForm callback={createGroupCallback} />
+        <GroupForm callback={createTeacherCallback} />
       </FormProvider>
     </div>
   );

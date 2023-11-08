@@ -111,8 +111,7 @@
 				"required": [
 					"internalId",
 					"name",
-					"firstSurname",
-					"groups"
+					"firstSurname"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -135,6 +134,10 @@
 					"name": {
 						"type": "string"
 					},
+					"maxStudents": {
+						"type": "number",
+						"format": "double"
+					},
 					"students": {
 						"items": {
 							"$ref": "#/components/schemas/IStudent"
@@ -151,7 +154,8 @@
 				"required": [
 					"grade",
 					"subGroup",
-					"name"
+					"name",
+					"maxStudents"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -177,9 +181,6 @@
 						"type": "array"
 					}
 				},
-				"required": [
-					"groups"
-				],
 				"type": "object",
 				"additionalProperties": false
 			}

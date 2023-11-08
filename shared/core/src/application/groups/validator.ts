@@ -1,5 +1,5 @@
 import {IGroup, IStudent, ITeacher} from '@school-server/server';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsNotEmpty, IsNumber, IsOptional, Min} from 'class-validator';
 
 export class GroupValidator implements IGroup {
   constructor(data: IGroup) {
@@ -29,4 +29,8 @@ export class GroupValidator implements IGroup {
 
   @IsOptional()
   internalId?: string;
+
+  @IsNumber()
+  @Min(1)
+  maxStudents!: number;
 }
