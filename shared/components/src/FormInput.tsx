@@ -9,6 +9,7 @@ export interface IFormInput {
   required?: boolean;
   disabled?: boolean;
   onChange?: (event: any) => void;
+  className?: string;
 }
 
 export const FormInput = (props: IFormInput) => {
@@ -21,25 +22,27 @@ export const FormInput = (props: IFormInput) => {
   });
 
   return (
-    <TextField
-      {...field}
-      inputRef={field.ref}
-      label={props.label}
-      type={props.type}
-      required={props.required}
-      disabled={props.disabled}
-      variant="outlined"
-      size="small"
-      fullWidth
-      onChange={event => {
-        props.onChange && props.onChange(event);
-        field.onChange(event);
-      }}
-      error={fieldState?.error != null}
-      helperText={fieldState?.error != null && fieldState?.error?.message}
-      InputLabelProps={{
-        shrink: true,
-      }}
-    ></TextField>
+    <div className={props.className}>
+      <TextField
+        {...field}
+        inputRef={field.ref}
+        label={props.label}
+        type={props.type}
+        required={props.required}
+        disabled={props.disabled}
+        variant="outlined"
+        size="small"
+        fullWidth
+        onChange={event => {
+          props.onChange && props.onChange(event);
+          field.onChange(event);
+        }}
+        error={fieldState?.error != null}
+        helperText={fieldState?.error != null && fieldState?.error?.message}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      ></TextField>
+    </div>
   );
 };

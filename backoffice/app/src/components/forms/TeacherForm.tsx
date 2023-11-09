@@ -32,9 +32,9 @@ export const TeacherForm = (props: {onClose: (data: ITeacher) => void}) => {
   return (
     <FormProvider {...methods}>
       <>
-        <FormInput name="name" label="Name" />
-        <FormInput name="firstSurname" label="First Surname" />
-        <FormInput name="internalId" label="DNI" />
+        <FormInput className="pt-4 pb-8" name="name" label="Name" />
+        <FormInput className="pb-8" name="firstSurname" label="First Surname" />
+        <FormInput className="" name="internalId" label="DNI" />
 
         <Button onClick={createTeacherCallback}>Submit</Button>
       </>
