@@ -7,6 +7,7 @@ import {BaseSyntheticEvent} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
 import {registerTeacher} from '../../application/register-teacher/action';
 import {RegisterTeacherCommand} from '../../application/register-teacher/command';
+import {GroupSelector} from './GroupSelector';
 
 const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
 export const TeacherForm = (props: {onClose: (data: ITeacher) => void}) => {
@@ -35,6 +36,8 @@ export const TeacherForm = (props: {onClose: (data: ITeacher) => void}) => {
         <FormInput className="pt-4 pb-8" name="name" label="Name" />
         <FormInput className="pb-8" name="firstSurname" label="First Surname" />
         <FormInput className="" name="internalId" label="DNI" />
+
+        <GroupSelector />
 
         <Button onClick={createTeacherCallback}>Submit</Button>
       </>

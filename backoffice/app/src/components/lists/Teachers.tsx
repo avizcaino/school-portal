@@ -206,6 +206,7 @@ export function Teachers() {
       }}
     >
       <DataGrid
+        className="shadow-lg"
         rows={teachers}
         columns={columns}
         editMode="row"

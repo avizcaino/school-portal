@@ -1,5 +1,5 @@
 import {ITeacher} from '@school-server/server';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsArray, IsNotEmpty, IsOptional} from 'class-validator';
 
 export class TeacherValidator implements ITeacher {
   constructor(data: ITeacher) {
@@ -27,5 +27,6 @@ export class TeacherValidator implements ITeacher {
   profilePic?: string;
 
   @IsOptional()
+  @IsArray()
   groups?: string[];
 }
