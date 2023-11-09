@@ -10,8 +10,8 @@ export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
   getTeachers(extended?: boolean): Promise<ITeacher[] | ITeacherExtended[]> {
     return this.adapter.fetch(`/teachers?extended=${extended}`, 'get');
   }
-  getTeacher(id: string): Promise<ITeacherExtended> {
-    throw new Error('Method not implemented.');
+  async getTeacher(id: string): Promise<ITeacherExtended> {
+    return await this.adapter.fetch<ITeacherExtended>(`/teachers/${id}?extended=true`, 'get');
   }
   async registerTeacher(teacher: ITeacher): Promise<string> {
     return await this.adapter.fetch<string>('/teachers', 'post', teacher);

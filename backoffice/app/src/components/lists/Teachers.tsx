@@ -20,7 +20,7 @@ import {
   GridToolbarContainer,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import {ITeacher, ITeacherExtended} from '@school-server/server';
+import {ITeacherExtended} from '@school-server/server';
 import {useUpdateModal} from '@school-shared/components';
 import {useEffect, useState} from 'react';
 import {deleteTeacher} from '../../application/delete-teacher/action';
@@ -41,7 +41,7 @@ function EditToolbar(props: EditToolbarProps) {
     updateModal({content: () => TeacherForm({onClose: onAddRecord}), renderCloseAction: true});
   };
 
-  const onAddRecord = (data: ITeacher) => {
+  const onAddRecord = (data: ITeacherExtended) => {
     setRows(oldRows => [...oldRows, {...data, isNew: true}]);
     setRowModesModel(oldModel => ({
       ...oldModel,
@@ -65,10 +65,6 @@ export function Teachers() {
   useEffect(() => {
     fetchTeachers().then(t => setTeachers(t));
   }, []);
-
-  useEffect(() => {
-    console.log(teachers);
-  }, [teachers]);
 
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
