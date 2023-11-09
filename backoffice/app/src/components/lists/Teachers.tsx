@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import GroupAdd from '@mui/icons-material/GroupAdd';
 import SaveIcon from '@mui/icons-material/Save';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,7 +11,6 @@ import {
   GridActionsCellItem,
   GridColDef,
   GridEventListener,
-  GridRenderCellParams,
   GridRowEditStopReasons,
   GridRowId,
   GridRowModel,
@@ -20,60 +20,13 @@ import {
   GridToolbarContainer,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import {
-  randomArrayItem,
-  randomCreatedDate,
-  randomId,
-  randomTraderName,
-} from '@mui/x-data-grid-generator';
-import {ITeacherExtended} from '@school-server/server';
+import {ITeacher, ITeacherExtended} from '@school-server/server';
+import {useUpdateModal} from '@school-shared/components';
 import {useEffect, useState} from 'react';
 import {deleteTeacher} from '../../application/delete-teacher/action';
 import {fetchTeachers} from '../../application/get-teachers/action';
 import {updateTeacher} from '../../application/update-teacher/action';
-
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
-
-const initialRows: GridRowsProp = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 25,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 36,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 19,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 28,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 23,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-];
+import {TeacherForm} from '../forms/TeacherForm';
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -81,20 +34,24 @@ interface EditToolbarProps {
 }
 
 function EditToolbar(props: EditToolbarProps) {
+  const updateModal = useUpdateModal();
   const {setRows, setRowModesModel} = props;
 
-  const handleClick = () => {
-    const id = randomId();
-    setRows(oldRows => [...oldRows, {id, name: '', age: '', isNew: true}]);
+  const addRecord = () => {
+    updateModal({content: () => TeacherForm({onClose: onAddRecord}), renderCloseAction: true});
+  };
+
+  const onAddRecord = (data: ITeacher) => {
+    setRows(oldRows => [...oldRows, {...data, isNew: true}]);
     setRowModesModel(oldModel => ({
       ...oldModel,
-      [id]: {mode: GridRowModes.Edit, fieldToFocus: 'name'},
+      [data.id as string]: {mode: GridRowModes.Edit, fieldToFocus: 'name'},
     }));
   };
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={addRecord}>
         Add record
       </Button>
     </GridToolbarContainer>
@@ -102,6 +59,7 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export function Teachers() {
+  const updateModal = useUpdateModal();
   const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
   useEffect(() => {
@@ -122,6 +80,10 @@ export function Teachers() {
 
   const handleEditClick = (id: GridRowId) => () => {
     setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
+  };
+
+  const handleEditGroupsClick = (id: GridRowId) => () => {
+    updateModal(null as never);
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
@@ -157,16 +119,17 @@ export function Teachers() {
   };
 
   const columns: GridColDef[] = [
-    {
-      field: 'profilePic',
-      headerName: 'Avatar',
-      renderCell: (params: GridRenderCellParams<any, string>) => (
-        <img src={params.value} alt="profile-pic" />
-      ),
-    },
+    // {
+    //   field: 'profilePic',
+    //   headerName: 'Avatar',
+    //   renderCell: (params: GridRenderCellParams<any, string>) => (
+    //     <img src={params.value} alt="profile-pic" />
+    //   ),
+    // },
     {field: 'name', headerName: 'Nom', editable: true},
-    {field: 'firstSurname', headerName: 'Cognom', editable: true},
-    {field: 'secondSurname', headerName: 'Cognom', editable: true},
+    {field: 'firstSurname', headerName: 'Primer Cognom', editable: true},
+    {field: 'secondSurname', headerName: 'Segon Cognom', editable: true},
+    {field: 'internalId', headerName: 'DNI', editable: true},
     {
       field: 'groups',
       headerName: 'Cursos',
@@ -208,6 +171,13 @@ export function Teachers() {
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<GroupAdd />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditGroupsClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem

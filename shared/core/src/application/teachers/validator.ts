@@ -11,8 +11,8 @@ export class TeacherValidator implements ITeacher {
   @IsOptional()
   id?: string | undefined;
 
-  @IsOptional()
-  internalId?: string;
+  @IsNotEmpty()
+  internalId!: string;
 
   @IsNotEmpty()
   name!: string;

@@ -1,6 +1,8 @@
 import {ThemeProvider} from '@mui/material';
 import {ModalContainer, ModalProvider} from '@school-shared/components';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Sidebar} from './components/Sidebar';
 import {Groups} from './components/lists/Groups';
 import {Students} from './components/lists/Students';
@@ -37,6 +39,7 @@ function App() {
               </Routes>
             </div>
             <ModalContainer />
+            <ToastContainer />
           </ModalProvider>
         </ThemeProvider>
       </BrowserRouter>

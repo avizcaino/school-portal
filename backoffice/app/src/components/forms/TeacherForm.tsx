@@ -9,7 +9,7 @@ import {registerTeacher} from '../../application/register-teacher/action';
 import {RegisterTeacherCommand} from '../../application/register-teacher/command';
 
 const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
-export const TeacherForm = () => {
+export const TeacherForm = (props: {onClose: (data: ITeacher) => void}) => {
   const updateModal = useUpdateModal();
 
   const methods = useForm<TeacherValidator>({
@@ -17,9 +17,10 @@ export const TeacherForm = () => {
   });
 
   const onSuccess = async (data: RegisterTeacherCommand, event: unknown) => {
-    console.log(data);
-    registerTeacher(data);
-    updateModal(null as never);
+    registerTeacher(data).then((id: string) => {
+      updateModal(null as never);
+      props.onClose({id, ...data});
+    });
   };
 
   const onError = (errors: FieldErrors<ITeacher>, event?: BaseSyntheticEvent) => {
@@ -33,6 +34,7 @@ export const TeacherForm = () => {
       <>
         <FormInput name="name" label="Name" />
         <FormInput name="firstSurname" label="First Surname" />
+        <FormInput name="internalId" label="DNI" />
 
         <Button onClick={createTeacherCallback}>Submit</Button>
       </>
