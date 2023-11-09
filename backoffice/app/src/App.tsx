@@ -1,4 +1,5 @@
 import {ThemeProvider} from '@mui/material';
+import {ModalContainer, ModalProvider} from '@school-shared/components';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {Sidebar} from './components/Sidebar';
 import {Groups} from './components/lists/Groups';
@@ -26,14 +27,17 @@ function App() {
     <>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <div className="h-full w-full flex flex-row">
-            <Sidebar />
-            <Routes>
-              {routes.map(r => (
-                <Route path={r.path} element={r.element} />
-              ))}
-            </Routes>
-          </div>
+          <ModalProvider>
+            <div className="h-full w-full flex flex-row">
+              <Sidebar />
+              <Routes>
+                {routes.map((r, i) => (
+                  <Route key={i} path={r.path} element={r.element} />
+                ))}
+              </Routes>
+            </div>
+            <ModalContainer />
+          </ModalProvider>
         </ThemeProvider>
       </BrowserRouter>
     </>

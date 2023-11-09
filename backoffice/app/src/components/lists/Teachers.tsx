@@ -1,70 +1,255 @@
-import {classValidatorResolver} from '@hookform/resolvers/class-validator';
-import Button from '@mui/material/Button/Button';
-import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
-import {ITeacher, ITeacherExtended} from '@school-server/server';
-import {TeacherValidator} from '@school-shared/core';
-import {BaseSyntheticEvent, useEffect, useState} from 'react';
-import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColDef,
+  GridEventListener,
+  GridRenderCellParams,
+  GridRowEditStopReasons,
+  GridRowId,
+  GridRowModel,
+  GridRowModes,
+  GridRowModesModel,
+  GridRowsProp,
+  GridToolbarContainer,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
+import {
+  randomArrayItem,
+  randomCreatedDate,
+  randomId,
+  randomTraderName,
+} from '@mui/x-data-grid-generator';
+import {ITeacherExtended} from '@school-server/server';
+import {useEffect, useState} from 'react';
+import {deleteTeacher} from '../../application/delete-teacher/action';
 import {fetchTeachers} from '../../application/get-teachers/action';
-import {RegisterTeacherCommand} from '../../application/register-teacher/command';
-import {GroupForm} from '../forms/GroupForm';
+import {updateTeacher} from '../../application/update-teacher/action';
 
-const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
-export const Teachers = () => {
+const roles = ['Market', 'Finance', 'Development'];
+const randomRole = () => {
+  return randomArrayItem(roles);
+};
+
+const initialRows: GridRowsProp = [
+  {
+    id: randomId(),
+    name: randomTraderName(),
+    age: 25,
+    joinDate: randomCreatedDate(),
+    role: randomRole(),
+  },
+  {
+    id: randomId(),
+    name: randomTraderName(),
+    age: 36,
+    joinDate: randomCreatedDate(),
+    role: randomRole(),
+  },
+  {
+    id: randomId(),
+    name: randomTraderName(),
+    age: 19,
+    joinDate: randomCreatedDate(),
+    role: randomRole(),
+  },
+  {
+    id: randomId(),
+    name: randomTraderName(),
+    age: 28,
+    joinDate: randomCreatedDate(),
+    role: randomRole(),
+  },
+  {
+    id: randomId(),
+    name: randomTraderName(),
+    age: 23,
+    joinDate: randomCreatedDate(),
+    role: randomRole(),
+  },
+];
+
+interface EditToolbarProps {
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void;
+}
+
+function EditToolbar(props: EditToolbarProps) {
+  const {setRows, setRowModesModel} = props;
+
+  const handleClick = () => {
+    const id = randomId();
+    setRows(oldRows => [...oldRows, {id, name: '', age: '', isNew: true}]);
+    setRowModesModel(oldModel => ({
+      ...oldModel,
+      [id]: {mode: GridRowModes.Edit, fieldToFocus: 'name'},
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        Add record
+      </Button>
+    </GridToolbarContainer>
+  );
+}
+
+export function Teachers() {
   const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
   useEffect(() => {
     fetchTeachers().then(t => setTeachers(t));
   }, []);
 
-  const methods = useForm<TeacherValidator>({
-    resolver,
-  });
+  useEffect(() => {
+    console.log(teachers);
+  }, [teachers]);
 
-  const onSuccess = async (data: RegisterTeacherCommand, event: unknown) => {
-    console.log(data);
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
   };
 
-  const onError = (errors: FieldErrors<ITeacher>, event?: BaseSyntheticEvent) => {
-    console.log(errors, event);
+  const handleEditClick = (id: GridRowId) => () => {
+    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
   };
 
-  const createTeacherCallback = methods?.handleSubmit(onSuccess, onError);
+  const handleSaveClick = (id: GridRowId) => () => {
+    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
+  };
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    deleteTeacher(id.toString());
+    setTeachers(teachers.filter(row => row.id !== id));
+  };
+
+  const handleCancelClick = (id: GridRowId) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: {mode: GridRowModes.View, ignoreModifications: true},
+    });
+
+    const editedRow = teachers.find(row => row.id === id);
+    if (editedRow!.isNew) {
+      setTeachers(teachers.filter(row => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow: GridRowModel) => {
+    const updatedRow = {...newRow, isNew: false};
+    updateTeacher(newRow.id, newRow);
+    setTeachers(teachers.map(row => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
 
   const columns: GridColDef[] = [
-    // {field: 'id', headerName: 'ID'},
-    {field: 'name', headerName: 'Nom'},
-    {field: 'firstSurname', headerName: 'Cognom'},
-    {field: 'secondSurname', headerName: 'Cognom'},
+    {
+      field: 'profilePic',
+      headerName: 'Avatar',
+      renderCell: (params: GridRenderCellParams<any, string>) => (
+        <img src={params.value} alt="profile-pic" />
+      ),
+    },
+    {field: 'name', headerName: 'Nom', editable: true},
+    {field: 'firstSurname', headerName: 'Cognom', editable: true},
+    {field: 'secondSurname', headerName: 'Cognom', editable: true},
     {
       field: 'groups',
       headerName: 'Cursos',
       valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
         params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
     },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({id}) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: 'primary.main',
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
   ];
 
-  const addTeacher = () => {
-    console.log('');
-  };
-
   return (
-    <div className="w-full px-4 py-4 flex flex-col">
-      <Button onClick={addTeacher}>Afegir Professor</Button>
+    <Box
+      className="w-full px-4 py-4 flex flex-col"
+      sx={{
+        height: 500,
+        width: '100%',
+        '& .actions': {
+          color: 'text.secondary',
+        },
+        '& .textPrimary': {
+          color: 'text.primary',
+        },
+      }}
+    >
       <DataGrid
         rows={teachers}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {page: 0, pageSize: 20},
-          },
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={handleRowModesModelChange}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        slots={{
+          toolbar: EditToolbar,
         }}
-        pageSizeOptions={[20, 30]}
-        checkboxSelection
+        slotProps={{
+          toolbar: {setRows: setTeachers, setRowModesModel},
+        }}
       />
-      <FormProvider {...methods}>
-        <GroupForm callback={createTeacherCallback} />
-      </FormProvider>
-    </div>
+    </Box>
   );
-};
+}

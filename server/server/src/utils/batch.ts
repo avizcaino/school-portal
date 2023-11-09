@@ -101,7 +101,7 @@ export const teachersBatchInput = (groups: IGroup[], backendAdapter: TeachersBac
       internalId: chance.ssn(),
       name: name?.split(' ')[0],
       firstSurname: name?.split(' ')[1],
-      profilePic: chance.avatar(),
+      profilePic: `https://robohash.org/${name.split(' ')[1]}`,
       groups: uniq(getTeacherGroups(groups)),
     };
     backendAdapter

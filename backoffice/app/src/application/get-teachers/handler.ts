@@ -1,10 +1,9 @@
 import {ITeacher, ITeacherExtended, TeachersBackendAdapter} from '@school-server/server';
 import {inject, injectable} from 'inversify';
-import {IRequestHandler, requestHandler} from 'mediatr-ts';
+import {IRequestHandler} from 'mediatr-ts';
 import {TeachersQuery} from './query';
 
 @injectable()
-@requestHandler(TeachersQuery)
 export class TeachersQueryHandler
   implements IRequestHandler<TeachersQuery, ITeacher[] | ITeacherExtended[]>
 {

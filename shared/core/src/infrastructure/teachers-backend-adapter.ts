@@ -13,13 +13,13 @@ export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
   getTeacher(id: string): Promise<ITeacherExtended> {
     throw new Error('Method not implemented.');
   }
-  registerTeacher(group: ITeacher): Promise<string> {
+  registerTeacher(teacher: ITeacher): Promise<string> {
     throw new Error('Method not implemented.');
   }
-  updateTeacher(id: string, group: ITeacher): Promise<ITeacher> {
-    throw new Error('Method not implemented.');
+  updateTeacher(id: string, teacher: ITeacher): Promise<ITeacher> {
+    return this.adapter.fetch(`/teachers/${id}`, 'put', teacher);
   }
   deleteTeacher(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this.adapter.fetch(`/teachers/${id}`, 'delete');
   }
 }

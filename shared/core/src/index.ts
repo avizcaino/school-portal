@@ -1,4 +1,5 @@
 export * from './application';
+export * from './constants';
 export * from './infrastructure';
 export * from './utils';
 import {iocContainer, setMediatorResolver} from '@uxland/ioc';

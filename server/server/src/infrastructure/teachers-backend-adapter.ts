@@ -39,16 +39,16 @@ export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {
     return {...teacher, groups};
   }
 
-  async registerTeacher(group: ITeacher): Promise<string> {
+  async registerTeacher(teacher: ITeacher): Promise<string> {
     const exists = await this.db.findDocument(TEACHERS_COLLECTION, [
-      {field: 'internalId', operator: DBFilterOperator.equals, value: group.internalId},
+      {field: 'internalId', operator: DBFilterOperator.equals, value: teacher.internalId},
     ]);
-    if (exists) throw new Error(`Group with ID ${group.internalId} already exists`);
-    else return this.db.addDocument<ITeacher>(TEACHERS_COLLECTION, group);
+    if (exists) throw new Error(`Teacher with ID ${teacher.internalId} already exists`);
+    else return this.db.addDocument<ITeacher>(TEACHERS_COLLECTION, teacher);
   }
 
-  async updateTeacher(id: string, group: ITeacher): Promise<ITeacher> {
-    return await this.db.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, group);
+  async updateTeacher(id: string, teacher: ITeacher): Promise<ITeacher> {
+    return await this.db.updateDocument<ITeacher>(TEACHERS_COLLECTION, id, teacher);
   }
 
   async deleteTeacher(id: string): Promise<boolean> {
