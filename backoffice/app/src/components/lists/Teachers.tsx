@@ -43,10 +43,6 @@ function EditToolbar(props: EditToolbarProps) {
 
   const onAddRecord = (data: ITeacherExtended) => {
     setRows(oldRows => [...oldRows, {...data, isNew: true}]);
-    setRowModesModel(oldModel => ({
-      ...oldModel,
-      [data.id as string]: {mode: GridRowModes.Edit, fieldToFocus: 'name'},
-    }));
   };
 
   return (
@@ -79,7 +75,16 @@ export function Teachers() {
   };
 
   const handleEditGroupsClick = (id: GridRowId) => () => {
-    updateModal(null as never);
+    const selectedTeacher = teachers.find(t => t.id === id);
+    updateModal({
+      content: () =>
+        TeacherForm({
+          onClose: processRowUpdate,
+          data: selectedTeacher,
+          groupAssignation: true,
+        }),
+      renderCloseAction: true,
+    });
   };
 
   const handleSaveClick = (id: GridRowId) => () => {

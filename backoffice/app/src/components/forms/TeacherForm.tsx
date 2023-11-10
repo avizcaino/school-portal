@@ -10,7 +10,11 @@ import {RegisterTeacherCommand} from '../../application/register-teacher/command
 import {GroupSelector} from './GroupSelector';
 
 const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
-export const TeacherForm = (props: {onClose: (data: ITeacherExtended) => void}) => {
+export const TeacherForm = (props: {
+  onClose: (data: ITeacherExtended) => void;
+  data?: ITeacherExtended;
+  groupAssignation?: boolean;
+}) => {
   const updateModal = useUpdateModal();
 
   const methods = useForm<TeacherValidator>({
@@ -33,11 +37,15 @@ export const TeacherForm = (props: {onClose: (data: ITeacherExtended) => void}) 
   return (
     <FormProvider {...methods}>
       <>
-        <FormInput className="pt-4 pb-8" name="name" label="Name" defaultValue="" />
-        <FormInput className="pb-8" name="firstSurname" label="First Surname" defaultValue="" />
-        <FormInput className="pb-8" name="internalId" label="DNI" defaultValue="" />
+        {!props.groupAssignation && (
+          <>
+            <FormInput className="pt-4 pb-8" name="name" label="Name" defaultValue="" />
+            <FormInput className="pb-8" name="firstSurname" label="First Surname" defaultValue="" />
+            <FormInput className="pb-8" name="internalId" label="DNI" defaultValue="" />
+          </>
+        )}
 
-        <GroupSelector />
+        <GroupSelector defaultValues={props.data?.groups?.map(g => g.id) as string[]} />
 
         <Button onClick={createTeacherCallback}>Submit</Button>
       </>
