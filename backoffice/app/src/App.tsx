@@ -1,4 +1,4 @@
-import {ThemeProvider} from '@mui/material';
+import {NextUIProvider} from '@nextui-org/react';
 import {ModalContainer, ModalProvider} from '@school-shared/components';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
@@ -7,7 +7,6 @@ import {Sidebar} from './components/Sidebar';
 import {Groups} from './components/lists/Groups';
 import {Students} from './components/lists/Students';
 import {Teachers} from './components/lists/Teachers';
-import {theme} from './styles/mui/theme';
 
 function App() {
   const routes = [
@@ -26,24 +25,24 @@ function App() {
   ];
 
   return (
-    <>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <ModalProvider>
-            <div className="h-full w-full flex flex-row">
-              <Sidebar />
-              <Routes>
-                {routes.map((r, i) => (
-                  <Route key={i} path={r.path} element={r.element} />
-                ))}
-              </Routes>
-            </div>
-            <ModalContainer />
-            <ToastContainer />
-          </ModalProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <NextUIProvider className="h-full w-full">
+        {/* <ThemeProvider theme={theme}> */}
+        <ModalProvider>
+          <div className="h-full w-full flex flex-row">
+            <Sidebar />
+            <Routes>
+              {routes.map((r, i) => (
+                <Route key={i} path={r.path} element={r.element} />
+              ))}
+            </Routes>
+          </div>
+          <ModalContainer />
+          <ToastContainer />
+        </ModalProvider>
+        {/* </ThemeProvider> */}
+      </NextUIProvider>
+    </BrowserRouter>
   );
 }
 
