@@ -33,9 +33,9 @@ export const TeacherForm = (props: {onClose: (data: ITeacherExtended) => void}) 
   return (
     <FormProvider {...methods}>
       <>
-        <FormInput className="pt-4 pb-8" name="name" label="Name" />
-        <FormInput className="pb-8" name="firstSurname" label="First Surname" />
-        <FormInput className="pb-8" name="internalId" label="DNI" />
+        <FormInput className="pt-4 pb-8" name="name" label="Name" defaultValue="" />
+        <FormInput className="pb-8" name="firstSurname" label="First Surname" defaultValue="" />
+        <FormInput className="pb-8" name="internalId" label="DNI" defaultValue="" />
 
         <GroupSelector />
 
