@@ -25,7 +25,6 @@ import {useUpdateModal} from '@school-shared/components';
 import {useEffect, useState} from 'react';
 import {deleteTeacher} from '../../application/delete-teacher/action';
 import {fetchTeachers} from '../../application/get-teachers/action';
-import {updateTeacher} from '../../application/update-teacher/action';
 import {TeacherForm} from '../forms/TeacherForm';
 
 interface EditToolbarProps {
@@ -110,7 +109,6 @@ export function Teachers() {
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = {...newRow, isNew: false};
-    updateTeacher(newRow.id, newRow);
     setTeachers(teachers.map(row => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };

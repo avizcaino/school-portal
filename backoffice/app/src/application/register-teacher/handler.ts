@@ -17,8 +17,7 @@ export class RegisterTeacherCommandHandler
   async handle(value: RegisterTeacherCommand): Promise<ITeacherExtended> {
     try {
       const id = await this.backendAdapter.registerTeacher(value);
-      const extendedTeacher = await this.backendAdapter.getTeacher(id);
-      return extendedTeacher;
+      return await this.backendAdapter.getTeacher(id);
     } catch (error: any) {
       this.notificationService.notifyError(
         (error as AxiosError<Error>).response?.data?.message || error.message
