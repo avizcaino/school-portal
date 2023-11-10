@@ -24,7 +24,7 @@ const config = {
   content: [
     '../*/src/**/*.{js,ts,jsx,tsx}',
     './index.html',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    '../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {},

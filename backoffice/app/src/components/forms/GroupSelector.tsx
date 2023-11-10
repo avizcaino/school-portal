@@ -1,6 +1,6 @@
 import ToggleButton from '@mui/material/ToggleButton/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup/ToggleButtonGroup';
-import {IGroup} from '@school-server/server';
+import {IGroup} from '@school-shared/core';
 import {useEffect, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {fetchGroups} from '../../application/get-groups/action';

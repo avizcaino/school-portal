@@ -5,12 +5,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import GroupAdd from '@mui/icons-material/GroupAdd';
 import SaveIcon from '@mui/icons-material/Save';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import {
   DataGrid,
   GridActionsCellItem,
   GridColDef,
   GridEventListener,
+  GridRenderCellParams,
   GridRowEditStopReasons,
   GridRowId,
   GridRowModel,
@@ -18,10 +18,10 @@ import {
   GridRowModesModel,
   GridRowsProp,
   GridToolbarContainer,
-  GridValueGetterParams,
 } from '@mui/x-data-grid';
-import {ITeacherExtended} from '@school-server/server';
+import {Avatar, AvatarGroup, Button} from '@nextui-org/react';
 import {useUpdateModal} from '@school-shared/components';
+import {IGroup, ITeacherExtended} from '@school-shared/core';
 import {useEffect, useState} from 'react';
 import {deleteTeacher} from '../../application/delete-teacher/action';
 import {fetchTeachers} from '../../application/get-teachers/action';
@@ -46,7 +46,7 @@ function EditToolbar(props: EditToolbarProps) {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={addRecord}>
+      <Button color="primary" startContent={<AddIcon />} onClick={addRecord}>
         Add record
       </Button>
     </GridToolbarContainer>
@@ -132,8 +132,15 @@ export function Teachers() {
     {
       field: 'groups',
       headerName: 'Cursos',
-      valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
-        params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
+      renderCell: (params: GridRenderCellParams<any, string>) => (
+        <AvatarGroup isBordered max={2}>
+          {params.row.groups?.map((g: IGroup) => (
+            <Avatar name={g.name} />
+          ))}
+        </AvatarGroup>
+      ),
+      // valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
+      //   params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
     },
     {
       field: 'actions',

@@ -1,6 +1,6 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {IGroup} from '@school-server/server';
+import {IGroup} from '@school-shared/core';
 import {GroupValidator} from '@school-shared/core';
 import {Guid} from 'guid-typescript';
 import {prop, sortWith} from 'ramda';
