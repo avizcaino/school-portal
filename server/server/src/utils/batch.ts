@@ -1,9 +1,13 @@
+import {
+  GroupsBackendAdapter,
+  IGroup,
+  IStudent,
+  ITeacher,
+  StudentsBackendAdapter,
+  TeachersBackendAdapter,
+} from '@school-shared/core';
 import Chance from 'chance';
 import {uniq} from 'ramda';
-import {IGroup, IStudent, ITeacher} from 'src/interfaces';
-import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
-import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
-import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
 
 const chance = new Chance();
 

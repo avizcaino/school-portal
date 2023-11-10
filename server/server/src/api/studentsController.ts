@@ -1,9 +1,9 @@
+import {IStudent, IStudentExtended} from '@school-shared/core/src/interfaces/student';
 import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Put, Query, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
-import {IStudent, IStudentExtended} from '../interfaces/student';
 import {provideSingleton} from '../ioc';
 import {studentsBatchInput} from '../utils/batch';
 

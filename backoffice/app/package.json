@@ -39,7 +39,7 @@
     "@mui/x-data-grid-generator": "^6.18.0",
     "@nextui-org/react": "^2.2.9",
     "framer-motion": "^10.16.4",
-    "@school-server/server": "^0.0.0",
+    "@school-shared/core": "^0.0.0",
     "@school-shared/components": "^0.0.0",
     "@school-shared/core": "^0.0.0",
     "guid-typescript": "^1.0.9",

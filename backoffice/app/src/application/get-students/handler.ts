@@ -1,4 +1,4 @@
-import {IStudent, IStudentExtended, StudentsBackendAdapter} from '@school-server/server';
+import {IStudent, IStudentExtended, StudentsBackendAdapter} from '@school-shared/core';
 import {inject, injectable} from 'inversify';
 import {IRequestHandler} from 'mediatr-ts';
 import {StudentsQuery} from './query';

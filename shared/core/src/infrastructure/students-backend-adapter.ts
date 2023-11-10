@@ -1,6 +1,7 @@
-import {IStudent, IStudentExtended, StudentsBackendAdapter} from '@school-server/server';
 import {provideSingleton} from '@uxland/ioc';
 import {inject, injectable} from 'inversify';
+import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
+import {IStudent, IStudentExtended} from '../interfaces/student';
 import {BackendAdapterBase} from './backend-adapter-base';
 
 @injectable()

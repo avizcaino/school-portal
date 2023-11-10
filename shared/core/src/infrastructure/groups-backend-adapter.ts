@@ -1,6 +1,7 @@
-import {GroupsBackendAdapter, IGroup} from '@school-server/server';
 import {provideSingleton} from '@uxland/ioc';
 import {inject, injectable} from 'inversify';
+import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
+import {IGroup} from '../interfaces/group';
 import {BackendAdapterBase} from './backend-adapter-base';
 
 @injectable()

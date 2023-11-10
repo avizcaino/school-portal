@@ -1,10 +1,9 @@
+import {AttendancePayload, AttendanceRecord, IStudentAttendanceRecord} from '@school-shared/core';
 import {format} from 'date-fns';
 import {inject, injectable} from 'inversify';
-import {IStudentAttendanceRecord} from 'src/interfaces/student';
 import {AttendanceBackendAdapter} from '../domain/attendance-backend-adapter';
 import {ATTENDANCE_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
-import {AttendancePayload, AttendanceRecord} from '../interfaces/attendance';
 import {provideTransient} from '../ioc';
 
 @injectable()

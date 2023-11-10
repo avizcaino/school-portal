@@ -1,10 +1,10 @@
 import * as _firestore from '@google-cloud/firestore';
+import {Generic} from '@school-shared/core';
 import admin, {ServiceAccount} from 'firebase-admin';
 import 'firebase/firestore';
 import {injectable} from 'inversify';
 import serviceAccount from '../../serviceAccountKey.json';
 import {Converter, DBFilter, FirebaseDB} from '../domain/db';
-import {Generic} from '../interfaces/entity';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as ServiceAccount),

@@ -1,4 +1,4 @@
-import {ITeacherExtended, TeachersBackendAdapter} from '@school-server/server';
+import {ITeacherExtended, TeachersBackendAdapter} from '@school-shared/core';
 import {NotificationService} from '@uxland/react-services';
 import {AxiosError} from 'axios';
 import {inject, injectable} from 'inversify';

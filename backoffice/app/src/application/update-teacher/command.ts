@@ -1,4 +1,4 @@
-import {ITeacher, ITeacherExtended} from '@school-server/server';
+import {ITeacher, ITeacherExtended} from '@school-shared/core';
 import {IRequest} from 'mediatr-ts';
 
 export class UpdateTeacherCommand implements IRequest<ITeacherExtended> {

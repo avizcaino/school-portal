@@ -1,11 +1,9 @@
+import {IGroup, ITeacher, ITeacherExtended, TeachersBackendAdapter} from '@school-shared/core';
 import {groupBy} from '@school-shared/core/src/utils/mappers';
 import {inject, injectable} from 'inversify';
 import {uniq} from 'ramda';
 import {GROUPS_COLLECTION, TEACHERS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
-import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
-import {IGroup} from '../interfaces/group';
-import {ITeacher, ITeacherExtended} from '../interfaces/teacher';
 
 @injectable()
 export class TeachersBackendAdapterImpl implements TeachersBackendAdapter {

@@ -1,4 +1,4 @@
-import {IGroup} from '@school-server/server';
+import {IGroup} from '@school-shared/core';
 import {Mediator} from 'mediatr-ts';
 import {GroupsQuery} from './query';
 

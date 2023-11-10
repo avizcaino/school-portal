@@ -1,4 +1,4 @@
-import {ITeacher, ITeacherExtended, TeachersBackendAdapter} from '@school-server/server';
+import {ITeacher, ITeacherExtended, TeachersBackendAdapter} from '@school-shared/core';
 import {inject, injectable} from 'inversify';
 import {IRequestHandler} from 'mediatr-ts';
 import {TeachersQuery} from './query';

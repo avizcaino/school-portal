@@ -1,9 +1,9 @@
+import {AttendancePayload} from '@school-shared/core/src/interfaces/attendance';
+import {IStudentAttendanceRecord} from '@school-shared/core/src/interfaces/student';
 import {inject} from 'inversify';
 import {Body, Get, Path, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {AttendanceBackendAdapter} from '../domain/attendance-backend-adapter';
-import {AttendancePayload} from '../interfaces/attendance';
-import {IStudentAttendanceRecord} from '../interfaces/student';
 import {provideSingleton} from '../ioc';
 
 @Route('attendance')

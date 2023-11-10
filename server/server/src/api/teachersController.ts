@@ -1,9 +1,9 @@
+import {ITeacher, ITeacherExtended} from '@school-shared/core/src/interfaces/teacher';
 import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Put, Query, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
 import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
-import {ITeacher, ITeacherExtended} from '../interfaces/teacher';
 import {provideSingleton} from '../ioc';
 import {teachersBatchInput} from '../utils/batch';
 

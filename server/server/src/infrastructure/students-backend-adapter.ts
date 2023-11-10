@@ -1,10 +1,10 @@
+import {StudentsBackendAdapter} from '@school-shared/core';
+import {IGroup} from '@school-shared/core/src/interfaces/group';
+import {IStudent, IStudentExtended} from '@school-shared/core/src/interfaces/student';
 import {groupBy} from '@school-shared/core/src/utils/mappers';
 import {inject, injectable} from 'inversify';
 import {GROUPS_COLLECTION, STUDENTS_COLLECTION} from '../domain/collections';
 import {DBFilterOperator, FirebaseDB} from '../domain/db';
-import {StudentsBackendAdapter} from '../domain/students-backend-adapter';
-import {IGroup} from '../interfaces/group';
-import {IStudent, IStudentExtended} from '../interfaces/student';
 
 @injectable()
 export class StudentsBackendAdapterImpl implements StudentsBackendAdapter {

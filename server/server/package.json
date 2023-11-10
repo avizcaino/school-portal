@@ -34,6 +34,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@school-shared/core": "^0.0.0",
     "@uxland/ioc": "^1.0.3",
     "date-fns": "^2.30.0",
     "express": "^4.18.2",

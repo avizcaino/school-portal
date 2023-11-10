@@ -1,8 +1,8 @@
+import {IGroup} from '@school-shared/core/src/interfaces/group';
 import {inject} from 'inversify';
 import {Body, Delete, Get, Path, Post, Put, Route, Tags} from 'tsoa';
 import {Controller} from '../controller';
 import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
-import {IGroup} from '../interfaces/group';
 import {provideSingleton} from '../ioc';
 import {groupsBatchInput} from '../utils/batch';
 

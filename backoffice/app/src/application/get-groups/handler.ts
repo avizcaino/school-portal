@@ -1,4 +1,4 @@
-import {GroupsBackendAdapter, IGroup} from '@school-server/server';
+import {GroupsBackendAdapter, IGroup} from '@school-shared/core';
 import {inject, injectable} from 'inversify';
 import {IRequestHandler} from 'mediatr-ts';
 import {GroupsQuery} from './query';

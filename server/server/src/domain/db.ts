@@ -1,5 +1,5 @@
 import * as _firestore from '@google-cloud/firestore';
-import {Generic} from '../interfaces/entity';
+import {Generic} from '@school-shared/core/src/interfaces/entity';
 
 export interface Converter<T> {
   toFirestore: (data: T[]) => T[];

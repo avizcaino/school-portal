@@ -1,5 +1,5 @@
-import {AttendancePayload} from '../interfaces/attendance';
-import {IStudentAttendanceRecord} from '../interfaces/student';
+import {AttendancePayload} from '../../../../shared/core/src/interfaces/attendance';
+import {IStudentAttendanceRecord} from '../../../../shared/core/src/interfaces/student';
 
 export abstract class AttendanceBackendAdapter {
   abstract setStudentAttendance(id: string, data: AttendancePayload): Promise<boolean>;

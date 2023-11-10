@@ -1,6 +1,8 @@
 export * from './application';
 export * from './constants';
+export * from './domain';
 export * from './infrastructure';
+export * from './interfaces';
 export * from './utils';
 import {iocContainer, setMediatorResolver} from '@uxland/ioc';
 

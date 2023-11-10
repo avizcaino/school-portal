@@ -1,4 +1,4 @@
-import {ITeacher, ITeacherExtended} from '@school-server/server';
+import {ITeacher, ITeacherExtended} from '@school-shared/core';
 import {Mediator} from 'mediatr-ts';
 import {UpdateTeacherCommand} from './command';
 

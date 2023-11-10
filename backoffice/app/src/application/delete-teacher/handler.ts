@@ -1,4 +1,4 @@
-import {TeachersBackendAdapter} from '@school-server/server';
+import {TeachersBackendAdapter} from '@school-shared/core';
 import {inject, injectable} from 'inversify';
 import {IRequestHandler} from 'mediatr-ts';
 import {DeleteTeacherCommand} from './command';
