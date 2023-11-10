@@ -28,7 +28,6 @@ export const TeachersUI = () => {
       case 'name':
         return (
           <User
-            className="text-black"
             avatarProps={{radius: 'lg', src: teacher.profilePic as string}}
             description={teacher.internalId as string}
             name={fullName}
@@ -75,7 +74,7 @@ export const TeachersUI = () => {
     {name: 'ACTIONS', uid: 'actions'},
   ];
   return (
-    <Table aria-label="Example table with custom cells">
+    <Table aria-label="Example table with custom cells" className="px-4 py-4">
       <TableHeader columns={columns}>
         {column => (
           <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>

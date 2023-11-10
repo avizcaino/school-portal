@@ -1,7 +1,7 @@
 import {initializeCore} from '@school-portal/core';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
-import './index.css';
+// import './index.css';
 
 // Import the functions you need from the SDKs you need
 import {getAnalytics} from 'firebase/analytics';
