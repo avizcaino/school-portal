@@ -1,4 +1,4 @@
-import {initializeCore} from '@school-shared/core';
+import {initializeCore} from '@school-shared/infrastructure';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import {initializeApplication} from './application/handlers.ts';

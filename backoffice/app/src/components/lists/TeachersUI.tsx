@@ -10,17 +10,27 @@ import {
   Tooltip,
   User,
 } from '@nextui-org/react';
-import {DeleteIcon, EditIcon, EyeIcon} from '@school-shared/components';
+import {DeleteIcon, EditIcon, EyeIcon, useUpdateModal} from '@school-shared/components';
 import {ITeacherExtended} from '@school-shared/core';
 import {Key, useCallback, useEffect, useState} from 'react';
 import {fetchTeachers} from '../../application/get-teachers/action';
+import {TeacherForm} from '../forms/TeacherForm';
 
 export const TeachersUI = () => {
+  const updateModal = useUpdateModal();
   const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
   useEffect(() => {
     fetchTeachers().then(t => setTeachers(t));
   }, []);
+
+  const handleEdit = (teacher: ITeacherExtended) => {
+    updateModal({content: () => TeacherForm({onClose, data: teacher})});
+  };
+
+  const onClose = (teacher: ITeacherExtended) => {
+    setTeachers(teachers.map(row => (row.id === teacher.id ? teacher : row)));
+  };
 
   const renderCell = useCallback((teacher: ITeacherExtended, columnKey: Key) => {
     const fullName = `${teacher.name} ${teacher.firstSurname} ${teacher.secondSurname ?? ''}`;
@@ -39,7 +49,7 @@ export const TeachersUI = () => {
         return (
           <AvatarGroup>
             {teacher.groups?.map(i => (
-              <Avatar name={i.name} />
+              <Avatar key={i.name} name={i.name} />
             ))}
           </AvatarGroup>
         );
@@ -53,7 +63,7 @@ export const TeachersUI = () => {
             </Tooltip>
             <Tooltip content="Edit user">
               <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
-                <EditIcon />
+                <EditIcon onClick={() => handleEdit(teacher)} />
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
@@ -73,11 +83,12 @@ export const TeachersUI = () => {
     {name: 'GROUPS', uid: 'groups'},
     {name: 'ACTIONS', uid: 'actions'},
   ];
+
   return (
-    <Table aria-label="Example table with custom cells" className="px-4 py-4">
+    <Table hideHeader aria-label="Example table with custom cells" className="px-4 py-4">
       <TableHeader columns={columns}>
         {column => (
-          <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>
+          <TableColumn key={column.uid} align={column.uid === 'name' ? 'start' : 'center'}>
             {column.name}
           </TableColumn>
         )}

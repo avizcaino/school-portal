@@ -1,7 +1,7 @@
+import {GroupsBackendAdapter} from '@school-shared/core/src/domain/groups-backend-adapter';
+import {IGroup} from '@school-shared/core/src/interfaces/group';
 import {provideSingleton} from '@uxland/ioc';
 import {inject, injectable} from 'inversify';
-import {GroupsBackendAdapter} from '../domain/groups-backend-adapter';
-import {IGroup} from '../interfaces/group';
 import {BackendAdapterBase} from './backend-adapter-base';
 
 @injectable()

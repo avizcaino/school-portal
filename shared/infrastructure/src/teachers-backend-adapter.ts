@@ -1,7 +1,7 @@
+import {TeachersBackendAdapter} from '@school-shared/core/src/domain/teachers-backend-adapter';
+import {ITeacher, ITeacherExtended} from '@school-shared/core/src/interfaces/teacher';
 import {provideSingleton} from '@uxland/ioc';
 import {inject, injectable} from 'inversify';
-import {TeachersBackendAdapter} from '../domain/teachers-backend-adapter';
-import {ITeacher, ITeacherExtended} from '../interfaces/teacher';
 import {BackendAdapterBase} from './backend-adapter-base';
 
 @injectable()

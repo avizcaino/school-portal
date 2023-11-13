@@ -22,11 +22,9 @@
     "@school-server/server": "^0.0.0",
     "@uxland/ioc": "^1.0.3",
     "@uxland/react-services": "^1.0.6",
-    "@uxland/utilities": "^1.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "inversify": "^6.0.1",
-    "middleware-axios": "^2.1.5",
     "react-toastify": "^9.1.3"
   }
 }

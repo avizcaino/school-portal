@@ -4204,10 +4204,10 @@
     react-i18next "^12.1.4"
     react-toastify "^9.1.1"
 
-"@uxland/utilities@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@uxland/utilities/-/utilities-1.0.3.tgz#edde27800e2c77c02b976b587e0d255d94eec9a0"
-  integrity sha512-OyTHF1+L31s2q7bSFIHCfWklXN13Ly9Rlo0t5pK5pMvJq2mMtIqENwhwWDY0zY6S+EDCvr5PB2OjmTHACqMvdw==
+"@uxland/utilities@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@uxland/utilities/-/utilities-1.0.5.tgz#16f948fb28be4faecfa79fcfc1c74125e9835436"
+  integrity sha512-zzvcIGghD7XsRGevff0WZQyatC1s3c6kNwMDdoEXhWBW5TQipkAWRfjOXreGJvEyFlIUMye+gaiNocC1wuWxmQ==
   dependencies:
     "@uxland/ramda-extensions" "^1.0.3"
 

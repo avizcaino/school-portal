@@ -22,7 +22,7 @@ export const Toolbar = (props: {routes: {name: string; path: string; element: JS
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-3">
           {props.routes?.map(r => (
-            <NavbarItem>
+            <NavbarItem key={r.name}>
               <Link key={r.path} href={r.path}>
                 {r.name}
               </Link>

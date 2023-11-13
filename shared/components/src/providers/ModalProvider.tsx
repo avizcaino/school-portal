@@ -1,4 +1,4 @@
-import {contextNameBuilder} from '@school-shared/core';
+import {contextNameBuilder} from '@school-shared/utils';
 import {createContext, useContext, useState} from 'react';
 
 export type SlideDirection = 'left' | 'right' | 'up' | 'down';

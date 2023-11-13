@@ -1,7 +1,6 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
-import {IStudent, IStudentExtended} from '@school-shared/core';
-import {GroupValidator} from '@school-shared/core';
+import {GroupValidator, IStudent, IStudentExtended} from '@school-shared/core';
 import {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
 import {CreateGroupCommand} from '../../application/create-group/command';

@@ -1,8 +1,7 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
 import Button from '@mui/material/Button/Button';
-import {ITeacher, ITeacherExtended} from '@school-shared/core';
 import {FormInput, useUpdateModal} from '@school-shared/components';
-import {TeacherValidator} from '@school-shared/core';
+import {ITeacher, ITeacherExtended, TeacherValidator} from '@school-shared/core';
 import {BaseSyntheticEvent} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
 import {registerTeacher} from '../../application/register-teacher/action';

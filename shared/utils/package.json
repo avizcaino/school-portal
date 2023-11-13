@@ -1,5 +1,5 @@
 {
-  "name": "@school-shared/components",
+  "name": "@school-shared/utils",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Alex Vizcaino <avizcainoluna@gmail.com>",
@@ -13,15 +13,12 @@
     "url": "git+https://github.com/avizcaino/school-portal.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@school-shared/components.test.js"
+    "test": "node ./__tests__/@school-shared/utils.test.js"
   },
   "bugs": {
     "url": "https://github.com/avizcaino/school-portal/issues"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.15",
-    "@school-shared/utils": "^0.0.0"
+    "@uxland/utilities": "^1.0.5"
   }
 }

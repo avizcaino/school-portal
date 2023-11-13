@@ -1,4 +1,4 @@
-import {ITeacher} from '@school-server/server';
+import {ITeacher} from '@school-shared/core';
 import {IsArray, IsNotEmpty, IsOptional} from 'class-validator';
 
 export class TeacherValidator implements ITeacher {

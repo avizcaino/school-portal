@@ -1,7 +1,7 @@
+import {GroupsBackendAdapter} from '@school-shared/core';
 import 'reflect-metadata';
 import {beforeAll, describe, expect, it} from 'vitest';
 import {FirebaseDB} from '../../src/domain/db';
-import {GroupsBackendAdapter} from '../../src/domain/groups-backend-adapter';
 import {GroupsBackendAdapterImpl} from '../../src/infrastructure/groups-backend-adapter';
 import {dummyData} from '../assets/dummy-data';
 import {DummyDB} from '../assets/dummy-db';

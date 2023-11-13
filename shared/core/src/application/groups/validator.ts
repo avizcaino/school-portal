@@ -1,4 +1,4 @@
-import {IGroup, IStudent, ITeacher} from '@school-server/server';
+import {IGroup, IStudent, ITeacher} from '@school-shared/core';
 import {IsNotEmpty, IsNumber, IsOptional, Min} from 'class-validator';
 
 export class GroupValidator implements IGroup {
