@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {Toolbar} from './components/Toolbar';
 import {Groups} from './components/lists/Groups';
 import {Students} from './components/lists/Students';
-import {TeachersUI} from './components/lists/TeachersUI';
+import {Teachers} from './components/lists/Teachers';
 
 function App() {
   const routes = [
@@ -18,7 +18,7 @@ function App() {
     {
       name: 'Teachers',
       path: '/teachers',
-      element: <TeachersUI />,
+      element: <Teachers />,
     },
     {
       name: 'Students',

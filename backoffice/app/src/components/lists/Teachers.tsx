@@ -1,59 +1,38 @@
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import EditIcon from '@mui/icons-material/Edit';
-import GroupAdd from '@mui/icons-material/GroupAdd';
-import SaveIcon from '@mui/icons-material/Save';
-import Box from '@mui/material/Box';
+import {capitalize} from '@mui/material';
 import {
-  DataGrid,
-  GridActionsCellItem,
-  GridColDef,
-  GridEventListener,
-  GridRenderCellParams,
-  GridRowEditStopReasons,
-  GridRowId,
-  GridRowModel,
-  GridRowModes,
-  GridRowModesModel,
-  GridRowsProp,
-  GridToolbarContainer,
-} from '@mui/x-data-grid';
-import {Avatar, AvatarGroup, Button} from '@nextui-org/react';
-import {useUpdateModal} from '@school-shared/components';
-import {IGroup, ITeacherExtended} from '@school-shared/core';
-import {useEffect, useState} from 'react';
-import {deleteTeacher} from '../../application/delete-teacher/action';
+  Avatar,
+  AvatarGroup,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Selection,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+  User,
+} from '@nextui-org/react';
+import {
+  ChevronDownIcon,
+  DeleteIcon,
+  EditIcon,
+  EyeIcon,
+  PlusIcon,
+  SearchIcon,
+  useUpdateModal,
+} from '@school-shared/components';
+import {ITeacherExtended} from '@school-shared/core';
+import {Key, useCallback, useEffect, useMemo, useState} from 'react';
 import {fetchTeachers} from '../../application/get-teachers/action';
 import {TeacherForm} from '../forms/TeacherForm';
 
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void;
-}
-
-function EditToolbar(props: EditToolbarProps) {
-  const updateModal = useUpdateModal();
-  const {setRows, setRowModesModel} = props;
-
-  const addRecord = () => {
-    updateModal({content: () => TeacherForm({onClose: onAddRecord}), renderCloseAction: true});
-  };
-
-  const onAddRecord = (data: ITeacherExtended) => {
-    setRows(oldRows => [...oldRows, {...data, isNew: true}]);
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startContent={<AddIcon />} onClick={addRecord}>
-        Add record
-      </Button>
-    </GridToolbarContainer>
-  );
-}
-
-export function Teachers() {
+export const Teachers = () => {
   const updateModal = useUpdateModal();
   const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
 
@@ -61,172 +40,179 @@ export function Teachers() {
     fetchTeachers().then(t => setTeachers(t));
   }, []);
 
-  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const handleEdit = (teacher: ITeacherExtended) => {
+    updateModal({content: () => TeacherForm({onClose, data: teacher, isEditing: true})});
+  };
 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
+  const onClose = (teacher: ITeacherExtended) => {
+    setTeachers(teachers.map(row => (row.id === teacher.id ? teacher : row)));
+  };
+
+  const renderCell = useCallback((teacher: ITeacherExtended, columnKey: Key) => {
+    const fullName = `${teacher.name} ${teacher.firstSurname} ${teacher.secondSurname ?? ''}`;
+    switch (columnKey) {
+      case 'name':
+        return (
+          <User
+            avatarProps={{radius: 'lg', src: teacher.profilePic as string}}
+            description={teacher.internalId as string}
+            name={fullName}
+          >
+            {teacher.internalId as string}
+          </User>
+        );
+      case 'groups':
+        return (
+          <AvatarGroup>
+            {teacher.groups?.map(i => (
+              <Avatar key={i.name} name={i.name} />
+            ))}
+          </AvatarGroup>
+        );
+      case 'actions':
+        return (
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
+                <EyeIcon />
+              </span>
+            </Tooltip>
+            <Tooltip content="Edit user">
+              <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
+                <EditIcon onClick={() => handleEdit(teacher)} />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete user">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return 'cellValue';
     }
-  };
+  }, []);
 
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
-  };
-
-  const handleEditGroupsClick = (id: GridRowId) => () => {
-    const selectedTeacher = teachers.find(t => t.id === id);
-    updateModal({
-      content: () =>
-        TeacherForm({
-          onClose: processRowUpdate,
-          data: selectedTeacher,
-          isUpdating: true,
-        }),
-      renderCloseAction: true,
-    });
-  };
-
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
-  };
-
-  const handleDeleteClick = (id: GridRowId) => () => {
-    deleteTeacher(id.toString());
-    setTeachers(teachers.filter(row => row.id !== id));
-  };
-
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: {mode: GridRowModes.View, ignoreModifications: true},
-    });
-
-    const editedRow = teachers.find(row => row.id === id);
-    if (editedRow!.isNew) {
-      setTeachers(teachers.filter(row => row.id !== id));
-    }
-  };
-
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = {...newRow, isNew: false};
-    setTeachers(teachers.map(row => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
-
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-
-  const columns: GridColDef[] = [
-    // {
-    //   field: 'profilePic',
-    //   headerName: 'Avatar',
-    //   renderCell: (params: GridRenderCellParams<any, string>) => (
-    //     <img src={params.value} alt="profile-pic" />
-    //   ),
-    // },
-    {field: 'name', headerName: 'Nom', editable: true},
-    {field: 'firstSurname', headerName: 'Primer Cognom', editable: true},
-    {field: 'secondSurname', headerName: 'Segon Cognom', editable: true},
-    {field: 'internalId', headerName: 'DNI', editable: true},
-    {
-      field: 'groups',
-      headerName: 'Cursos',
-      renderCell: (params: GridRenderCellParams<any, string>) => (
-        <AvatarGroup isBordered max={2}>
-          {params.row.groups?.map((g: IGroup) => (
-            <Avatar name={g.name} />
-          ))}
-        </AvatarGroup>
-      ),
-      // valueGetter: (params: GridValueGetterParams<ITeacherExtended>) =>
-      //   params.row.groups?.reduce((groups, g) => groups.concat(`${g.name} | `), ''),
-    },
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({id}) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              sx={{
-                color: 'primary.main',
-              }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<GroupAdd />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditGroupsClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
-        ];
-      },
-    },
+  const columns = [
+    {name: 'NAME', uid: 'name'},
+    {name: 'GROUPS', uid: 'groups'},
+    {name: 'ACTIONS', uid: 'actions'},
   ];
 
+  // HEADER
+  const INITIAL_VISIBLE_COLUMNS = ['name', 'groups', 'actions'];
+  const [filterValue, setFilterValue] = useState('');
+  const [statusFilter, setStatusFilter] = useState<Selection>('all');
+  const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
+  const onSearchChange = useCallback((value?: string) => {
+    if (value) {
+      setFilterValue(value);
+    } else {
+      setFilterValue('');
+    }
+  }, []);
+
+  const onClear = useCallback(() => {
+    setFilterValue('');
+  }, []);
+
+  const headerColumns = useMemo(() => {
+    if (visibleColumns === 'all') return columns;
+
+    return columns.filter(column => Array.from(visibleColumns).includes(column.uid));
+  }, [visibleColumns]);
+
+  const hasSearchFilter = Boolean(filterValue);
+
+  const filteredItems = useMemo(() => {
+    let filteredTeachers = [...teachers];
+
+    if (hasSearchFilter) {
+      filteredTeachers = filteredTeachers.filter((teacher: ITeacherExtended) =>
+        teacher.name.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    }
+
+    return filteredTeachers;
+  }, [teachers, filterValue, statusFilter]);
+
   return (
-    <Box
-      className="w-full px-4 py-4 flex flex-col"
-      sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-      }}
-    >
-      <DataGrid
-        className="shadow-lg"
-        rows={teachers}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: {setRows: setTeachers, setRowModesModel},
-        }}
-      />
-    </Box>
+    <div className="flex flex-col gap-4 px-4 py-4">
+      <div className="flex justify-between gap-3 items-end">
+        <Input
+          isClearable
+          className="w-full sm:max-w-[44%]"
+          placeholder="Search by name..."
+          startContent={<SearchIcon />}
+          value={filterValue}
+          onClear={() => onClear()}
+          onValueChange={onSearchChange}
+        />
+        <div className="flex gap-3">
+          {/* <Dropdown>
+            <DropdownTrigger className="hidden sm:flex">
+              <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                Status
+              </Button>
+            </DropdownTrigger>
+            {<DropdownMenu
+              disallowEmptySelection
+              aria-label="Table Columns"
+              closeOnSelect={false}
+              selectedKeys={statusFilter}
+              selectionMode="multiple"
+              onSelectionChange={setStatusFilter}
+            >
+              {statusOptions.map(status => (
+                <DropdownItem key={status.uid} className="capitalize">
+                  {capitalize(status.name)}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>}
+          </Dropdown> */}
+          <Dropdown>
+            <DropdownTrigger className="hidden sm:flex">
+              <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                Columns
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disallowEmptySelection
+              aria-label="Table Columns"
+              closeOnSelect={false}
+              selectedKeys={visibleColumns}
+              selectionMode="multiple"
+              onSelectionChange={setVisibleColumns}
+            >
+              {columns.map(column => (
+                <DropdownItem key={column.uid} className="capitalize">
+                  {capitalize(column.name)}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Button color="primary" endContent={<PlusIcon />}>
+            Add New
+          </Button>
+        </div>
+      </div>
+      <Table hideHeader aria-label="Example table with custom cells" className="">
+        <TableHeader columns={headerColumns}>
+          {column => (
+            <TableColumn key={column.uid} align={column.uid === 'name' ? 'start' : 'center'}>
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={filteredItems}>
+          {item => (
+            <TableRow key={item.id as string}>
+              {columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
-}
+};
