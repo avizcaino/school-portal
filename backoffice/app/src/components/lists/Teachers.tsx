@@ -80,7 +80,7 @@ export function Teachers() {
         TeacherForm({
           onClose: processRowUpdate,
           data: selectedTeacher,
-          groupAssignation: true,
+          isUpdating: true,
         }),
       renderCloseAction: true,
     });

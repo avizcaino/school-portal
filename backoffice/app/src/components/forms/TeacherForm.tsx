@@ -13,7 +13,7 @@ const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync
 export const TeacherForm = (props: {
   onClose: (data: ITeacherExtended) => void;
   data?: ITeacherExtended;
-  groupAssignation?: boolean;
+  isEditing?: boolean;
 }) => {
   const updateModal = useUpdateModal();
 
@@ -30,7 +30,7 @@ export const TeacherForm = (props: {
       data: RegisterTeacherCommand
     ): Promise<ITeacherExtended> =>
       isEditing ? updateTeacher(data.id as string, data) : registerTeacher(data);
-    fn(props.groupAssignation, data).then((teacher: ITeacherExtended) => {
+    fn(props.isEditing, data).then((teacher: ITeacherExtended) => {
       updateModal(null as never);
       props.onClose(teacher);
     });
@@ -46,19 +46,19 @@ export const TeacherForm = (props: {
     <FormProvider {...methods}>
       <>
         <FormInput
-          className={`pt-4 pb-4 ${props.groupAssignation && 'hidden'}`}
+          className={`pt-4 pb-4`}
           name="name"
           label="Name"
           defaultValue={props.data?.name}
         />
         <FormInput
-          className={`pt-4 pb-4 ${props.groupAssignation && 'hidden'}`}
+          className={`pt-4 pb-4`}
           name="firstSurname"
           label="First Surname"
           defaultValue={props.data?.firstSurname}
         />
         <FormInput
-          className={`pt-4 pb-4 ${props.groupAssignation && 'hidden'}`}
+          className={`pt-4 pb-4`}
           name="internalId"
           label="DNI"
           defaultValue={props.data?.internalId}
