@@ -1,3 +1,4 @@
+import {injectReducer} from '@school-backoffice/core';
 import {requestHandler} from 'mediatr-ts';
 import {CreateGroupCommand} from './create-group/command';
 import {CreateGroupCommandHandler} from './create-group/handler';
@@ -9,6 +10,7 @@ import {StudentsQueryHandler} from './get-students/handler';
 import {StudentsQuery} from './get-students/query';
 import {TeachersQueryHandler} from './get-teachers/handler';
 import {TeachersQuery} from './get-teachers/query';
+import {teachersSlice} from './get-teachers/reducer';
 import {RegisterTeacherCommand} from './register-teacher/command';
 import {RegisterTeacherCommandHandler} from './register-teacher/handler';
 import {UpdateTeacherCommand} from './update-teacher/command';
@@ -22,4 +24,8 @@ export const initializeApplication = () => {
   requestHandler(RegisterTeacherCommand)(RegisterTeacherCommandHandler);
   requestHandler(UpdateTeacherCommand)(UpdateTeacherCommandHandler);
   requestHandler(DeleteTeacherCommand)(DeleteTeacherCommandHandler);
+};
+
+export const initializeStore = () => {
+  injectReducer('teachers', teachersSlice.reducer);
 };
