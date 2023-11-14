@@ -1,5 +1,7 @@
 import {NextUIProvider} from '@nextui-org/react';
+import {store} from '@school-backoffice/core';
 import {ModalContainer, ModalProvider} from '@school-shared/components';
+import {Provider} from 'react-redux';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,23 +31,25 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NextUIProvider className="h-full w-full">
-        {/* <ThemeProvider theme={theme}> */}
-        <ModalProvider>
-          <div className="h-full w-full flex flex-col">
-            <Toolbar routes={routes} />
-            {/* <Sidebar /> */}
-            <Routes>
-              {routes.map((r, i) => (
-                <Route key={i} path={r.path} element={r.element} />
-              ))}
-            </Routes>
-          </div>
-          <ModalContainer />
-          <ToastContainer />
-        </ModalProvider>
-        {/* </ThemeProvider> */}
-      </NextUIProvider>
+      <Provider store={store}>
+        <NextUIProvider className="h-full w-full">
+          {/* <ThemeProvider theme={theme}> */}
+          <ModalProvider>
+            <div className="h-full w-full flex flex-col">
+              <Toolbar routes={routes} />
+              {/* <Sidebar /> */}
+              <Routes>
+                {routes.map((r, i) => (
+                  <Route key={i} path={r.path} element={r.element} />
+                ))}
+              </Routes>
+            </div>
+            <ModalContainer />
+            <ToastContainer />
+          </ModalProvider>
+          {/* </ThemeProvider> */}
+        </NextUIProvider>
+      </Provider>
     </BrowserRouter>
   );
 }
