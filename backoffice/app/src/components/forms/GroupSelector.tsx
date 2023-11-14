@@ -19,7 +19,6 @@ export const GroupSelector = (props: {defaultValues?: string[]}) => {
       control={control}
       defaultValue={props.defaultValues}
       render={({field: {onChange, value}}) => {
-        console.log(value);
         return (
           <Select
             label="Assigned groups"
