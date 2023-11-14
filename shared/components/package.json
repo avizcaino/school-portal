@@ -22,6 +22,9 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.15",
-    "@school-shared/utils": "^0.0.0"
+    "@nextui-org/react": "^2.2.9",
+    "@school-shared/utils": "^0.0.0",
+    "@uxland/ramda-extensions": "^1.0.3",
+    "framer-motion": "^10.16.4"
   }
 }

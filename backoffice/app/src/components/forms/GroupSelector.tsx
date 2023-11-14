@@ -1,5 +1,4 @@
-import ToggleButton from '@mui/material/ToggleButton/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup/ToggleButtonGroup';
+import {Select, SelectItem} from '@nextui-org/react';
 import {IGroup} from '@school-shared/core';
 import {useEffect, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
@@ -22,18 +21,31 @@ export const GroupSelector = (props: {defaultValues?: string[]}) => {
       render={({field: {onChange, value}}) => {
         console.log(value);
         return (
-          <ToggleButtonGroup
-            className="!grid grid-cols-4 gap-4"
-            value={value}
-            onChange={(event, value: any) => onChange(value)}
-            aria-label="text formatting"
+          <Select
+            label="Assigned groups"
+            placeholder="Select group"
+            selectionMode="multiple"
+            onSelectionChange={onChange}
+            selectedKeys={value}
           >
             {groups.map(g => (
-              <ToggleButton key={g.id} value={g.id as string} aria-label={g.name}>
+              <SelectItem key={g.id as string} value={g.id}>
                 {g.name}
-              </ToggleButton>
+              </SelectItem>
             ))}
-          </ToggleButtonGroup>
+          </Select>
+          // <ToggleButtonGroup
+          //   className="!grid grid-cols-4 gap-4"
+          //   value={value}
+          //   onChange={(event, value: any) => onChange(value)}
+          //   aria-label="text formatting"
+          // >
+          //   {groups.map(g => (
+          //     <ToggleButton key={g.id} value={g.id as string} aria-label={g.name}>
+          //       {g.name}
+          //     </ToggleButton>
+          //   ))}
+          // </ToggleButtonGroup>
         );
       }}
     />

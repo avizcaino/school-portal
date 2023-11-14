@@ -1,5 +1,5 @@
 import {classValidatorResolver} from '@hookform/resolvers/class-validator';
-import Button from '@mui/material/Button/Button';
+import {Button} from '@nextui-org/react';
 import {FormInput, useUpdateModal} from '@school-shared/components';
 import {ITeacher, ITeacherExtended, TeacherValidator} from '@school-shared/core';
 import {BaseSyntheticEvent} from 'react';
@@ -46,19 +46,19 @@ export const TeacherForm = (props: {
     <FormProvider {...methods}>
       <>
         <FormInput
-          className={`pt-4 pb-4`}
+          className={`pt-2 pb-2`}
           name="name"
           label="Name"
           defaultValue={props.data?.name}
         />
         <FormInput
-          className={`pt-4 pb-4`}
+          className={`pt-2 pb-2`}
           name="firstSurname"
           label="First Surname"
           defaultValue={props.data?.firstSurname}
         />
         <FormInput
-          className={`pt-4 pb-4`}
+          className={`pt-2 pb-2`}
           name="internalId"
           label="DNI"
           defaultValue={props.data?.internalId}

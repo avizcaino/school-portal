@@ -1,4 +1,4 @@
-import TextField from '@mui/material/TextField';
+import {Input} from '@nextui-org/react';
 import {useController, useFormContext} from 'react-hook-form';
 
 export interface IFormInput {
@@ -23,7 +23,20 @@ export const FormInput = (props: IFormInput) => {
 
   return (
     <div className={props.className}>
-      <TextField
+      <Input
+        isRequired={props.required}
+        type={props.type}
+        label={props.label}
+        defaultValue={props.defaultValue}
+        onChange={event => {
+          console.log(event);
+          props.onChange && props.onChange(event);
+          field.onChange(event);
+        }}
+        isInvalid={fieldState?.error != null}
+        errorMessage={fieldState?.error?.message}
+      />
+      {/* <TextField
         {...field}
         inputRef={field.ref}
         label={props.label}
@@ -42,7 +55,7 @@ export const FormInput = (props: IFormInput) => {
         InputLabelProps={{
           shrink: true,
         }}
-      ></TextField>
+      ></TextField> */}
     </div>
   );
 };

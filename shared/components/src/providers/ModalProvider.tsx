@@ -1,10 +1,12 @@
 import {contextNameBuilder} from '@school-shared/utils';
 import {createContext, useContext, useState} from 'react';
 
+export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
 export type SlideDirection = 'left' | 'right' | 'up' | 'down';
 export type ModalProviderState = {
   fullScreen?: boolean;
   slideDirection?: SlideDirection;
+  size?: ModalSize;
   content: React.FC;
   data?: any;
   className?: string;
@@ -26,6 +28,7 @@ export const ModalProvider = ({children}) => {
     fullScreen: true,
     content: null,
     data: null,
+    size: 'md',
     className: '',
     title: '',
     renderCloseAction: false,

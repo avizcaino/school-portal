@@ -41,7 +41,10 @@ export const Teachers = () => {
   }, []);
 
   const handleEdit = (teacher: ITeacherExtended) => {
-    updateModal({content: () => TeacherForm({onClose, data: teacher, isEditing: true})});
+    updateModal({
+      title: 'Editing...',
+      content: () => TeacherForm({onClose, data: teacher, isEditing: true}),
+    });
   };
 
   const onClose = (teacher: ITeacherExtended) => {
