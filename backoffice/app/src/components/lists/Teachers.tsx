@@ -211,7 +211,7 @@ export const Teachers = () => {
         aria-label="Example table with custom cells"
         classNames={{
           base: 'max-h-[520px] overflow-scroll',
-          table: 'min-h-[490px]',
+          table: 'min-h-[60px]',
         }}
       >
         <TableHeader columns={headerColumns}>
