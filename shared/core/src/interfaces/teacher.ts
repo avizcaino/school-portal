@@ -6,6 +6,6 @@ export interface ITeacher extends Person {
   groups?: ID[];
 }
 
-export interface ITeacherExtended extends Omit<ITeacher, 'groups'> {
+export interface ITeacherExtended extends Person {
   groups?: IGroup[];
 }

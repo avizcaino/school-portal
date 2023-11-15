@@ -7,7 +7,7 @@ initializeCore().then(async () => {
   initializeApplication();
   initializeStore();
   await createRoot(document.getElementById('root')!).render(
-    <main className="dark text-foreground bg-background">
+    <main className="dark h-full w-full text-foreground bg-background">
       <App />
     </main>
   );

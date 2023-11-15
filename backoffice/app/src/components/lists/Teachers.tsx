@@ -9,6 +9,7 @@ import {
   DropdownTrigger,
   Input,
   Selection,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -29,15 +30,20 @@ import {
 } from '@school-shared/components';
 import {ITeacherExtended} from '@school-shared/core';
 import {Key, useCallback, useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {fetchTeachers} from '../../application/get-teachers/action';
+import {teachersSelector} from '../../application/get-teachers/selectors';
 import {TeacherForm} from '../forms/TeacherForm';
 
 export const Teachers = () => {
   const updateModal = useUpdateModal();
-  const [teachers, setTeachers] = useState<ITeacherExtended[]>([]);
+  const teachers = useSelector(teachersSelector);
+
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
-    fetchTeachers().then(t => setTeachers(t));
+    setFetching(true);
+    fetchTeachers().then(r => setFetching(false));
   }, []);
 
   const handleEdit = (teacher: ITeacherExtended) => {
@@ -48,7 +54,7 @@ export const Teachers = () => {
   };
 
   const onClose = (teacher: ITeacherExtended) => {
-    setTeachers(teachers.map(row => (row.id === teacher.id ? teacher : row)));
+    console.log(`Teacher edited ${teacher}`);
   };
 
   const renderCell = useCallback((teacher: ITeacherExtended, columnKey: Key) => {
@@ -57,7 +63,7 @@ export const Teachers = () => {
       case 'name':
         return (
           <User
-            avatarProps={{radius: 'lg', src: teacher.profilePic as string}}
+            // avatarProps={{radius: 'lg', src: teacher.profilePic as string}}
             description={teacher.internalId as string}
             name={fullName}
           >
@@ -129,7 +135,7 @@ export const Teachers = () => {
   const hasSearchFilter = Boolean(filterValue);
 
   const filteredItems = useMemo(() => {
-    let filteredTeachers = [...teachers];
+    let filteredTeachers = [...(teachers ?? [])];
 
     if (hasSearchFilter) {
       filteredTeachers = filteredTeachers.filter((teacher: ITeacherExtended) =>
@@ -200,7 +206,14 @@ export const Teachers = () => {
           </Button>
         </div>
       </div>
-      <Table hideHeader aria-label="Example table with custom cells" className="">
+      <Table
+        hideHeader
+        aria-label="Example table with custom cells"
+        classNames={{
+          base: 'max-h-[520px] overflow-scroll',
+          table: 'min-h-[490px]',
+        }}
+      >
         <TableHeader columns={headerColumns}>
           {column => (
             <TableColumn key={column.uid} align={column.uid === 'name' ? 'start' : 'center'}>
@@ -208,7 +221,11 @@ export const Teachers = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={filteredItems}>
+        <TableBody
+          isLoading={fetching}
+          loadingContent={<Spinner label="Loading..." />}
+          items={filteredItems}
+        >
           {item => (
             <TableRow key={item.id as string}>
               {columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}
