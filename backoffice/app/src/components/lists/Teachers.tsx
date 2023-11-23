@@ -33,6 +33,8 @@ import {Key, useCallback, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {fetchTeachers} from '../../application/get-teachers/action';
 import {teachersSelector} from '../../application/get-teachers/selectors';
+import {ConfirmDelete} from '../forms/ConfirmDelete';
+import {DeleteActions} from '../forms/DeleteActions';
 import {TeacherForm} from '../forms/TeacherForm';
 
 export const Teachers = () => {
@@ -49,13 +51,20 @@ export const Teachers = () => {
   const handleEdit = (teacher: ITeacherExtended) => {
     updateModal({
       title: 'Editing...',
-      content: () => TeacherForm({onClose, data: teacher, isEditing: true}),
+      content: () => TeacherForm({data: teacher, isEditing: true}),
     });
   };
 
-  const onClose = (teacher: ITeacherExtended) => {
-    console.log(`Teacher edited ${teacher}`);
+  const handleDelete = (id: string) => {
+    updateModal({
+      title: '',
+      data: id,
+      content: () => ConfirmDelete({onClose: onCloseDelete, data: id}),
+      actions: DeleteActions,
+    });
   };
+
+  const onCloseDelete = () => console.log('Delete');
 
   const renderCell = useCallback((teacher: ITeacherExtended, columnKey: Key) => {
     const fullName = `${teacher.name} ${teacher.firstSurname} ${teacher.secondSurname ?? ''}`;
@@ -93,7 +102,7 @@ export const Teachers = () => {
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
+                <DeleteIcon onClick={() => handleDelete(teacher.id as string)} />
               </span>
             </Tooltip>
           </div>

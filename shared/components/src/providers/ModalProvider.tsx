@@ -3,6 +3,9 @@ import {createContext, useContext, useState} from 'react';
 
 export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
 export type SlideDirection = 'left' | 'right' | 'up' | 'down';
+export interface ModalActions {
+  onClose?: () => void;
+}
 export type ModalProviderState = {
   fullScreen?: boolean;
   slideDirection?: SlideDirection;
@@ -12,7 +15,7 @@ export type ModalProviderState = {
   className?: string;
   title?: string;
   renderCloseAction?: boolean;
-  actions?: React.FC;
+  actions?: React.FC<ModalActions>;
   scroll?: 'body' | 'paper';
   contentAction?: () => void;
 };
@@ -26,15 +29,15 @@ ModalDispatchContext.displayName = contextNameBuilder('modal-dispatch');
 export const ModalProvider = ({children}) => {
   const [modal, setModal] = useState<ModalProviderState>({
     fullScreen: true,
-    content: null,
+    content: null as never,
     data: null,
     size: 'md',
     className: '',
     title: '',
     renderCloseAction: false,
-    actions: null,
+    actions: null as never,
     scroll: 'paper',
-    contentAction: null,
+    contentAction: null as never,
   });
   return (
     <ModalStateContext.Provider value={modal}>

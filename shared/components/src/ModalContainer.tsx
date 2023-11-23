@@ -6,7 +6,7 @@ export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   renderCloseAction?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const renderContent = (Content: React.FC, data?: any) => <Content {...data} />;
@@ -24,7 +24,7 @@ export const ModalContainer = () => {
   const handleClose = () => {
     setOpen(false);
     setTimeout(() => {
-      updateModal(null);
+      updateModal(null as never);
     }, 500);
   };
 
@@ -36,7 +36,9 @@ export const ModalContainer = () => {
             <>
               <ModalHeader>{config.title}</ModalHeader>
               <ModalBody>{config?.content && renderContent(config.content)}</ModalBody>
-              <ModalFooter>{config?.actions && renderContent(config?.actions)}</ModalFooter>
+              <ModalFooter>
+                {config?.actions && renderContent(config?.actions, {onClose})}
+              </ModalFooter>
             </>
           )}
         </ModalContent>

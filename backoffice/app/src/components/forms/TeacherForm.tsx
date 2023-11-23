@@ -10,11 +10,7 @@ import {updateTeacher} from '../../application/update-teacher/action';
 import {GroupSelector} from './GroupSelector';
 
 const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});
-export const TeacherForm = (props: {
-  onClose: (data: ITeacherExtended) => void;
-  data?: ITeacherExtended;
-  isEditing?: boolean;
-}) => {
+export const TeacherForm = (props: {data?: ITeacherExtended; isEditing?: boolean}) => {
   const updateModal = useUpdateModal();
 
   const methods = useForm<TeacherValidator>({
@@ -32,7 +28,6 @@ export const TeacherForm = (props: {
       isEditing ? updateTeacher(data.id as string, data) : registerTeacher(data);
     fn(props.isEditing, data).then((teacher: ITeacherExtended) => {
       updateModal(null as never);
-      props.onClose(teacher);
     });
   };
 
