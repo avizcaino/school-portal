@@ -3,6 +3,8 @@
 - [ ] Afegir "gender"?
 - [x] API per generar avatars
 - [ ] Notification service
+- [ ] Modal: revisar com fer servir el ModalFooter per injectar custom actions i com delegar les
+      accions en onClose fora del modal o content-component del modal
 
 # TEACHERS
 

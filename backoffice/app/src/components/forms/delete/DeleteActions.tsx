@@ -5,24 +5,17 @@ import {
   useModal,
   useUpdateModal,
 } from '@school-shared/components';
-import {deleteTeacher} from '../../application/delete-teacher/action';
 
 export const DeleteActions = (props: ModalActions) => {
   const modalConfig = useModal() satisfies ModalProviderState;
   const updateModal = useUpdateModal();
 
   const handleAccept = () => {
-    closeModal();
-    deleteTeacher(modalConfig.data);
+    props.onClose && props.onClose(true);
   };
 
   const handleCancel = () => {
-    closeModal();
-  };
-
-  const closeModal = () => {
-    props.onClose && props.onClose();
-    updateModal(null as never);
+    props.onClose && props.onClose(false);
   };
 
   return (

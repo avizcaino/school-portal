@@ -4,7 +4,7 @@ import {createContext, useContext, useState} from 'react';
 export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full';
 export type SlideDirection = 'left' | 'right' | 'up' | 'down';
 export interface ModalActions {
-  onClose?: () => void;
+  onClose?: (result: boolean) => void;
 }
 export type ModalProviderState = {
   fullScreen?: boolean;
@@ -18,6 +18,7 @@ export type ModalProviderState = {
   actions?: React.FC<ModalActions>;
   scroll?: 'body' | 'paper';
   contentAction?: () => void;
+  onClose?: (result: boolean) => void;
 };
 
 type SetModal = (config: ModalProviderState) => void;

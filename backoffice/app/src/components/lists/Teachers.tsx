@@ -33,9 +33,9 @@ import {Key, useCallback, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {fetchTeachers} from '../../application/get-teachers/action';
 import {teachersSelector} from '../../application/get-teachers/selectors';
-import {ConfirmDelete} from '../forms/ConfirmDelete';
-import {DeleteActions} from '../forms/DeleteActions';
 import {TeacherForm} from '../forms/TeacherForm';
+import {ConfirmDelete} from '../forms/delete/ConfirmDelete';
+import {DeleteActions} from '../forms/delete/DeleteActions';
 
 export const Teachers = () => {
   const updateModal = useUpdateModal();
@@ -61,6 +61,7 @@ export const Teachers = () => {
       data: id,
       content: () => ConfirmDelete({onClose: onCloseDelete, data: id}),
       actions: DeleteActions,
+      onClose: onCloseDelete,
     });
   };
 

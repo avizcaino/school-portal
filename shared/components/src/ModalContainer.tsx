@@ -21,8 +21,10 @@ export const ModalContainer = () => {
     else setOpen(false);
   }, [config]);
 
-  const handleClose = () => {
+  const handleClose = result => {
+    console.log(result);
     setOpen(false);
+    config.onClose && config.onClose(true);
     setTimeout(() => {
       updateModal(null as never);
     }, 500);
@@ -30,7 +32,7 @@ export const ModalContainer = () => {
 
   return (
     config?.content && (
-      <Modal isOpen={open} onClose={handleClose} size={config.size}>
+      <Modal isOpen={open} onClose={handleClose} size={config.size} backdrop="blur">
         <ModalContent>
           {onClose => (
             <>
