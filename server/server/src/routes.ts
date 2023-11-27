@@ -104,6 +104,12 @@ const models: TsoaRoute.Models = {
   ITeacherExtended: {
     dataType: 'refObject',
     properties: {
+      id: {dataType: 'string'},
+      internalId: {dataType: 'string', required: true},
+      name: {dataType: 'string', required: true},
+      firstSurname: {dataType: 'string', required: true},
+      secondSurname: {dataType: 'string'},
+      profilePic: {dataType: 'string'},
       groups: {dataType: 'array', array: {dataType: 'refObject', ref: 'IGroup'}},
     },
     additionalProperties: false,

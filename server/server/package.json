@@ -16,6 +16,7 @@
   "scripts": {
     "build": "tsoa spec-and-routes",
     "start": "node -r reflect-metadata -r dotenv/config -r ts-node/register --inspect src/server.ts dotenv_config_path=.env.development",
+    "start:debug": "node --inspect=0.0.0.0:9229 -r reflect-metadata -r dotenv/config -r ts-node/register --inspect src/server.ts dotenv_config_path=.env.development",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "tdd": "vitest --watch"

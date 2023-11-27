@@ -24,7 +24,8 @@
     "bo:dev": "lerna run dev --scope @school-backoffice/app --verbose",
     "prepare": "husky install",
     "server:build": "lerna run build --scope @school-server/server --verbose",
-    "server:start": "lerna run start --scope @school-server/server --verbose"
+    "server:start": "lerna run start --scope @school-server/server --verbose",
+    "server:start:debug": "lerna run start:debug --scope @school-server/server --verbose"
   },
   "resolutions": {
     "mediatr-ts": "^1.2.1"
