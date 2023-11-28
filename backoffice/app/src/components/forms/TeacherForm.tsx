@@ -24,9 +24,9 @@ export const TeacherForm = (props: {data?: ITeacherExtended; isEditing?: boolean
     const fn = (
       isEditing: boolean | undefined,
       data: RegisterTeacherCommand
-    ): Promise<ITeacherExtended> =>
+    ): Promise<ITeacherExtended | ITeacherExtended[]> =>
       isEditing ? updateTeacher(data.id as string, data) : registerTeacher(data);
-    fn(props.isEditing, data).then((teacher: ITeacherExtended) => {
+    fn(props.isEditing, data).then((teacher: ITeacherExtended | ITeacherExtended[]) => {
       updateModal(null as never);
     });
   };

@@ -49,10 +49,10 @@ export const Teachers = () => {
     fetchTeachers().then(r => setFetching(false));
   }, []);
 
-  const handleEdit = (teacher: ITeacherExtended) => {
+  const handleEdit = (teacher: ITeacherExtended | undefined, isNew: boolean) => {
     updateModal({
-      title: 'Editing...',
-      content: () => TeacherForm({data: teacher, isEditing: true}),
+      title: isNew ? 'Creating...' : 'Editing...',
+      content: () => TeacherForm({data: teacher, isEditing: !isNew}),
     });
   };
 
@@ -99,7 +99,7 @@ export const Teachers = () => {
             </Tooltip>
             <Tooltip content="Edit user">
               <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
-                <EditIcon onClick={() => handleEdit(teacher)} />
+                <EditIcon onClick={() => handleEdit(teacher, false)} />
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
@@ -212,7 +212,11 @@ export const Teachers = () => {
               ))}
             </DropdownMenu>
           </Dropdown>
-          <Button color="primary" endContent={<PlusIcon />}>
+          <Button
+            color="primary"
+            endContent={<PlusIcon />}
+            onClick={() => handleEdit(undefined, true)}
+          >
             Add New
           </Button>
         </div>
