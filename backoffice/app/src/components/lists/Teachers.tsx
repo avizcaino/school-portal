@@ -31,6 +31,7 @@ import {
 import {ITeacherExtended} from '@school-shared/core';
 import {Key, useCallback, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
+import {deleteTeacher} from '../../application/delete-teacher/action';
 import {fetchTeachers} from '../../application/get-teachers/action';
 import {teachersSelector} from '../../application/get-teachers/selectors';
 import {TeacherForm} from '../forms/TeacherForm';
@@ -59,13 +60,13 @@ export const Teachers = () => {
     updateModal({
       title: '',
       data: id,
-      content: () => ConfirmDelete({onClose: onCloseDelete, data: id}),
+      content: ConfirmDelete,
       actions: DeleteActions,
       onClose: onCloseDelete,
     });
   };
 
-  const onCloseDelete = () => console.log('Delete');
+  const onCloseDelete = (result: boolean, id: string) => result && deleteTeacher(id);
 
   const renderCell = useCallback((teacher: ITeacherExtended, columnKey: Key) => {
     const fullName = `${teacher.name} ${teacher.firstSurname} ${teacher.secondSurname ?? ''}`;

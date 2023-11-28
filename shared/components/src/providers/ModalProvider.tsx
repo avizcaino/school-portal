@@ -18,7 +18,7 @@ export type ModalProviderState = {
   actions?: React.FC<ModalActions>;
   scroll?: 'body' | 'paper';
   contentAction?: () => void;
-  onClose?: (result: boolean) => void;
+  onClose?: (result: boolean, data: any) => void;
 };
 
 type SetModal = (config: ModalProviderState) => void;

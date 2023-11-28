@@ -21,10 +21,9 @@ export const ModalContainer = () => {
     else setOpen(false);
   }, [config]);
 
-  const handleClose = result => {
-    console.log(result);
+  const handleClose = () => {
     setOpen(false);
-    config.onClose && config.onClose(true);
+    // config.onClose && config.onClose(true);
     setTimeout(() => {
       updateModal(null as never);
     }, 500);
@@ -39,7 +38,13 @@ export const ModalContainer = () => {
               <ModalHeader>{config.title}</ModalHeader>
               <ModalBody>{config?.content && renderContent(config.content)}</ModalBody>
               <ModalFooter>
-                {config?.actions && renderContent(config?.actions, {onClose})}
+                {config?.actions &&
+                  renderContent(config?.actions, {
+                    onClose: (r: boolean) => {
+                      config.onClose && config.onClose(r, config.data);
+                      onClose();
+                    },
+                  })}
               </ModalFooter>
             </>
           )}

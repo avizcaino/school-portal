@@ -1,3 +1,3 @@
-export const ConfirmDelete = (props: {data: string}) => {
+export const ConfirmDelete = () => {
   return <div>Are you sure?</div>;
 };
