@@ -7,7 +7,7 @@ export interface IStudent extends Person {
   group: ID;
 }
 
-export interface IStudentExtended extends Omit<IStudent, 'group'> {
+export interface IStudentExtended extends Person {
   group: IGroup;
 }
 

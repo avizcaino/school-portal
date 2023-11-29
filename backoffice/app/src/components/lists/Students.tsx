@@ -1,62 +1,100 @@
-import {classValidatorResolver} from '@hookform/resolvers/class-validator';
-import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
-import {GroupValidator, IStudent, IStudentExtended} from '@school-shared/core';
-import {BaseSyntheticEvent, useEffect, useState} from 'react';
-import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {CreateGroupCommand} from '../../application/create-group/command';
-import {fetchStudents} from '../../application/get-students/action';
-import {GroupForm} from '../forms/GroupForm';
+import {Avatar, Tooltip, User} from '@nextui-org/react';
+import {DeleteIcon, EditIcon, EyeIcon, useUpdateModal} from '@school-shared/components';
+import {IStudentExtended} from '@school-shared/core';
+import {Key, useCallback, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {deleteStudent} from '../../application/students/delete-student/action';
+import {fetchStudents} from '../../application/students/get-students/action';
+import {studentsSelector} from '../../application/students/get-students/selectors';
+import {ConfirmDelete} from '../forms/delete/ConfirmDelete';
+import {DeleteActions} from '../forms/delete/DeleteActions';
+import {Grid} from '../grid/Grid';
 
-const resolver = classValidatorResolver(CreateGroupCommand, {}, {mode: 'sync'});
 export const Students = () => {
-  const [students, setStudents] = useState<IStudentExtended[]>([]);
+  const updateModal = useUpdateModal();
+  const students = useSelector(studentsSelector);
+
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
-    fetchStudents().then(g => setStudents(g));
+    setFetching(true);
+    fetchStudents().then(r => setFetching(false));
   }, []);
 
-  const methods = useForm<GroupValidator>({
-    resolver,
-  });
-
-  const onSuccess = async (data: CreateGroupCommand, event: unknown) => {
-    console.log(data);
+  const handleEdit = (student: IStudentExtended | undefined, isNew?: boolean) => {
+    updateModal({
+      title: isNew ? 'Creating...' : 'Editing...',
+      content: () => StudentForm({data: student, isEditing: !isNew}),
+    });
   };
 
-  const onError = (errors: FieldErrors<IStudent>, event?: BaseSyntheticEvent) => {
-    console.log(errors, event);
+  const handleDelete = (id: string) => {
+    updateModal({
+      title: '',
+      data: id,
+      content: ConfirmDelete,
+      actions: DeleteActions,
+      onClose: onCloseDelete,
+    });
   };
 
-  const createGroupCallback = methods?.handleSubmit(onSuccess, onError);
+  const onCloseDelete = (result: boolean, id: string) => result && deleteStudent(id);
 
-  const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID', width: 70},
-    {field: 'name', headerName: 'Nom', width: 130},
-    {field: 'firstSurname', headerName: 'Cognom', width: 130},
-    {
-      field: 'groupName',
-      headerName: 'Curs',
-      width: 130,
-      valueGetter: (params: GridValueGetterParams) => params.row.group.name,
-    },
+  const renderCell = useCallback((student: IStudentExtended, columnKey: Key) => {
+    const fullName = `${student.name} ${student.firstSurname} ${student.secondSurname ?? ''}`;
+    switch (columnKey) {
+      case 'name':
+        return (
+          <User
+            // avatarProps={{radius: 'lg', src: teacher.profilePic as string}}
+            description={student.internalId as string}
+            name={fullName}
+          >
+            {student.internalId as string}
+          </User>
+        );
+      case 'group':
+        return <Avatar key={student.group.id} name={student.group.name} />;
+      case 'actions':
+        return (
+          <div className="relative flex items-center gap-2">
+            <Tooltip content="Details">
+              <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
+                <EyeIcon />
+              </span>
+            </Tooltip>
+            <Tooltip content="Edit user">
+              <span className="text-lg text-slate-400 cursor-pointer active:opacity-50">
+                <EditIcon onClick={() => handleEdit(student)} />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete user">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon onClick={() => handleDelete(student.id as string)} />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return 'cellValue';
+    }
+  }, []);
+
+  const columns = [
+    {name: 'NAME', uid: 'name'},
+    {name: 'GROUP', uid: 'group'},
+    {name: 'ACTIONS', uid: 'actions'},
   ];
 
   return (
-    <div className="w-full px-4 py-4 flex flex-col">
-      <DataGrid
-        rows={students}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {page: 0, pageSize: 20},
-          },
-        }}
-        pageSizeOptions={[20, 30]}
-        checkboxSelection
-      />
-      <FormProvider {...methods}>
-        <GroupForm callback={createGroupCallback} />
-      </FormProvider>
-    </div>
+    <Grid<IStudentExtended>
+      items={students}
+      columns={columns}
+      isFetching={fetching}
+      hideHeader
+      withSearcher={true}
+      addItem={handleEdit}
+      renderCell={renderCell}
+    />
   );
 };

@@ -4,9 +4,9 @@ import {FormInput, useUpdateModal} from '@school-shared/components';
 import {ITeacher, ITeacherExtended, TeacherValidator} from '@school-shared/core';
 import {BaseSyntheticEvent} from 'react';
 import {FieldErrors, FormProvider, useForm} from 'react-hook-form';
-import {registerTeacher} from '../../application/register-teacher/action';
-import {RegisterTeacherCommand} from '../../application/register-teacher/command';
-import {updateTeacher} from '../../application/update-teacher/action';
+import {registerTeacher} from '../../application/teachers/register-teacher/action';
+import {RegisterTeacherCommand} from '../../application/teachers/register-teacher/command';
+import {updateTeacher} from '../../application/teachers/update-teacher/action';
 import {GroupSelector} from './GroupSelector';
 
 const resolver = classValidatorResolver(RegisterTeacherCommand, {}, {mode: 'sync'});

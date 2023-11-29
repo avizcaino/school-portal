@@ -29,7 +29,6 @@ export const FormInput = (props: IFormInput) => {
         label={props.label}
         defaultValue={props.defaultValue}
         onChange={event => {
-          console.log(event);
           props.onChange && props.onChange(event);
           field.onChange(event);
         }}

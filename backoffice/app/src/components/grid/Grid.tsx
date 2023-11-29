@@ -1,4 +1,11 @@
+import {capitalize} from '@mui/material';
 import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
   Selection,
   Spinner,
   Table,
@@ -8,9 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/react';
-import {renderContent} from '@school-shared/components';
+import {ChevronDownIcon, PlusIcon, SearchIcon} from '@school-shared/components';
 import {Entity} from '@school-shared/core';
-import React, {Key, ReactNode, useMemo, useState} from 'react';
+import {Key, ReactNode, useCallback, useMemo, useState} from 'react';
 
 export interface GridColumn {
   name: string;
@@ -23,23 +30,10 @@ export interface GridModel<T> {
   columns: GridColumn[];
   items: T[];
   renderCell: (item: T, columnKey: Key) => ReactNode;
-  toolbar?: React.FC;
   hideHeader?: boolean;
   withSearcher?: boolean;
-  addItem?: () => void;
+  addItem?: (teacher: T | undefined, isNew?: boolean) => void;
 }
-
-export interface GridToolbar {
-  visibleColumns: Selection;
-  setVisibleColumns: React.Dispatch<React.SetStateAction<Selection>>;
-  columns: GridColumn[];
-  addItem?: () => void;
-  filterValue?: string;
-  setFilterValue?: React.Dispatch<React.SetStateAction<string>>;
-  withSearcher?: boolean;
-}
-
-const renderToolbar = (Content: React.FC, data: GridToolbar) => renderContent(Content, data);
 
 export function Grid<T extends Entity>(props: GridModel<T>) {
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
@@ -52,6 +46,14 @@ export function Grid<T extends Entity>(props: GridModel<T>) {
 
     return props.columns?.filter(column => Array.from(visibleColumns).includes(column.uid));
   }, [visibleColumns]);
+
+  const onSearchChange = useCallback((value?: string) => {
+    setFilterValue(value || '');
+  }, []);
+
+  const onClear = useCallback(() => {
+    setFilterValue('');
+  }, []);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -79,16 +81,49 @@ export function Grid<T extends Entity>(props: GridModel<T>) {
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
-      {props.toolbar &&
-        renderToolbar(props.toolbar, {
-          columns: props.columns,
-          visibleColumns,
-          setVisibleColumns,
-          addItem: props.addItem,
-          filterValue,
-          setFilterValue,
-          withSearcher: props.withSearcher,
-        })}
+      <div className="flex justify-between gap-3 items-end">
+        {props.withSearcher && (
+          <Input
+            isClearable
+            className="w-full sm:max-w-[44%]"
+            placeholder="Search by name..."
+            startContent={<SearchIcon />}
+            value={filterValue}
+            onClear={onClear}
+            onValueChange={onSearchChange}
+          />
+        )}
+        <div className="flex gap-3">
+          <Dropdown>
+            <DropdownTrigger className="hidden sm:flex">
+              <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                Columns
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disallowEmptySelection
+              aria-label="Table Columns"
+              closeOnSelect={false}
+              selectedKeys={visibleColumns}
+              selectionMode="multiple"
+              onSelectionChange={setVisibleColumns}
+            >
+              {props.columns?.map(column => (
+                <DropdownItem key={column.uid} className="capitalize">
+                  {capitalize(column.name)}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Button
+            color="primary"
+            endContent={<PlusIcon />}
+            onClick={() => props.addItem && props.addItem(undefined, true)}
+          >
+            Add New
+          </Button>
+        </div>
+      </div>
       <Table
         hideHeader={props.hideHeader}
         aria-label="Example table with custom cells"

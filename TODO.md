@@ -5,6 +5,8 @@
 - [ ] Notification service
 - [ ] Modal: revisar com fer servir el ModalFooter per injectar custom actions i com delegar les
       accions en onClose fora del modal o content-component del modal
+- [ ] Prepare testing for application layer in backoffice
+- [ ] Refactor code to avoid boilerplate in application layer in backoffice
 
 # TEACHERS
 

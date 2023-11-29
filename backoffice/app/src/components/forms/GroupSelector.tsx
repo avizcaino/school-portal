@@ -2,7 +2,7 @@ import {Select, SelectItem} from '@nextui-org/react';
 import {IGroup} from '@school-shared/core';
 import {useEffect, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import {fetchGroups} from '../../application/get-groups/action';
+import {fetchGroups} from '../../application/groups/get-groups/action';
 
 export const GroupSelector = (props: {defaultValues?: string[]}) => {
   const [groups, setGroups] = useState<IGroup[]>([]);

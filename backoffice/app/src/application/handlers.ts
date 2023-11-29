@@ -1,20 +1,22 @@
 import {injectReducer} from '@school-backoffice/core';
 import {requestHandler} from 'mediatr-ts';
-import {CreateGroupCommand} from './create-group/command';
-import {CreateGroupCommandHandler} from './create-group/handler';
-import {DeleteTeacherCommand} from './delete-teacher/command';
-import {DeleteTeacherCommandHandler} from './delete-teacher/handler';
-import {GroupsQueryHandler} from './get-groups/handler';
-import {GroupsQuery} from './get-groups/query';
-import {StudentsQueryHandler} from './get-students/handler';
-import {StudentsQuery} from './get-students/query';
-import {TeachersQueryHandler} from './get-teachers/handler';
-import {TeachersQuery} from './get-teachers/query';
-import {teachersSlice} from './get-teachers/reducer';
-import {RegisterTeacherCommand} from './register-teacher/command';
-import {RegisterTeacherCommandHandler} from './register-teacher/handler';
-import {UpdateTeacherCommand} from './update-teacher/command';
-import {UpdateTeacherCommandHandler} from './update-teacher/handler';
+import {CreateGroupCommand} from './groups/create-group/command';
+import {CreateGroupCommandHandler} from './groups/create-group/handler';
+import {GroupsQueryHandler} from './groups/get-groups/handler';
+import {GroupsQuery} from './groups/get-groups/query';
+import {groupsSlice} from './groups/get-groups/reducer';
+import {StudentsQueryHandler} from './students/get-students/handler';
+import {StudentsQuery} from './students/get-students/query';
+import {studentsSlice} from './students/get-students/reducer';
+import {DeleteTeacherCommand} from './teachers/delete-teacher/command';
+import {DeleteTeacherCommandHandler} from './teachers/delete-teacher/handler';
+import {TeachersQueryHandler} from './teachers/get-teachers/handler';
+import {TeachersQuery} from './teachers/get-teachers/query';
+import {teachersSlice} from './teachers/get-teachers/reducer';
+import {RegisterTeacherCommand} from './teachers/register-teacher/command';
+import {RegisterTeacherCommandHandler} from './teachers/register-teacher/handler';
+import {UpdateTeacherCommand} from './teachers/update-teacher/command';
+import {UpdateTeacherCommandHandler} from './teachers/update-teacher/handler';
 
 export const initializeApplication = () => {
   requestHandler(CreateGroupCommand)(CreateGroupCommandHandler);
@@ -27,5 +29,7 @@ export const initializeApplication = () => {
 };
 
 export const initializeStore = () => {
+  injectReducer('groups', groupsSlice.reducer);
   injectReducer('teachers', teachersSlice.reducer);
+  injectReducer('students', studentsSlice.reducer);
 };
